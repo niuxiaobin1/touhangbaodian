@@ -1,0 +1,13 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="tv_10sp">10sp</dimen>
+    <dimen name="tv_12sp">12sp</dimen>
+    <dimen name="tv_13sp">13sp</dimen>
+    <dimen name="tv_14sp">14sp</dimen>
+    <dimen name="tv_15sp">15sp</dimen>
+    <dimen name="tv_16sp">16sp</dimen>
+    <dimen name="tv_17sp">17sp</dimen>
+    <dimen name="tv_18sp">18sp</dimen>
+    <dimen name="tv_19sp">19sp</dimen>
+    <dimen name="tv_20sp">20sp</dimen>
+</resources>

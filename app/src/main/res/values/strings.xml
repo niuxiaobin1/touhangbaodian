@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Tou Hang</string>
+    <string name="title_activity_base">BaseActivity</string>
+
+
+    <string name="footerConsulatationString">咨询</string>
+    <string name="footerBussinessOpportunitiedString">业务机会</string>
+    <string name="footerSearchString">搜索</string>
+    <string name="footerCommunicationString">学习交流</string>
+    <string name="footerMineString">我的</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="BussinessOpportunitiedSubtitleString">并购投资项目</string>
+    <string name="productReleaseString">资管产品发布</string>
+
+    <string name="amountString">金额：</string>
+    <string name="termString">期限：</string>
+    <string name="stateOwnedString">国企：</string>
+    <string name="guaranteeString">担保：</string>
+    <string name="rateString">评级：</string>
+    <string name="publishDateString">发布时间：</string>
+    <string name="search_hintString">请输入您要查询的公司名称</string>
+
+</resources>

@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="7dp"
+    android:paddingRight="7dp"
+    tools:context="com.xinyi.touhang.fragments.BusinessOpportunitiesFragment">
+
+    <TextView
+        android:paddingBottom="10dp"
+        android:id="@+id/titleTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/footerBussinessOpportunitiedString"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/tv_14sp"
+        android:visibility="invisible" />
+
+    <com.xinyi.touhang.weight.ObservableScrollView
+        android:id="@+id/mScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/subTitleTv"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/BussinessOpportunitiedSubtitleString"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/tv_16sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="7dp"
+                    android:drawableRight="@mipmap/release_icon"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/productReleaseString"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_12sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:paddingBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recylerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </com.xinyi.touhang.weight.ObservableScrollView>
+</LinearLayout>
