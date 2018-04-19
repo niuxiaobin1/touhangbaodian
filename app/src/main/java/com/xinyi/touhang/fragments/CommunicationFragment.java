@@ -12,7 +12,7 @@ import com.xinyi.touhang.R;
 import com.xinyi.touhang.base.BaseFragment;
 
 /**
- * 学习交流
+ * 学习交流todo
  * Use the {@link CommunicationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
