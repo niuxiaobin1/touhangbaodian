@@ -40,19 +40,19 @@ public class StatusBarUtil {
     }
 
 
-    public static void setHideVirtualKey(Window window){
+    public static void setHideVirtualKey(Window window) {
         //保持布局状态
-        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE|
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
                 //布局位于状态栏下方
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION|
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
                 //全屏
-                View.SYSTEM_UI_FLAG_FULLSCREEN|
+                View.SYSTEM_UI_FLAG_FULLSCREEN |
                 //隐藏导航栏
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-        if (Build.VERSION.SDK_INT>=19){
+        if (Build.VERSION.SDK_INT >= 19) {
             uiOptions |= 0x00001000;
-        }else{
+        } else {
             uiOptions |= View.SYSTEM_UI_FLAG_LOW_PROFILE;
         }
         window.getDecorView().setSystemUiVisibility(uiOptions);
@@ -115,7 +115,7 @@ public class StatusBarUtil {
      *
      * @param scrollY
      */
-   public static void changeStatusBarColor(int scrollY, int fadingHeight, Activity activity) {
+    public static void changeStatusBarColor(int scrollY, int fadingHeight, Activity activity) {
 
         if (scrollY > fadingHeight) {
             int result = StatusBarUtil.StatusBarLightMode(activity);
@@ -154,7 +154,6 @@ public class StatusBarUtil {
 
         }
     }
-
 
 
     /**
@@ -268,9 +267,6 @@ public class StatusBarUtil {
             }
 
 
-
-
-
 //            Class clazz = window.getClass();
 //            try {
 //                int darkModeFlag = 0;
@@ -289,6 +285,11 @@ public class StatusBarUtil {
 //            }
         }
         return result;
+    }
+
+    public static int getStatusBarHeight(Activity activity) {
+        return new SystemBarTintManager(activity).getStatusBarHeight();
+
     }
 
 }

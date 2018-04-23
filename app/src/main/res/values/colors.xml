@@ -9,10 +9,12 @@
     <color name="colorBlack">#000000</color>
     <color name="colorMain">#4A4A4A</color>
     <color name="colorItem">#E9E9E9</color>
+    <color name="colorFooterLine">#C8C8C8</color>
     <color name="colorTabSelectedIndicator">#FFD700</color>
     <color name="colorSubTitle">#9B9B9B</color>
     <color name="colorPink">#FF543B</color>
     <color name="colorLine">#D6D2D2</color>
+    <color name="mask_color">#88888888</color>
 
 
 </resources>

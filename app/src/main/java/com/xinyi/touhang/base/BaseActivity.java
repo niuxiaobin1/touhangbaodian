@@ -7,15 +7,23 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.utils.AppManager;
 import com.xinyi.touhang.utils.StatusBarUtil;
 
+import butterknife.BindView;
+
 public class BaseActivity extends AppCompatActivity {
 
     private Toast toast;
+
+    private ImageView back_image;
+    private TextView title_tv;
+    private TextView right_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +37,29 @@ public class BaseActivity extends AppCompatActivity {
 
 
     protected void initViews() {
+        back_image = findViewById(R.id.back_image);
+        title_tv = findViewById(R.id.title_tv);
+        right_tv = findViewById(R.id.right_tv);
+        if (back_image != null) {
+            back_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
 
     }
 
     protected void initDatas() {
 
+    }
+
+
+    protected void initTitle(@StringRes int resId) {
+        if (title_tv != null) {
+            title_tv.setText(resId);
+        }
     }
 
     protected void showToast(@StringRes int string) {

@@ -13,6 +13,21 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="BussinessOpportunitiedSubtitleString">并购投资项目</string>
     <string name="productReleaseString">资管产品发布</string>
+    <string name="studyString">学习</string>
+    <string name="discussString">讨论交流</string>
+    <string name="loginOrRegistString">登录/注册</string>
+    <string name="favoriteString">收藏</string>
+    <string name="historyString">历史</string>
+    <string name="commentString">评论</string>
+    <string name="messageNotificationString">消息通知</string>
+    <string name="mycourseString">我的课程</string>
+    <string name="myfriendString">我的好友</string>
+    <string name="myAttentionString">我的关注</string>
+    <string name="myPostString">我的帖子</string>
+    <string name="updateString">软件更新</string>
+    <string name="feedbackString">意见反馈</string>
+    <string name="inputHintString">写跟帖</string>
+    <string name="inputCommitString">发表 ✔</string>
 
     <string name="amountString">金额：</string>
     <string name="termString">期限：</string>

@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="7dp"
-    android:paddingRight="7dp"
+    android:paddingLeft="@dimen/content_pading_7dp"
+    android:paddingRight="@dimen/content_pading_7dp"
     tools:context="com.xinyi.touhang.fragments.BusinessOpportunitiesFragment">
 
     <TextView
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:drawablePadding="7dp"
+                    android:drawablePadding="@dimen/content_pading_7dp"
                     android:drawableRight="@mipmap/release_icon"
                     android:gravity="center"
                     android:padding="5dp"

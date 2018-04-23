@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.base.BaseFragment;
 
+import butterknife.ButterKnife;
+
 /**
  * 我的
  * Use the {@link MineFragment#newInstance} factory method to
@@ -63,7 +65,9 @@ public class MineFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mine, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_mine, container, false);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     @Override

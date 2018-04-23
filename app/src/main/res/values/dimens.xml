@@ -10,4 +10,6 @@
     <dimen name="tv_18sp">18sp</dimen>
     <dimen name="tv_19sp">19sp</dimen>
     <dimen name="tv_20sp">20sp</dimen>
+
+    <dimen name="content_pading_7dp">7dp</dimen>
 </resources>

@@ -1,6 +1,7 @@
 package com.xinyi.touhang.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.ConsulationDetailActivity;
 import com.xinyi.touhang.utils.DensityUtil;
 
 /**
@@ -32,6 +34,14 @@ public class ConsulationInnerAdapter extends RecyclerView.Adapter<ConsulationInn
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it=new Intent(context, ConsulationDetailActivity.class);
+                context.startActivity(it);
+            }
+        });
 
     }
 

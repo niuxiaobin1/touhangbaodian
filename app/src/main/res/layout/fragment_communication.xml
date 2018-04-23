@@ -1,14 +1,175 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
     tools:context="com.xinyi.touhang.fragments.CommunicationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:gravity="center"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingLeft="@dimen/content_pading_7dp"
+        android:paddingRight="@dimen/content_pading_7dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/subTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/footerCommunicationString"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tv_16sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="4" />
+        android:scrollbars="none">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingBottom="10dp"
+                android:paddingLeft="@dimen/content_pading_7dp"
+                android:paddingRight="@dimen/content_pading_7dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/studyString"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/tv_15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="0dp"
+                    android:background="@color/colorTabSelectedIndicator"
+                    app:layout_constraintBottom_toBottomOf="@id/title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/title" />
+
+
+            </android.support.constraint.ConstraintLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/content_pading_7dp"
+                android:paddingRight="@dimen/content_pading_7dp">
+
+                <com.xinyi.touhang.weight.MyGridView
+                    android:id="@+id/gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="2"></com.xinyi.touhang.weight.MyGridView>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/colorLine" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"
+                android:paddingLeft="@dimen/content_pading_7dp"
+                android:paddingRight="@dimen/content_pading_7dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/center_recylerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/colorLine" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/content_pading_7dp"
+                    android:layout_marginRight="@dimen/content_pading_7dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/discussTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="@string/discussString"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/tv_15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/colorTabSelectedIndicator"
+                        app:layout_constraintBottom_toBottomOf="@id/discussTitle"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/discussTitle" />
+
+
+                </android.support.constraint.ConstraintLayout>
+
+                <ImageView
+                    android:layout_marginRight="@dimen/content_pading_7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/arrow_right" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"
+                android:paddingLeft="@dimen/content_pading_7dp"
+                android:paddingRight="@dimen/content_pading_7dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/discuss_recylerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
+
