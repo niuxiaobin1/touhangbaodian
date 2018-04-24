@@ -1,16 +1,20 @@
 package com.xinyi.touhang.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.LoginActivity;
 import com.xinyi.touhang.base.BaseFragment;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -19,6 +23,10 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class MineFragment extends BaseFragment {
+
+    @BindView(R.id.login_tv)
+    TextView login_tv;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -72,6 +80,14 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void initViews() {
+
+        login_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it=new Intent(getActivity(), LoginActivity.class);
+                startActivity(it);
+            }
+        });
 
     }
 

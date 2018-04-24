@@ -36,5 +36,16 @@
     <string name="rateString">评级：</string>
     <string name="publishDateString">发布时间：</string>
     <string name="search_hintString">请输入您要查询的公司名称</string>
-
+    <string name="userTelString">手机号码</string>
+    <string name="userCodeString">验证码&#8195;</string>
+    <string name="getCodeString">获取验证码</string>
+    <string name="userTelHintString">输入您的手机号码</string>
+    <string name="userCodeHintString">输入验证码</string>
+    <string name="loginString">确认登录</string>
+    <string name="loginByOtherWayString">您还可以使用以下方式登录</string>
+    <string name="loginByQQString">QQ登录</string>
+    <string name="loginByWechatString">微信登录</string>
+    <string name="telIsEmptyString">请先填写手机号</string>
+    <string name="telIsNotCorrectString">手机号不正确</string>
+    <string name="loginNoCompeleteString">登录信息填写不完整</string>
 </resources>
