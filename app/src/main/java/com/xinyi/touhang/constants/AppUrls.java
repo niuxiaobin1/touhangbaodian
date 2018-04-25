@@ -7,10 +7,10 @@ package com.xinyi.touhang.constants;
 public class AppUrls {
 
     public static final String HostAddress = "http://39.108.183.178/";
-    public static final String AcademyUrl = HostAddress + "school/detail";
+    public static final String MineUrl = HostAddress + "customer/mypage";
     public static final String GetidentifyingUrl = HostAddress + "customer/getidentifying";
-    public static final String EmailRegisterUrl = HostAddress + "customer/email_register";
-    public static final String TelephoneRegisterUrl = HostAddress + "customer/telephone_register";
+    public static final String NewsIndexUrl = HostAddress + "news/index";
     public static final String LoginUrl = HostAddress + "customer/login";
+    public static final String NewsDetailUrl = HostAddress + "news/detail/";
 
 }

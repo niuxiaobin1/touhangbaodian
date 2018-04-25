@@ -269,7 +269,6 @@ public class CommonUtils {
     }
 
 
-
     /**
      * 分段打印出较长log文本
      *
@@ -397,18 +396,18 @@ public class CommonUtils {
     }
 
 
-    public static void showSoftInput(Context context, View view){
+    public static void showSoftInput(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         //imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
     }
 
-    public static void hideSoftInput(Context context, View view){
+    public static void hideSoftInput(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
     }
 
-    public static boolean isShowSoftInput(Context context){
+    public static boolean isShowSoftInput(Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         //获取状态信息
         return imm.isActive();//true 打开
@@ -447,5 +446,26 @@ public class CommonUtils {
         ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
                 .hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
+    }
+
+    private static String css = "<style type=\"text/css\"> </style>";
+
+    public static String resolveHtml(String html) {
+        return "<html><header><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no>" + css + "</header>" + "<body>"
+                + html + "</body>" + "</html>";
+    }
+
+
+    public static String addHeadToHtml(String html,String title,String author,String time,
+                                       String authorImage,String readNum,String editor) {
+
+       String content= "<div><h3>" +title + "</h3><div><img style='float:left;' src=" + authorImage +
+                " width='20' height='20' class='icon'><div style='float:left;margin-left:10;color:#a9a9a9;'>"
+                + author + "</div><div style='float:left;margin-left:20;color:#a9a9a9;'>" + time
+                + "</div>  <div style='float:right;'><img style='float:left;' src=" + authorImage
+                + " width='20' height='20' class='icon'><div style='float:left;margin-left:5; color:#a9a9a9;'>"
+                + readNum + "阅读</div></div>   </div><div style='clear:both; margin-top:70;'>" +
+                html+ "</div><div style='color:#a9a9a9;'>责任编辑：" + editor + "</div></div>";
+        return resolveHtml(content);
     }
 }

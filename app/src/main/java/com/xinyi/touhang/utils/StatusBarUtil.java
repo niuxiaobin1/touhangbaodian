@@ -291,5 +291,9 @@ public class StatusBarUtil {
         return new SystemBarTintManager(activity).getStatusBarHeight();
 
     }
+    public static int getNavigationBarHeight(Activity activity) {
+        return new SystemBarTintManager(activity).getNavigationBarHeight();
+
+    }
 
 }

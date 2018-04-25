@@ -19,6 +19,7 @@
         android:src="@mipmap/banner_parker_replace" />
 
     <TextView
+        android:id="@+id/newsTitleTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -33,6 +34,7 @@
         android:layout_marginTop="5dp">
 
         <TextView
+            android:id="@+id/newsEditorTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -40,10 +42,13 @@
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
             android:text="网易新闻"
+            android:maxLines="1"
             android:textColor="@color/colorSubTitle"
             android:textSize="@dimen/tv_12sp" />
 
         <TextView
+            android:maxLines="1"
+            android:id="@+id/newsTimeTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

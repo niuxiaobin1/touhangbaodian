@@ -15,16 +15,31 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
+import com.lzy.okgo.model.HttpParams;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.base.BaseFragment;
+import com.xinyi.touhang.callBack.DialogCallBack;
+import com.xinyi.touhang.callBack.HandleResponse;
+import com.xinyi.touhang.constants.AppUrls;
 import com.xinyi.touhang.utils.DensityUtil;
+import com.xinyi.touhang.utils.DoParams;
+import com.xinyi.touhang.utils.JsonUtils;
+import com.xinyi.touhang.utils.UIHelper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Response;
 
 /**
  * 咨询
@@ -39,8 +54,7 @@ public class ConsulationFragment extends BaseFragment {
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
-    private String[] titles = new String[]{"要闻",
-            "国际", "热点", "过激", "热点", "其他1", "其他2", "其他3"};
+    private List<Map<String, String>> titles = new ArrayList<>();
 
     private List<Fragment> fragments;
 
@@ -100,19 +114,63 @@ public class ConsulationFragment extends BaseFragment {
     @Override
     public void initViews() {
 
-        initTabs();
+
     }
 
     @Override
     public void initDatas() {
 
+        HttpParams params = new HttpParams();
+        params.put("type", "");
+        params.put("page", "1");
+        OkGo.<String>post(AppUrls.NewsIndexUrl)
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(DoParams.encryptionparams(getActivity(), params, ""))
+                .tag(this)
+                .execute(new DialogCallBack(getActivity(), false) {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject js = new JSONObject(response.body());
+
+                            if (js.getBoolean("result")) {
+                                JSONObject data = js.getJSONObject("data");
+                                JSONArray type_list = data.getJSONArray("type_list");
+                                titles = JsonUtils.ArrayToList(type_list, new String[]{"id", "name", "created", "modified"});
+                                initTabs(data);
+                            } else {
+                                UIHelper.toastMsg(js.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            UIHelper.toastMsg(e.getMessage());
+                        }
+
+                    }
+
+                    @Override
+                    public String convertResponse(Response response) throws Throwable {
+                        HandleResponse.handleReponse(response);
+                        return super.convertResponse(response);
+                    }
+
+                    @Override
+                    public void onError(com.lzy.okgo.model.Response<String> response) {
+                        super.onError(response);
+                        HandleResponse.handleException(response, getActivity());
+                    }
+                });
+
     }
 
 
-    private void initTabs() {
+    private void initTabs(JSONObject js) {
         fragments = new ArrayList<>();
-        for (int i = 0; i < titles.length; i++) {
-            fragments.add(ConsulationInnerFragment.newInstance("", ""));
+        for (int i = 0; i < titles.size(); i++) {
+            if (i == 0) {
+                fragments.add(ConsulationInnerFragment.newInstance(titles.get(i).get("id"), js.toString()));
+            } else {
+                fragments.add(ConsulationInnerFragment.newInstance(titles.get(i).get("id"), ""));
+            }
         }
         adapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
         viewPager.setOffscreenPageLimit(4);
@@ -126,7 +184,7 @@ public class ConsulationFragment extends BaseFragment {
             public void run() {
                 invalidateTablayout();
             }
-        }, 500);
+        }, 100);
 
     }
 
@@ -187,7 +245,7 @@ public class ConsulationFragment extends BaseFragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return titles[position];
+            return titles.get(position).get("name");
         }
     }
 
@@ -223,9 +281,9 @@ public class ConsulationFragment extends BaseFragment {
 
                 //设置tab左右间距为10dp  注意这里不能使用Padding 因为源码中线的宽度是根据 tabView的宽度来设置的
                 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
-                params.width = width+dp10;
-                params.leftMargin = dp10/2;
-                params.rightMargin = dp10/2;
+                params.width = width + dp10;
+                params.leftMargin = dp10 / 2;
+                params.rightMargin = dp10 / 2;
                 tabView.setLayoutParams(params);
 
                 tabView.invalidate();

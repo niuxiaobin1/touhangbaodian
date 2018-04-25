@@ -1,21 +1,40 @@
 package com.xinyi.touhang.fragments;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
+import com.lzy.okgo.model.HttpParams;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.activities.LoginActivity;
 import com.xinyi.touhang.base.BaseFragment;
+import com.xinyi.touhang.callBack.DialogCallBack;
+import com.xinyi.touhang.callBack.HandleResponse;
+import com.xinyi.touhang.constants.AppUrls;
+import com.xinyi.touhang.constants.Configer;
+import com.xinyi.touhang.utils.DoParams;
+import com.xinyi.touhang.utils.SpUtils;
+import com.xinyi.touhang.utils.UIHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Response;
 
 /**
  * 我的
@@ -23,6 +42,9 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class MineFragment extends BaseFragment {
+
+    private LocalBroadcastManager localBroadcastManager;//本地广播manager
+    private LoginBroadcastReceiver mReceiver;
 
     @BindView(R.id.login_tv)
     TextView login_tv;
@@ -63,6 +85,7 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registBroadCastReceive();//注册
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -81,10 +104,11 @@ public class MineFragment extends BaseFragment {
     @Override
     public void initViews() {
 
+
         login_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it=new Intent(getActivity(), LoginActivity.class);
+                Intent it = new Intent(getActivity(), LoginActivity.class);
                 startActivity(it);
             }
         });
@@ -93,6 +117,47 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void initDatas() {
+
+        String user_token = (String) SpUtils.get(getActivity(), SpUtils.USERUSER_TOKEN, "");
+        if (TextUtils.isEmpty(user_token)) {
+            return;
+        }
+        HttpParams params = new HttpParams();
+        params.put("user_token", user_token);
+        OkGo.<String>post(AppUrls.MineUrl)
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(DoParams.encryptionparams(getActivity(), params, user_token))
+                .tag(this)
+                .execute(new DialogCallBack(getActivity(), false) {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject js = new JSONObject(response.body());
+
+                            if (js.getBoolean("result")) {
+
+                                savaUserInfo(js.getJSONObject("data"));
+                            } else {
+                                UIHelper.toastMsg(js.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            UIHelper.toastMsg(e.getMessage());
+                        }
+
+                    }
+
+                    @Override
+                    public String convertResponse(Response response) throws Throwable {
+                        HandleResponse.handleReponse(response);
+                        return super.convertResponse(response);
+                    }
+
+                    @Override
+                    public void onError(com.lzy.okgo.model.Response<String> response) {
+                        super.onError(response);
+                        HandleResponse.handleException(response, getActivity());
+                    }
+                });
 
     }
 
@@ -134,4 +199,70 @@ public class MineFragment extends BaseFragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unRegistBroadCastReceive();//解除注册
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    /**
+     * 注册广播
+     */
+    private void registBroadCastReceive() {
+        localBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
+        mReceiver = new LoginBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Configer.LOCAL_USERLOGIN_ACTION);
+        localBroadcastManager.registerReceiver(mReceiver, intentFilter);
+    }
+
+    /**
+     * 销毁广播
+     */
+    private void unRegistBroadCastReceive() {
+        localBroadcastManager.unregisterReceiver(mReceiver);
+    }
+
+    private class LoginBroadcastReceiver extends BroadcastReceiver {
+
+        //接收到广播后自动调用该方法
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //写入接收广播后的操作
+            if (intent.getAction().equals(Configer.LOCAL_USERLOGIN_ACTION)) {
+                //
+                initDatas();
+            }
+        }
+    }
+
+    private void savaUserInfo(JSONObject jsonObject) throws JSONException {
+        JSONObject user = jsonObject.getJSONObject("user");
+        SpUtils.put(getActivity(), SpUtils.USERNAME, user.getString("name"));
+        SpUtils.put(getActivity(), SpUtils.USERTELEPHONE, user.getString("telephone"));
+        SpUtils.put(getActivity(), SpUtils.USERWX_OPENID, user.getString("wx_openid"));
+        SpUtils.put(getActivity(), SpUtils.USERQQ_ACCOUNT, user.getString("qq_account"));
+        SpUtils.put(getActivity(), SpUtils.USERVIP, user.getString("vip"));
+        SpUtils.put(getActivity(), SpUtils.USERUSER_TOKEN, user.getString("user_token"));
+        SpUtils.put(getActivity(), SpUtils.USERUDID, user.getString("udid"));
+        SpUtils.put(getActivity(), SpUtils.USERCREATED, user.getString("created"));
+        SpUtils.put(getActivity(), SpUtils.USERMODIFIED, user.getString("modified"));
+        SpUtils.put(getActivity(), SpUtils.USERIMAGE, user.getString("image"));
+        SpUtils.put(getActivity(), SpUtils.USERVIP_LIMIT, user.getString("vip_limit"));
+
+    }
+
 }

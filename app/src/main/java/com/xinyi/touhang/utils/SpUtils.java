@@ -18,35 +18,16 @@ public class SpUtils {
     public static final String APPFirst = "_isfirst";
 
     public static final String USERNAME = "_name";
-    public static final String USEREMAIL = "_email";
-    public static final String USETELEPHONE = "_telephone";
-    public static final String USERAPP_CODE = "_app_code";
-    public static final String USERLOGIN_TYPE = "_login_type";
-    public static final String USERTRUE_NAME = "_true_name";
-    public static final String USERCONFIRM_FLAG = "_confirm_flag";
-    public static final String USERPAYMENT = "_payment";
-    public static final String USERPAYMENT_NO = "_payment_no";
-    public static final String USERIDENTITY_FLAG = "_identity_flag";
-    public static final String USERGRADE = "_grade";
-    public static final String USERPROFESSION_ID = "_profession_id";
-    public static final String USERPROFESSIONAL_NAME = "_professional_name";
-    public static final String USERSCHOOL_ID = "_school_id";
-    public static final String USERSCHOOL_NAME = "_school_name";
-    public static final String USERSTANDARD_ID = "_standard_id";
-    public static final String USERSERVICE_NAME = "_service_name";
-    public static final String USERSERVICE_PRICE = "_service_price";
-    public static final String USERCHARGE_UNIT = "_charge_unit";
-    public static final String USERCONTACT = "_contact";
-    public static final String USERCOMPANY_ADDRESS = "_company_address";
-    public static final String USERVIDO_ADDRESS = "_vido_address";
-    public static final String USERTOTAL_AMOUNT = "_total_amount";
+    public static final String USERTELEPHONE = "_telephone";
+    public static final String USERWX_OPENID = "_wx_openid";
+    public static final String USERQQ_ACCOUNT = "_qq_account";
+    public static final String USERVIP = "_vip";
     public static final String USERUSER_TOKEN = "_user_token";
-    public static final String USERINVITER_USER_TOKEN = "_inviter_user_token";
-    public static final String USERPOINTS = "_points";
-    public static final String USECREATED = "_created";
-    public static final String USEMODIFIED = "_modified";
-    public static final String USEIMAGE = "_image";
-    public static final String USECARD_IMAGE = "_card_image";
+    public static final String USERUDID = "_udid";
+    public static final String USERCREATED = "_created";
+    public static final String USERMODIFIED = "_modified";
+    public static final String USERIMAGE = "_image";
+    public static final String USERVIP_LIMIT = "_vip_limit";
 
     public SpUtils() {
         /* cannot be instantiated */

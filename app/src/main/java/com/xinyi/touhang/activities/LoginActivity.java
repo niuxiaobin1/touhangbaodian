@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import com.xinyi.touhang.callBack.HandleResponse;
 import com.xinyi.touhang.constants.AppUrls;
 import com.xinyi.touhang.constants.Configer;
 import com.xinyi.touhang.utils.DoParams;
+import com.xinyi.touhang.utils.SpUtils;
 import com.xinyi.touhang.utils.UIHelper;
 
 import org.json.JSONException;
@@ -33,6 +35,7 @@ import butterknife.ButterKnife;
 import okhttp3.Response;
 
 public class LoginActivity extends BaseActivity {
+
 
     //获取验证码
     @BindView(R.id.getCodeTv)
@@ -235,6 +238,7 @@ public class LoginActivity extends BaseActivity {
 
                             if (js.getBoolean("result")) {
                                 savaUserInfo(js.getJSONObject("data"));
+                                senLocalBroadCast();
                                 finish();
                             }
                             UIHelper.toastMsg(js.getString("message"));
@@ -260,7 +264,24 @@ public class LoginActivity extends BaseActivity {
 
 
     private void savaUserInfo(JSONObject jsonObject) throws JSONException {
+        JSONObject user = jsonObject.getJSONObject("user");
+        SpUtils.put(this, SpUtils.USERNAME, user.getString("name"));
+        SpUtils.put(this, SpUtils.USERTELEPHONE, user.getString("telephone"));
+        SpUtils.put(this, SpUtils.USERWX_OPENID, user.getString("wx_openid"));
+        SpUtils.put(this, SpUtils.USERQQ_ACCOUNT, user.getString("qq_account"));
+        SpUtils.put(this, SpUtils.USERVIP, user.getString("vip"));
+        SpUtils.put(this, SpUtils.USERUSER_TOKEN, user.getString("user_token"));
+        SpUtils.put(this, SpUtils.USERUDID, user.getString("udid"));
+        SpUtils.put(this, SpUtils.USERCREATED, user.getString("created"));
+        SpUtils.put(this, SpUtils.USERMODIFIED, user.getString("modified"));
+        SpUtils.put(this, SpUtils.USERIMAGE, user.getString("image"));
+
+    }
 
 
+    private void senLocalBroadCast() {
+        Intent intent = new Intent();
+        intent.setAction(Configer.LOCAL_USERLOGIN_ACTION);
+        localBroadcastManager.sendBroadcast(intent);
     }
 }
