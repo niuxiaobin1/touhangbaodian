@@ -124,7 +124,7 @@ public class ConsulationDetailActivity extends BaseActivity {
     protected void initViews() {
         super.initViews();
         id = getIntent().getStringExtra(NEWS_ID);
-
+        setViewTreeObserver();
         initWebView();
         initListener();
 
@@ -139,7 +139,7 @@ public class ConsulationDetailActivity extends BaseActivity {
         commentAdapter = new CommentAdapter(this);
         comment_RecylerView.setAdapter(commentAdapter);
 
-        setViewTreeObserver();
+
     }
 
     private void initListener() {
@@ -150,7 +150,7 @@ public class ConsulationDetailActivity extends BaseActivity {
                 scrollView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        changeInputEdittextVisibility(View.VISIBLE);
+                changeInputEdittextVisibility(View.VISIBLE);
                     }
                 }, 500);
 
@@ -255,6 +255,9 @@ public class ConsulationDetailActivity extends BaseActivity {
                 super.onProgressChanged(view, newProgress);
                 if (newProgress == 100) {
                     //comment
+                    if (bodyLayout.getVisibility()==View.INVISIBLE){
+                        bodyLayout.setVisibility(View.VISIBLE);
+                    }
                     try {
                         JSONArray comments = data.getJSONArray("comments");
                         commentAdapter.addDatas(JsonUtils.ArrayToList(comments, new String[]{
@@ -281,11 +284,12 @@ public class ConsulationDetailActivity extends BaseActivity {
             input_layout.setVisibility(View.GONE);
             CommonUtils.hideSoftInput(this, input_et);
         } else {
-            input_layout.setVisibility(View.VISIBLE);
+
             input_et.setFocusable(true);
             input_et.setFocusableInTouchMode(true);
             input_et.requestFocus();
             CommonUtils.showSoftInput(this, input_et);
+
         }
     }
 
@@ -296,7 +300,7 @@ public class ConsulationDetailActivity extends BaseActivity {
         if (TextUtils.isEmpty(id)) {
             return;
         }
-        String user_token=(String)SpUtils.get(ConsulationDetailActivity.this,SpUtils.USERUSER_TOKEN,"");
+        String user_token = (String) SpUtils.get(ConsulationDetailActivity.this, SpUtils.USERUSER_TOKEN, "");
         HttpParams params = new HttpParams();
         params.put("id", id);
         params.put("user_token", user_token);
@@ -424,16 +428,16 @@ public class ConsulationDetailActivity extends BaseActivity {
      */
     private void setViewTreeObserver() {
 
-        final ViewTreeObserver swipeRefreshLayoutVTO = input_layout.getViewTreeObserver();
+        final ViewTreeObserver swipeRefreshLayoutVTO = bodyLayout.getViewTreeObserver();
         swipeRefreshLayoutVTO.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
 
                 Rect r = new Rect();
-                input_layout.getWindowVisibleDisplayFrame(r);
+                bodyLayout.getWindowVisibleDisplayFrame(r);
                 int statusBarH = StatusBarUtil.getStatusBarHeight(ConsulationDetailActivity.this);//状态栏高度
                 int navigationBarH = StatusBarUtil.getNavigationBarHeight(ConsulationDetailActivity.this);//状态栏高度
-                int screenH = input_layout.getRootView().getHeight();
+                int screenH = bodyLayout.getRootView().getHeight();
 
                 if (r.top != statusBarH) {
                     //r.top代表的是状态栏高度，在沉浸式状态栏时r.top＝0，通过getStatusBarHeight获取状态栏高度
@@ -462,6 +466,7 @@ public class ConsulationDetailActivity extends BaseActivity {
                 }
 
                 input_layout.setPadding(0, 0, 0, keyboardH - statusBarH);
+                input_layout.setVisibility(View.VISIBLE);
 //                bodyLayout.setPadding(0, 0, 0, (screenHeight - DensityUtil.dip2px(ConsulationDetailActivity.this, 60)) - r.bottom);
 
             }
@@ -502,11 +507,11 @@ public class ConsulationDetailActivity extends BaseActivity {
 
                             if (js.getBoolean("result")) {
                                 JSONObject data = js.getJSONObject("data");
-                                if (!TextUtils.isEmpty(favorite_flg)&&
-                                        !favorite_flg.equals("0")  ){
+                                if (!TextUtils.isEmpty(favorite_flg) &&
+                                        !favorite_flg.equals("0")) {
                                     favorite_flg = "0";
                                     favo_tv.setSelected(false);
-                                }else{
+                                } else {
                                     favorite_flg = data.getString("favorite");
                                     favo_tv.setSelected(true);
                                 }

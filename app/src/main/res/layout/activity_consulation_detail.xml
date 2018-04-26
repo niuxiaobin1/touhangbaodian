@@ -26,6 +26,7 @@
             android:scrollbars="none">
 
             <LinearLayout
+                android:visibility="invisible"
                 android:id="@+id/bodyLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,6 +47,7 @@
                     android:background="@color/colorLine" />
 
                 <LinearLayout
+                    android:id="@+id/comment_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -144,12 +146,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:background="@color/mask_color"
         android:id="@+id/input_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <View
             android:id="@+id/empty_view"
@@ -166,6 +168,7 @@
             android:orientation="vertical">
 
             <EditText
+                android:focusable="false"
                 android:maxLength="800"
                 android:id="@+id/input_et"
                 android:layout_width="match_parent"

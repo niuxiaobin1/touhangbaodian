@@ -182,7 +182,7 @@ public class ConsulationFragment extends BaseFragment {
         tabLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                invalidateTablayout();
+//                invalidateTablayout();
             }
         }, 100);
 

@@ -21,10 +21,11 @@
     <string name="commentString">评论</string>
     <string name="messageNotificationString">消息通知</string>
     <string name="mycourseString">我的课程</string>
-    <string name="myfriendString">我的好友</string>
+    <string name="myorderString">我的订单</string>
     <string name="myAttentionString">我的关注</string>
     <string name="myPostString">我的帖子</string>
     <string name="updateString">软件更新</string>
+    <string name="settingsString">设置</string>
     <string name="feedbackString">意见反馈</string>
     <string name="inputHintString">写跟帖</string>
     <string name="inputHint1String">写评论</string>

@@ -5,8 +5,6 @@
     android:background="@color/colorWhite"
     android:orientation="vertical"
     android:paddingTop="10dp"
-    android:paddingLeft="@dimen/content_pading_7dp"
-    android:paddingRight="@dimen/content_pading_7dp"
     tools:context="com.xinyi.touhang.fragments.searchInner.RegroupFragment">
     <ScrollView
         android:scrollbars="none"
@@ -19,6 +17,8 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:paddingLeft="@dimen/content_pading_7dp"
+                android:paddingRight="@dimen/content_pading_7dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
 

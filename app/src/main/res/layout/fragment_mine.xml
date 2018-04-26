@@ -218,6 +218,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
 
@@ -252,7 +253,7 @@
                         android:textSize="@dimen/tv_14sp"
                         android:textColor="@color/colorMain"
                         android:layout_centerVertical="true"
-                        android:text="@string/myfriendString"
+                        android:text="@string/myorderString"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -270,6 +271,7 @@
                         android:background="@color/colorItem"/>
                 </RelativeLayout>
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
 
@@ -357,6 +359,33 @@
                         android:textColor="@color/colorMain"
                         android:layout_centerVertical="true"
                         android:text="@string/feedbackString"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@mipmap/arrow_right"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+
+                    <View
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0.5dp"
+                        android:background="@color/colorItem"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp">
+
+
+                    <TextView
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:layout_centerVertical="true"
+                        android:text="@string/settingsString"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 

@@ -11,5 +11,5 @@
     <dimen name="tv_19sp">19sp</dimen>
     <dimen name="tv_20sp">20sp</dimen>
 
-    <dimen name="content_pading_7dp">7dp</dimen>
+    <dimen name="content_pading_7dp">10dp</dimen>
 </resources>
