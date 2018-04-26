@@ -19,6 +19,7 @@
         <include layout="@layout/back_title_bar" />
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -123,17 +124,20 @@
                 android:textColor="@color/colorSubTitle"
                 android:textSize="@dimen/tv_14sp" />
 
-            <ImageView
+            <TextView
+                android:id="@+id/share_tv"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@mipmap/favo_icon" />
+                android:background="@drawable/favo_tv_bg" />
 
-            <ImageView
+            <TextView
+                android:id="@+id/favo_tv"
+                android:background="@drawable/favo_tv_bg"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@mipmap/favo_icon" />
+                />
 
         </LinearLayout>
 
@@ -162,13 +166,14 @@
             android:orientation="vertical">
 
             <EditText
+                android:maxLength="800"
                 android:id="@+id/input_et"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_margin="@dimen/content_pading_7dp"
                 android:background="@drawable/query_search_bg"
                 android:gravity="start"
-                android:hint="@string/inputHintString"
+                android:hint="@string/inputHint1String"
                 android:padding="5dp"
                 android:textColor="@color/colorMain"
                 android:textColorHint="@color/colorSubTitle"
@@ -182,6 +187,7 @@
                 android:paddingRight="@dimen/content_pading_7dp">
 
                 <TextView
+                    android:id="@+id/commit_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -194,6 +200,7 @@
                     android:textColor="@color/colorMain" />
 
                 <TextView
+                    android:id="@+id/et_content_length"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

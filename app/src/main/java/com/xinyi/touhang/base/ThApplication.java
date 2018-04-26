@@ -14,6 +14,7 @@ import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.MemoryCookieStore;
 import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+import com.tencent.smtt.sdk.QbSdk;
 import com.xinyi.touhang.constants.Configer;
 import com.xinyi.touhang.third.WeakHandler;
 
@@ -64,6 +65,8 @@ public class ThApplication extends Application {
                 return false;
             }
         });
+
+        QbSdk.initX5Environment(getApplicationContext(), null); QbSdk.setDownloadWithoutWifi(true);
     }
 
 

@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -18,8 +20,10 @@ import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
@@ -33,13 +37,20 @@ import com.xinyi.touhang.utils.CommonUtils;
 import com.xinyi.touhang.utils.DensityUtil;
 import com.xinyi.touhang.utils.DividerDecoration;
 import com.xinyi.touhang.utils.DoParams;
+import com.xinyi.touhang.utils.GlideCircleTransform;
 import com.xinyi.touhang.utils.JsonUtils;
+import com.xinyi.touhang.utils.SpUtils;
 import com.xinyi.touhang.utils.StatusBarUtil;
 import com.xinyi.touhang.utils.UIHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,27 +62,42 @@ public class ConsulationDetailActivity extends BaseActivity {
 
     @BindView(R.id.webView)
     WebView webView;
-
+    //评论列表
     @BindView(R.id.comment_RecylerView)
     RecyclerView comment_RecylerView;
-
+    //发表按钮
     @BindView(R.id.inputTv)
     TextView inputTv;
-
+    //输入部分
     @BindView(R.id.input_layout)
     LinearLayout input_layout;
 
     @BindView(R.id.rootView)
     RelativeLayout rootView;
-
+    //编辑框
     @BindView(R.id.input_et)
     EditText input_et;
+    //编辑框字数
+    @BindView(R.id.et_content_length)
+    TextView et_content_length;
+    //发表
+    @BindView(R.id.commit_tv)
+    TextView commit_tv;
+    //收藏
+    @BindView(R.id.favo_tv)
+    TextView favo_tv;
+    //分享
+    @BindView(R.id.share_tv)
+    TextView share_tv;
 
     @BindView(R.id.empty_view)
     View empty_view;
 
     @BindView(R.id.bodyLayout)
     LinearLayout bodyLayout;
+
+    @BindView(R.id.scrollView)
+    ScrollView scrollView;
 
     private int currentKeyboardH;
     private int editTextBodyHeight;
@@ -80,6 +106,7 @@ public class ConsulationDetailActivity extends BaseActivity {
 
     private JSONObject data;
     private CommentAdapter commentAdapter;
+    private String favorite_flg;//是否收藏
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +116,7 @@ public class ConsulationDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         initViews();
         initDatas();
-        initListener();
+
     }
 
 
@@ -99,6 +126,7 @@ public class ConsulationDetailActivity extends BaseActivity {
         id = getIntent().getStringExtra(NEWS_ID);
 
         initWebView();
+        initListener();
 
         comment_RecylerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
             @Override
@@ -108,7 +136,7 @@ public class ConsulationDetailActivity extends BaseActivity {
         });
         comment_RecylerView.addItemDecoration(new DividerDecoration(this, R.color.colorItem, DensityUtil.dip2px(
                 this, 1)));
-        commentAdapter=new CommentAdapter(this);
+        commentAdapter = new CommentAdapter(this);
         comment_RecylerView.setAdapter(commentAdapter);
 
         setViewTreeObserver();
@@ -118,7 +146,14 @@ public class ConsulationDetailActivity extends BaseActivity {
         inputTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeInputEdittextVisibility(View.VISIBLE);
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                scrollView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        changeInputEdittextVisibility(View.VISIBLE);
+                    }
+                }, 500);
+
 
             }
         });
@@ -128,9 +163,48 @@ public class ConsulationDetailActivity extends BaseActivity {
                 changeInputEdittextVisibility(View.GONE);
             }
         });
+        commit_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //发表
+                commitComment();
+            }
+        });
+
+        input_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String content = s.toString();
+                if (TextUtils.isEmpty(content)) {
+                    et_content_length.setText("0/800");
+                } else {
+                    et_content_length.setText(content.length() + "/800");
+                }
+            }
+        });
+
+        favo_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doFavo();
+            }
+        });
     }
 
 
+    /**
+     * 初始化webview
+     */
     private void initWebView() {
         //声明WebSettings子类
         WebSettings webSettings = webView.getSettings();
@@ -174,17 +248,18 @@ public class ConsulationDetailActivity extends BaseActivity {
                 return false;
             }
         });
-        webView.setWebChromeClient(new WebChromeClient(){
+        //webview加载完成再显示评论
+        webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                if (newProgress==100){
+                if (newProgress == 100) {
                     //comment
                     try {
-                        JSONArray comments=data.getJSONArray("comments");
-                        commentAdapter.addDatas(JsonUtils.ArrayToList(comments,new String[]{
-                                "id","name","customer_id","news_id","content","good_num","created","modified",
-                                "passed","customer_name","image"
+                        JSONArray comments = data.getJSONArray("comments");
+                        commentAdapter.addDatas(JsonUtils.ArrayToList(comments, new String[]{
+                                "id", "name", "customer_id", "news_id", "content", "good_num", "created", "modified",
+                                "passed", "customer_name", "image"
                         }));
                     } catch (JSONException e) {
 
@@ -195,7 +270,11 @@ public class ConsulationDetailActivity extends BaseActivity {
 
     }
 
-
+    /**
+     * toggle 软键盘显示与否
+     *
+     * @param visibility
+     */
     private void changeInputEdittextVisibility(int visibility) {
 
         if (visibility == View.GONE) {
@@ -203,6 +282,9 @@ public class ConsulationDetailActivity extends BaseActivity {
             CommonUtils.hideSoftInput(this, input_et);
         } else {
             input_layout.setVisibility(View.VISIBLE);
+            input_et.setFocusable(true);
+            input_et.setFocusableInTouchMode(true);
+            input_et.requestFocus();
             CommonUtils.showSoftInput(this, input_et);
         }
     }
@@ -210,16 +292,18 @@ public class ConsulationDetailActivity extends BaseActivity {
     @Override
     protected void initDatas() {
         super.initDatas();
-
+        //获取数据
         if (TextUtils.isEmpty(id)) {
             return;
         }
+        String user_token=(String)SpUtils.get(ConsulationDetailActivity.this,SpUtils.USERUSER_TOKEN,"");
         HttpParams params = new HttpParams();
         params.put("id", id);
+        params.put("user_token", user_token);
         OkGo.<String>post(AppUrls.NewsDetailUrl)
                 .cacheMode(CacheMode.NO_CACHE)
                 .tag(this)
-                .params(DoParams.encryptionparams(ConsulationDetailActivity.this, params, ""))
+                .params(DoParams.encryptionparams(ConsulationDetailActivity.this, params, user_token))
                 .execute(new DialogCallBack(ConsulationDetailActivity.this, true) {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
@@ -238,8 +322,13 @@ public class ConsulationDetailActivity extends BaseActivity {
                                 String passed = data.getJSONObject("news").getString("passed");
                                 webView.loadDataWithBaseURL(null, CommonUtils.addHeadToHtml(newsContent,
                                         name, author, passed, author_img, read_num, editer), "text/html", "UTF-8", null);
-
-
+//                                webView.loadDataWithBaseURL(null, CommonUtils.resolveHtml(newsContent), "text/html", "UTF-8", null);
+                                favorite_flg = data.getString("favorite_flg");
+                                if (favorite_flg.equals("0")) {
+                                    favo_tv.setSelected(false);
+                                } else {
+                                    favo_tv.setSelected(true);
+                                }
 
                             } else {
                                 UIHelper.toastMsg(js.getString("message"));
@@ -265,6 +354,74 @@ public class ConsulationDetailActivity extends BaseActivity {
     }
 
 
+    /**
+     * 发表评论
+     */
+    private void commitComment() {
+
+        final String comment = input_et.getText().toString().trim();
+        String user_token = (String) SpUtils.get(this, SpUtils.USERUSER_TOKEN, "");
+        if (TextUtils.isEmpty(comment)) {
+            showToast(R.string.commentEmptyString);
+            return;
+        }
+        if (TextUtils.isEmpty(user_token)) {
+            showToast(R.string.commentNeedloginString);
+            return;
+        }
+
+        HttpParams params = new HttpParams();
+        params.put("content", comment);
+        params.put("user_token", user_token);
+        params.put("news_id", id);
+        OkGo.<String>post(AppUrls.NewsAddCommentUrl)
+                .cacheMode(CacheMode.NO_CACHE)
+                .tag(this)
+                .params(DoParams.encryptionparams(ConsulationDetailActivity.this, params, user_token))
+                .execute(new DialogCallBack(ConsulationDetailActivity.this, true) {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject js = new JSONObject(response.body());
+
+                            if (js.getBoolean("result")) {
+                                changeInputEdittextVisibility(View.GONE);
+                                List<Map<String, String>> list = new ArrayList<>();
+                                Map map = new HashMap();
+                                map.put("image", SpUtils.get(ConsulationDetailActivity.this, SpUtils.USERIMAGE, ""));
+                                map.put("name", SpUtils.get(ConsulationDetailActivity.this, SpUtils.USERNAME, ""));
+                                map.put("good_num", "0");
+                                map.put("modified", "刚刚");
+                                map.put("content", comment);
+                                list.add(map);
+                                commentAdapter.addDatas(list);
+                            } else {
+                                UIHelper.toastMsg(js.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            UIHelper.toastMsg(e.getMessage());
+                        }
+                    }
+
+
+                    @Override
+                    public String convertResponse(okhttp3.Response response) throws Throwable {
+                        HandleResponse.handleReponse(response);
+                        return super.convertResponse(response);
+                    }
+
+                    @Override
+                    public void onError(com.lzy.okgo.model.Response<String> response) {
+                        super.onError(response);
+                        HandleResponse.handleException(response, ConsulationDetailActivity.this);
+                    }
+                });
+
+    }
+
+    /**
+     * 监听软键盘弹出后布局变化
+     */
     private void setViewTreeObserver() {
 
         final ViewTreeObserver swipeRefreshLayoutVTO = input_layout.getViewTreeObserver();
@@ -278,16 +435,16 @@ public class ConsulationDetailActivity extends BaseActivity {
                 int navigationBarH = StatusBarUtil.getNavigationBarHeight(ConsulationDetailActivity.this);//状态栏高度
                 int screenH = input_layout.getRootView().getHeight();
 
-                if (navigationBarH!=0){
-                    //有navigationBar的影响
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        r.bottom-=navigationBarH;
-                    }
-
-                }
                 if (r.top != statusBarH) {
                     //r.top代表的是状态栏高度，在沉浸式状态栏时r.top＝0，通过getStatusBarHeight获取状态栏高度
                     r.top = statusBarH;
+                }
+
+                if (navigationBarH != 0) {
+                    //有navigationBar的影响
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        screenH -= navigationBarH;
+                    }
                 }
                 keyboardH = screenH - (r.bottom - r.top);
 
@@ -310,5 +467,70 @@ public class ConsulationDetailActivity extends BaseActivity {
             }
 
         });
+    }
+
+    /**
+     * 关注与取消关注
+     */
+    private void doFavo() {
+
+        String user_token = (String) SpUtils.get(this, SpUtils.USERUSER_TOKEN, "");
+        if (TextUtils.isEmpty(user_token)) {
+            showToast(R.string.commentNeedloginString);
+            return;
+        }
+        String favoUrl = AppUrls.NewsAddFavoUrl;
+        HttpParams params = new HttpParams();
+        if (!TextUtils.isEmpty(favorite_flg) && !favorite_flg.equals("0")) {
+            //取消收藏
+            favoUrl = AppUrls.NewsRemoveFavoUrl;
+            params.put("fid", favorite_flg);
+        } else {
+            //收藏
+            params.put("news_id", id);
+        }
+        params.put("user_token", user_token);
+        OkGo.<String>post(favoUrl)
+                .cacheMode(CacheMode.NO_CACHE)
+                .tag(this)
+                .params(DoParams.encryptionparams(ConsulationDetailActivity.this, params, user_token))
+                .execute(new DialogCallBack(ConsulationDetailActivity.this, false) {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject js = new JSONObject(response.body());
+
+                            if (js.getBoolean("result")) {
+                                JSONObject data = js.getJSONObject("data");
+                                if (!TextUtils.isEmpty(favorite_flg)&&
+                                        !favorite_flg.equals("0")  ){
+                                    favorite_flg = "0";
+                                    favo_tv.setSelected(false);
+                                }else{
+                                    favorite_flg = data.getString("favorite");
+                                    favo_tv.setSelected(true);
+                                }
+
+                            } else {
+                                UIHelper.toastMsg(js.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            UIHelper.toastMsg(e.getMessage());
+                        }
+                    }
+
+
+                    @Override
+                    public String convertResponse(okhttp3.Response response) throws Throwable {
+                        HandleResponse.handleReponse(response);
+                        return super.convertResponse(response);
+                    }
+
+                    @Override
+                    public void onError(com.lzy.okgo.model.Response<String> response) {
+                        super.onError(response);
+                        HandleResponse.handleException(response, ConsulationDetailActivity.this);
+                    }
+                });
     }
 }

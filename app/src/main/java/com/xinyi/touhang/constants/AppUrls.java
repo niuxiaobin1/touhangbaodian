@@ -12,5 +12,8 @@ public class AppUrls {
     public static final String NewsIndexUrl = HostAddress + "news/index";
     public static final String LoginUrl = HostAddress + "customer/login";
     public static final String NewsDetailUrl = HostAddress + "news/detail/";
+    public static final String NewsAddCommentUrl = HostAddress + "news/add_comment/";
+    public static final String NewsRemoveFavoUrl = HostAddress + "news/remove_favorite/";
+    public static final String NewsAddFavoUrl = HostAddress + "news/add_favorite/";
 
 }

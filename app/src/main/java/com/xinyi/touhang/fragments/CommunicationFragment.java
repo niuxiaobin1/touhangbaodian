@@ -27,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 学习交流todo
+ * 学习交流
  * Use the {@link CommunicationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
