@@ -8,12 +8,12 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorMain">#4A4A4A</color>
-    <color name="colorItem">#E9E9E9</color>
+    <color name="colorItem">#E6E6E6</color>
     <color name="colorFooterLine">#C8C8C8</color>
     <color name="colorTabSelectedIndicator">#FFD700</color>
     <color name="colorSubTitle">#9B9B9B</color>
-    <color name="colorPink">#FF543B</color>
-    <color name="colorLine">#E9E9E9</color>
+    <color name="colorPink">#FF5239</color>
+    <color name="colorLine">#E6E6E6</color>
     <color name="mask_color">#88888888</color>
     <color name="hint_color">#D6D2D2</color>
 
