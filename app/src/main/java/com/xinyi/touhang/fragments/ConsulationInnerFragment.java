@@ -130,7 +130,7 @@ public class ConsulationInnerFragment extends BaseFragment {
                 return false;
             }
         });
-        recylerView.addItemDecoration(new DividerDecoration(getActivity(), R.color.colorItem, DensityUtil.dip2px(getActivity(), 1)));
+        recylerView.addItemDecoration(new DividerDecoration(getActivity(), R.color.colorItem, DensityUtil.dip2px(getActivity(), 0.5f)));
         innerAdapter = new ConsulationInnerAdapter(getActivity());
         recylerView.setAdapter(innerAdapter);
     }

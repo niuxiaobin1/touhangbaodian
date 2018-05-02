@@ -6,7 +6,7 @@ package com.xinyi.touhang.constants;
 
 public class AppUrls {
 
-    public static final String HostAddress = "http://39.108.183.178/";
+    public static final String HostAddress = "https://api.ibdict.com.cn/";
     public static final String MineUrl = HostAddress + "customer/mypage";
     public static final String GetidentifyingUrl = HostAddress + "customer/getidentifying";
     public static final String NewsIndexUrl = HostAddress + "news/index";
@@ -15,5 +15,7 @@ public class AppUrls {
     public static final String NewsAddCommentUrl = HostAddress + "news/add_comment/";
     public static final String NewsRemoveFavoUrl = HostAddress + "news/remove_favorite/";
     public static final String NewsAddFavoUrl = HostAddress + "news/add_favorite/";
+    public static final String ForumIndexUrl = HostAddress + "forum/index";
+    public static final String NewsGood_clickUrl = HostAddress + "news/good_click/";
 
 }

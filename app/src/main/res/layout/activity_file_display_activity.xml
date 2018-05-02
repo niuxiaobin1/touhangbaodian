@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xinyi.touhang.activities.FileDisplayActivityActivity">
+    android:background="@color/colorWhite"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.xinyi.touhang.activities.FileDisplayActivity">
 
+    <include layout="@layout/back_title_bar" />
 
-    <com.xinyi.touhang.weight.SuperFileView2
-        android:id="@+id/mSuperFileView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.xinyi.touhang.weight.SuperFileView2>
-</RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.xinyi.touhang.weight.SuperFileView2
+            android:id="@+id/mSuperFileView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.xinyi.touhang.weight.SuperFileView2>
+
+        <TextView
+            android:id="@+id/alertTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/colorMain"
+            android:textSize="@dimen/tv_14sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <ProgressBar
+            android:id="@+id/progresBar"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/init_progressbar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/downLoadTv"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="@string/downLoadString"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/tv_15sp" />
+    </RelativeLayout>
+</LinearLayout>

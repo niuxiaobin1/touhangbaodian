@@ -18,6 +18,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    repositories {
+        flatDir { dirs 'libs' }
+    }
 }
 
 dependencies {
@@ -52,4 +55,10 @@ dependencies {
     implementation files('libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar')
     //PermissionsManager
     implementation 'com.github.kongqw:PermissionsManager:1.1.0'
+
+    //video
+    implementation(name: 'AlivcReporter-1.1', ext: 'aar')
+    implementation(name: 'AlivcPlayer-3.4.3', ext: 'aar')
+    implementation(name: 'AliyunVodPlayer-3.4.3', ext: 'aar')
+    implementation(name: 'AliyunVodPlayerView-3.4.3', ext: 'aar')
 }

@@ -40,11 +40,11 @@
                     android:textSize="@dimen/tv_13sp" />
 
                 <TextView
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     android:id="@+id/userThumbNumTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/thumbs_up_icon"
+                    android:drawableLeft="@drawable/thumbs_up_bg"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:textColor="@color/colorSubTitle"

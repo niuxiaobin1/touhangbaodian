@@ -135,7 +135,7 @@ public class ConsulationDetailActivity extends BaseActivity {
             }
         });
         comment_RecylerView.addItemDecoration(new DividerDecoration(this, R.color.colorItem, DensityUtil.dip2px(
-                this, 1)));
+                this, 0.5f)));
         commentAdapter = new CommentAdapter(this);
         comment_RecylerView.setAdapter(commentAdapter);
 
@@ -150,7 +150,7 @@ public class ConsulationDetailActivity extends BaseActivity {
                 scrollView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                changeInputEdittextVisibility(View.VISIBLE);
+                        changeInputEdittextVisibility(View.VISIBLE);
                     }
                 }, 500);
 
@@ -255,18 +255,19 @@ public class ConsulationDetailActivity extends BaseActivity {
                 super.onProgressChanged(view, newProgress);
                 if (newProgress == 100) {
                     //comment
-                    if (bodyLayout.getVisibility()==View.INVISIBLE){
+                    if (bodyLayout.getVisibility() == View.INVISIBLE) {
                         bodyLayout.setVisibility(View.VISIBLE);
-                    }
-                    try {
-                        JSONArray comments = data.getJSONArray("comments");
-                        commentAdapter.addDatas(JsonUtils.ArrayToList(comments, new String[]{
-                                "id", "name", "customer_id", "news_id", "content", "good_num", "created", "modified",
-                                "passed", "customer_name", "image"
-                        }));
-                    } catch (JSONException e) {
+                        try {
+                            JSONArray comments = data.getJSONArray("comments");
+                            commentAdapter.addDatas(JsonUtils.ArrayToList(comments, new String[]{
+                                    "id", "name", "customer_id", "news_id", "content", "good_num", "created", "modified",
+                                    "passed", "customer_name", "image", "checked"
+                            }));
+                        } catch (JSONException e) {
 
+                        }
                     }
+
                 }
             }
         });
@@ -313,7 +314,7 @@ public class ConsulationDetailActivity extends BaseActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         try {
                             JSONObject js = new JSONObject(response.body());
-
+                            UIHelper.showLogCompletion(response.body(), 1000);
                             if (js.getBoolean("result")) {
                                 data = js.getJSONObject("data");
                                 //init webView
@@ -324,9 +325,9 @@ public class ConsulationDetailActivity extends BaseActivity {
                                 String editer = data.getJSONObject("news").getString("editer");
                                 String author_img = data.getJSONObject("news").getString("author_img");
                                 String passed = data.getJSONObject("news").getString("passed");
-                                webView.loadDataWithBaseURL(null, CommonUtils.addHeadToHtml(newsContent,
-                                        name, author, passed, author_img, read_num, editer), "text/html", "UTF-8", null);
-//                                webView.loadDataWithBaseURL(null, CommonUtils.resolveHtml(newsContent), "text/html", "UTF-8", null);
+//                                webView.loadDataWithBaseURL(null, CommonUtils.addHeadToHtml(newsContent,
+//                                        name, author, passed, author_img, read_num, editer), "text/html", "UTF-8", null);
+                                webView.loadDataWithBaseURL(null, CommonUtils.resolveHtml(newsContent), "text/html", "UTF-8", null);
                                 favorite_flg = data.getString("favorite_flg");
                                 if (favorite_flg.equals("0")) {
                                     favo_tv.setSelected(false);
@@ -397,6 +398,7 @@ public class ConsulationDetailActivity extends BaseActivity {
                                 map.put("good_num", "0");
                                 map.put("modified", "刚刚");
                                 map.put("content", comment);
+                                map.put("checked", "0");
                                 list.add(map);
                                 commentAdapter.addDatas(list);
                             } else {

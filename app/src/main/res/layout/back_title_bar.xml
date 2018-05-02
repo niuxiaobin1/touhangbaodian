@@ -15,6 +15,9 @@
         android:src="@mipmap/back_icon" />
 
     <TextView
+        android:maxLines="1"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
         android:id="@+id/title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -44,6 +44,7 @@
     <string name="userTelHintString">输入您的手机号码</string>
     <string name="userCodeHintString">输入验证码</string>
     <string name="loginString">确认登录</string>
+    <string name="downLoadString">下载</string>
     <string name="loginByOtherWayString">您还可以使用以下方式登录</string>
     <string name="loginByQQString">QQ登录</string>
     <string name="loginByWechatString">微信登录</string>
@@ -51,5 +52,6 @@
     <string name="telIsNotCorrectString">手机号不正确</string>
     <string name="loginNoCompeleteString">登录信息填写不完整</string>
     <string name="commentEmptyString">请先输入评价内容</string>
-    <string name="commentNeedloginString">登录后才可以进行评论</string>
+    <string name="commentNeedloginString">当前未登录，请先登录。</string>
+    <string name="videoCostString">此视频为收费视频暂时无法观看，请在购买后继续观看哦！</string>
 </resources>

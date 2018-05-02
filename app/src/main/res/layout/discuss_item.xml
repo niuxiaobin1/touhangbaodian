@@ -21,6 +21,7 @@
             android:src="@mipmap/top_icon" />
 
         <TextView
+            android:id="@+id/forumName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
@@ -31,6 +32,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/forumContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
@@ -47,6 +49,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/forumAauthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我是发帖人"
@@ -54,6 +57,7 @@
             android:textSize="@dimen/tv_13sp" />
 
         <TextView
+            android:id="@+id/forumTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -67,6 +71,8 @@
             android:layout_weight="1" />
 
         <TextView
+            android:visibility="gone"
+            android:id="@+id/forumThumbsNum"
             android:drawablePadding="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,6 +83,7 @@
             android:textSize="@dimen/tv_13sp" />
 
         <TextView
+            android:id="@+id/forumReadNum"
             android:drawablePadding="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

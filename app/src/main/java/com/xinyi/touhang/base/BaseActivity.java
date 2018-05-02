@@ -62,6 +62,12 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    protected void initTitle(String title) {
+        if (title_tv != null) {
+            title_tv.setText(title);
+        }
+    }
+
     protected void showToast(@StringRes int string) {
         if (toast == null) {
             toast = Toast.makeText(this, string, Toast.LENGTH_SHORT);
