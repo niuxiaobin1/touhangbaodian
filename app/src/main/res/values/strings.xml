@@ -30,6 +30,7 @@
     <string name="inputHintString">写跟帖</string>
     <string name="inputHint1String">写评论</string>
     <string name="inputCommitString">发表 ✔</string>
+    <string name="studyVideoString">学习视频</string>
 
     <string name="amountString">金额：</string>
     <string name="termString">期限：</string>

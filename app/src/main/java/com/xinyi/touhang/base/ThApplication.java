@@ -16,8 +16,11 @@ import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.tencent.smtt.sdk.QbSdk;
 import com.xinyi.touhang.constants.Configer;
+import com.xinyi.touhang.third.TLSSocketFactory;
 import com.xinyi.touhang.third.WeakHandler;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -44,7 +47,13 @@ public class ThApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initOkGo();
+        try {
+            initOkGo();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         weakHandler = new WeakHandler(new Handler.Callback() {
             @Override
@@ -73,7 +82,7 @@ public class ThApplication extends Application {
     /**
      * init Okgo
      */
-    private void initOkGo() {
+    private void initOkGo() throws NoSuchAlgorithmException, KeyManagementException {
 
         //配置HttpClient全局参数
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -93,7 +102,8 @@ public class ThApplication extends Application {
 
         //方法一：信任所有证书,不安全有风险
         HttpsUtils.SSLParams sslParams1 = HttpsUtils.getSslSocketFactory();
-        builder.sslSocketFactory(sslParams1.sSLSocketFactory, sslParams1.trustManager);
+//        builder.sslSocketFactory(sslParams1.sSLSocketFactory, sslParams1.trustManager);
+        builder.sslSocketFactory(new TLSSocketFactory(), sslParams1.trustManager);
         //------------------------配置OkGo全局参数-------------------------
 
 

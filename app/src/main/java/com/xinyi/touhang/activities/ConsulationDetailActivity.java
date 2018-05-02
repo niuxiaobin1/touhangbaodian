@@ -314,7 +314,6 @@ public class ConsulationDetailActivity extends BaseActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
                         try {
                             JSONObject js = new JSONObject(response.body());
-                            UIHelper.showLogCompletion(response.body(), 1000);
                             if (js.getBoolean("result")) {
                                 data = js.getJSONObject("data");
                                 //init webView
