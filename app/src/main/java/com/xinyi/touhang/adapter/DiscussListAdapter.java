@@ -1,6 +1,7 @@
 package com.xinyi.touhang.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.DiscussDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,7 @@ public class DiscussListAdapter extends BaseAdapter<DiscussListAdapter.ViewHolde
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Map<String, String> map = datas.get(position);
+        final Map<String, String> map = datas.get(position);
         if (map.get("top").equals("1")) {
             holder.isTop_image.setVisibility(View.VISIBLE);
         } else {
@@ -53,7 +55,9 @@ public class DiscussListAdapter extends BaseAdapter<DiscussListAdapter.ViewHolde
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent it = new Intent(context,DiscussDetailActivity.class);
+                it.putExtra(DiscussDetailActivity.FORUM_ID,map.get("id"));
+                context.startActivity(it);
             }
         });
 

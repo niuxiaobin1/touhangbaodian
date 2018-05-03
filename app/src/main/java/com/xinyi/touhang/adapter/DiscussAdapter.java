@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.DiscussDetailActivity;
 import com.xinyi.touhang.activities.FileDisplayActivity;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class DiscussAdapter extends BaseAdapter<DiscussAdapter.ViewHolder> {
 
     public DiscussAdapter(Context context) {
         super();
-        this.context=context;
+        this.context = context;
     }
 
 
@@ -41,7 +42,7 @@ public class DiscussAdapter extends BaseAdapter<DiscussAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Map<String, String> map = datas.get(position);
+        final Map<String, String> map = datas.get(position);
         if (map.get("top").equals("1")) {
             holder.isTop_image.setVisibility(View.VISIBLE);
         } else {
@@ -56,6 +57,9 @@ public class DiscussAdapter extends BaseAdapter<DiscussAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent it = new Intent(context,DiscussDetailActivity.class);
+                it.putExtra(DiscussDetailActivity.FORUM_ID,map.get("id"));
+                context.startActivity(it);
 
             }
         });

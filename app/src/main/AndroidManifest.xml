@@ -57,7 +57,8 @@
         <activity
             android:name=".activities.StudyListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.DiscussListActivity"></activity>
+        <activity android:name=".activities.DiscussListActivity" />
+        <activity android:name=".activities.DiscussDetailActivity"></activity>
     </application>
 
 </manifest>
