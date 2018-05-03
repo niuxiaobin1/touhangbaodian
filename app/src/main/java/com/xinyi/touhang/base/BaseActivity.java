@@ -1,6 +1,8 @@
 package com.xinyi.touhang.base;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -59,6 +61,14 @@ public class BaseActivity extends AppCompatActivity {
     protected void initTitle(@StringRes int resId) {
         if (title_tv != null) {
             title_tv.setText(resId);
+        }
+    }
+
+    protected void initRightTv(String title, Drawable drawable) {
+        if (right_tv != null) {
+            right_tv.setText(title);
+            right_tv.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
+
         }
     }
 

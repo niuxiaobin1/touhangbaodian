@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
+
+
+    <RelativeLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/banner_parker_replace" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/play_icon" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/rightLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <com.xinyi.touhang.weight.EllipsizingTextView
+            android:id="@+id/titleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="MAB教学研究班：带你走进成功的殿堂"
+            android:textColor="@color/colorMain"
+            android:textSize="@dimen/tv_14sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/commitorTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:text="甲方发布"
+                android:textColor="@color/colorSubTitle"
+                android:textSize="@dimen/tv_12sp" />
+
+            <TextView
+                android:id="@+id/readNumTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="甲方发布"
+                android:textColor="@color/colorSubTitle"
+                android:textSize="@dimen/tv_12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

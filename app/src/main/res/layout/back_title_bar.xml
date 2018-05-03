@@ -26,6 +26,7 @@
         android:textSize="@dimen/tv_15sp" />
 
     <TextView
+        android:drawablePadding="5dp"
         android:id="@+id/right_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

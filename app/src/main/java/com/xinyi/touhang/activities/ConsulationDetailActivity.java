@@ -123,6 +123,7 @@ public class ConsulationDetailActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
+        initTitle("法律法规");
         id = getIntent().getStringExtra(NEWS_ID);
         setViewTreeObserver();
         initWebView();
@@ -261,7 +262,7 @@ public class ConsulationDetailActivity extends BaseActivity {
                             JSONArray comments = data.getJSONArray("comments");
                             commentAdapter.addDatas(JsonUtils.ArrayToList(comments, new String[]{
                                     "id", "name", "customer_id", "news_id", "content", "good_num", "created", "modified",
-                                    "passed", "customer_name", "image", "checked"
+                                    "passed", "comment_image", "customer_name", "image", "checked"
                             }));
                         } catch (JSONException e) {
 

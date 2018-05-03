@@ -57,7 +57,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
 
     public void addDatas(List<Map<String, String>> list) {
-        Log.e("nxb", list.toString());
         datas.addAll(list);
         notifyDataSetChanged();
     }
@@ -101,16 +100,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
             return;
         }
-
-//        if (userThumbNumTv.isSelected()) {
-//            userThumbNumTv.setSelected(false);
-//        } else {
-//            userThumbNumTv.setSelected(true);
-//        }
+        String url = "";
+        if (datas.get(0).containsKey("news_id")) {
+            url = AppUrls.NewsGood_clickUrl;
+        } else if (datas.get(0).containsKey("video_id")) {
+            url = AppUrls.VideoGood_clickUrl;
+        }
         HttpParams params = new HttpParams();
         params.put("comment_id", comment_id);
         params.put("user_token", user_token);
-        OkGo.<String>post(AppUrls.NewsGood_clickUrl)
+        OkGo.<String>post(url)
                 .cacheMode(CacheMode.NO_CACHE)
                 .tag(this)
                 .params(DoParams.encryptionparams(context, params, user_token))

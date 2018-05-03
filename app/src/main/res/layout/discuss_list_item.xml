@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/isTop_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/top_icon" />
+
+        <TextView
+            android:id="@+id/forumName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="MBA研究班教学：带你走进成功的殿堂"
+            android:textColor="@color/colorMain"
+            android:textSize="@dimen/tv_15sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/forumContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:maxLines="3"
+        android:text="这就是一个关于成功的阳历，随便写点在研究班发生的事情，把一些事情分享给大家，希望能给人一些启发，希望大家能从中收获一些东西。。。"
+        android:textColor="@color/colorSubTitle"
+        android:textSize="@dimen/tv_13sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/forumAauthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我是发帖人"
+            android:textColor="@color/colorSubTitle"
+            android:textSize="@dimen/tv_13sp" />
+
+        <TextView
+            android:id="@+id/forumTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="前天"
+            android:textColor="@color/colorSubTitle"
+            android:textSize="@dimen/tv_13sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/replyNumTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="231"
+            android:textColor="@color/colorSubTitle"
+            android:textSize="@dimen/tv_13sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="回复"
+            android:textColor="@color/colorSubTitle"
+            android:textSize="@dimen/tv_13sp" />
+    </LinearLayout>
+
+</LinearLayout>

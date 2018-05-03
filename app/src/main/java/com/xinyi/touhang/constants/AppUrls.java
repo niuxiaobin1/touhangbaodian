@@ -17,5 +17,14 @@ public class AppUrls {
     public static final String NewsAddFavoUrl = HostAddress + "news/add_favorite/";
     public static final String ForumIndexUrl = HostAddress + "forum/index";
     public static final String NewsGood_clickUrl = HostAddress + "news/good_click/";
+    public static final String VideoListsUrl = HostAddress + "video/lists/";
+    public static final String AdviseListsUrl = HostAddress + "advise/lists/";
+    public static final String VideoDetailUrl = HostAddress + "video/detail/";
+    public static final String VideoAdd_favoriteUrl = HostAddress + "video/add_favorite";
+    public static final String VideoRemove_favoriteUrl = HostAddress + "video/remove_favorite/";
+    public static final String VideoGood_clickUrl = HostAddress + "video/good_click/";
+    public static final String VideoAdd_commentUrl = HostAddress + "video/add_comment/";
+    public static final String ForumType_listUrl = HostAddress + "forum/type_list/";
+    public static final String ForumListsUrl = HostAddress + "forum/lists/";
 
 }

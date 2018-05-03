@@ -20,10 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
         <meta-data
             android:name="com.xinyi.touhang.third.OkHttpGlideModule"
-            android:value="GlideModule"/>
+            android:value="GlideModule" />
+
         <activity
             android:name=".activities.MainActivity"
             android:launchMode="singleTask">
@@ -46,11 +46,18 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.FileViewerActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.FileDisplayActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".activities.VideoActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.VideoActivity"
+            android:configChanges="orientation|keyboard|locale|screenSize|layoutDirection"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.StudyListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.DiscussListActivity"></activity>
     </application>
 
 </manifest>

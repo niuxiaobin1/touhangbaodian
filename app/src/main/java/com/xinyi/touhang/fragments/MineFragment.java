@@ -135,7 +135,6 @@ public class MineFragment extends BaseFragment {
                             JSONObject js = new JSONObject(response.body());
 
                             if (js.getBoolean("result")) {
-
                                 savaUserInfo(js.getJSONObject("data"));
                             } else {
                                 UIHelper.toastMsg(js.getString("message"));

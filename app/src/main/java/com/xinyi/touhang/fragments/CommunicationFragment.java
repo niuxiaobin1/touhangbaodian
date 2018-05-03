@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +24,8 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.DiscussListActivity;
+import com.xinyi.touhang.activities.StudyListActivity;
 import com.xinyi.touhang.activities.VideoActivity;
 import com.xinyi.touhang.adapter.CommunicationAdapter;
 import com.xinyi.touhang.adapter.DiscussAdapter;
@@ -54,6 +58,12 @@ import okhttp3.Response;
  * create an instance of this fragment.
  */
 public class CommunicationFragment extends BaseFragment {
+
+    @BindView(R.id.toStudyListLayout)
+    RelativeLayout toStudyListLayout;
+
+    @BindView(R.id.toDiscussListLayout)
+    RelativeLayout toDiscussListLayout;
 
     @BindView(R.id.gridview)
     MyGridView gridview;
@@ -139,7 +149,7 @@ public class CommunicationFragment extends BaseFragment {
                 if (topList.get(position).containsKey("video_id")) {
                     //视频
                     it = new Intent(getActivity(), VideoActivity.class);
-
+                    it.putExtra(VideoActivity.VIDEO_ID,topList.get(position).get("id"));
                 } else {
 
                 }
@@ -175,6 +185,20 @@ public class CommunicationFragment extends BaseFragment {
         discuss_recylerView.setAdapter(discussAdapter);
 
 
+        toStudyListLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(getActivity(), StudyListActivity.class);
+                startActivity(it);
+            }
+        });
+        toDiscussListLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(getActivity(), DiscussListActivity.class);
+                startActivity(it);
+            }
+        });
     }
 
     @Override
@@ -216,7 +240,7 @@ public class CommunicationFragment extends BaseFragment {
                                         "qq_account", "customer_vip", "user_token", "udid", "customer_created",
                                         "customer_modified", "image", "passed", "author"
                                 });
-                                discussAdapter.setData(forumList);
+                                discussAdapter.addDatas(forumList);
                             } else {
                                 UIHelper.toastMsg(js.getString("message"));
                             }

@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.alivc.player.AliVcMediaPlayer;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -47,6 +48,7 @@ public class ThApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //okgo 适配4.4 https网络访问
         try {
             initOkGo();
         } catch (NoSuchAlgorithmException e) {
@@ -54,6 +56,8 @@ public class ThApplication extends Application {
         } catch (KeyManagementException e) {
             e.printStackTrace();
         }
+        //ali video
+        AliVcMediaPlayer.init(getApplicationContext());
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         weakHandler = new WeakHandler(new Handler.Callback() {
             @Override
@@ -74,8 +78,9 @@ public class ThApplication extends Application {
                 return false;
             }
         });
-
-        QbSdk.initX5Environment(getApplicationContext(), null); QbSdk.setDownloadWithoutWifi(true);
+        //tencent tbs
+        QbSdk.initX5Environment(getApplicationContext(), null);
+        QbSdk.setDownloadWithoutWifi(true);
     }
 
 
