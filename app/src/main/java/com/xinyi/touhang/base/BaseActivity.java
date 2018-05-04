@@ -2,6 +2,7 @@ package com.xinyi.touhang.base;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
@@ -68,8 +69,32 @@ public class BaseActivity extends AppCompatActivity {
         if (right_tv != null) {
             right_tv.setText(title);
             right_tv.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
-
+            right_tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onRightClick();
+                }
+            });
         }
+    }
+
+    protected void initRightTv(String title, @ColorRes int color) {
+        if (right_tv != null) {
+            right_tv.setText(title);
+            right_tv.setTextColor(getResources().getColor(color));
+
+            right_tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onRightClick();
+                }
+            });
+        }
+
+    }
+
+    protected void onRightClick() {
+
     }
 
     protected void initTitle(String title) {

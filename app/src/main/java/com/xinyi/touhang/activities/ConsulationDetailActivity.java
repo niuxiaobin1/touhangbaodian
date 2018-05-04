@@ -299,6 +299,7 @@ public class ConsulationDetailActivity extends BaseActivity {
     protected void initDatas() {
         super.initDatas();
         //获取数据
+
         if (TextUtils.isEmpty(id)) {
             return;
         }

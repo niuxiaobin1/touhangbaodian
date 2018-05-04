@@ -1,6 +1,7 @@
 package com.xinyi.touhang.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
@@ -85,6 +87,18 @@ public class DiscussListActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onRightClick() {
+        super.onRightClick();
+        String user_token = (String) SpUtils.get(this, SpUtils.USERUSER_TOKEN, "");
+
+        if (TextUtils.isEmpty(user_token)) {
+            Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent it = new Intent(DiscussListActivity.this, ReleaseForumActivity.class);
+        startActivity(it);
+    }
 
     @Override
     protected void initDatas() {

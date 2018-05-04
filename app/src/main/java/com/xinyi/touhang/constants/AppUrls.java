@@ -26,5 +26,11 @@ public class AppUrls {
     public static final String VideoAdd_commentUrl = HostAddress + "video/add_comment/";
     public static final String ForumType_listUrl = HostAddress + "forum/type_list/";
     public static final String ForumListsUrl = HostAddress + "forum/lists/";
+    public static final String ForumDetailUrl = HostAddress + "forum/detail/";
+    public static final String ForumGood_clickUrl = HostAddress + "forum/good_click/";
+    public static final String ForumAdd_favoriteUrl = HostAddress + "forum/add_favorite/";
+    public static final String ForumRemove_favoriteUrl = HostAddress + "forum/remove_favorite/";
+    public static final String ForumAdd_commentUrl = HostAddress + "forum/add_comment/";
+    public static final String UploadForum_imageUrl = HostAddress + "upload/forum_image/";
 
 }

@@ -10,10 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xinyi.touhang.R;
-import com.xinyi.touhang.activities.DiscussDetailActivity;
+import com.xinyi.touhang.activities.ForumDetailActivity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -55,8 +53,8 @@ public class DiscussListAdapter extends BaseAdapter<DiscussListAdapter.ViewHolde
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(context,DiscussDetailActivity.class);
-                it.putExtra(DiscussDetailActivity.FORUM_ID,map.get("id"));
+                Intent it = new Intent(context,ForumDetailActivity.class);
+                it.putExtra(ForumDetailActivity.FORUM_ID,map.get("id"));
                 context.startActivity(it);
             }
         });

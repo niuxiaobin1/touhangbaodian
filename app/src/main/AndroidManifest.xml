@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".base.ThApplication"
@@ -23,6 +24,16 @@
         <meta-data
             android:name="com.xinyi.touhang.third.OkHttpGlideModule"
             android:value="GlideModule" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.xinyi.touhang.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
 
         <activity
             android:name=".activities.MainActivity"
@@ -57,8 +68,13 @@
         <activity
             android:name=".activities.StudyListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.DiscussListActivity" />
-        <activity android:name=".activities.DiscussDetailActivity"></activity>
+        <activity
+            android:name=".activities.DiscussListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ForumDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.ReleaseForumActivity"></activity>
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ package com.xinyi.touhang.utils;
 
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +16,11 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -30,7 +33,9 @@ import android.widget.Toast;
 
 
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.constants.Configer;
 
+import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -458,16 +463,16 @@ public class CommonUtils {
     }
 
 
-    public static String addHeadToHtml(String html,String title,String author,String time,
-                                       String authorImage,String readNum,String editor) {
+    public static String addHeadToHtml(String html, String title, String author, String time,
+                                       String authorImage, String readNum, String editor) {
 
-       String content= "<div><h3>" +title + "</h3><div><img style='float:left;' src=" + authorImage +
+        String content = "<div><h3>" + title + "</h3><div><img style='float:left;' src=" + authorImage +
                 " width='20' height='20' class='icon'><div style='float:left;margin-left:10;color:#a9a9a9;'>"
                 + author + "</div><div style='float:left;margin-left:20;color:#a9a9a9;'>" + time
                 + "</div>  <div style='float:right;'><img style='float:left;' src=" + authorImage
                 + " width='20' height='20' class='icon'><div style='float:left;margin-left:5; color:#a9a9a9;'>"
                 + readNum + "阅读</div></div>   </div><div style='clear:both; margin-top:70;'>" +
-                html+ "</div><div style='color:#a9a9a9;'>责任编辑：" + editor + "</div></div>";
+                html + "</div><div style='color:#a9a9a9;'>责任编辑：" + editor + "</div></div>";
         return resolveHtml(content);
     }
 
@@ -493,5 +498,82 @@ public class CommonUtils {
             hashKey = String.valueOf(key.hashCode());
         }
         return hashKey;
+    }
+
+    //相机拍照获取图片
+    public static String takepictures(Context context, String dirPath, String fileName,
+                                      Uri imageUri, int PHOTO_GRAPH) {
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            File dir = new File(dirPath);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            File file = new File(dir, fileName);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                imageUri = FileProvider.getUriForFile(context, context.getPackageName()
+                        + ".fileprovider", file);
+                context.grantUriPermission(context.getPackageName(), imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            } else {
+                imageUri = Uri.fromFile(file);
+            }
+
+            Intent intent = new Intent(
+                    MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            ((Activity) context).startActivityForResult(intent, PHOTO_GRAPH);
+            return file.getAbsolutePath();
+        } else {
+            UIHelper.toastMsg("未插入SD卡");
+            return null;
+        }
+    }
+
+    public static void cardSelect(Context context, int SELECT_PICTURE) {
+        Intent it = new Intent(Intent.ACTION_PICK);
+        it.setType("image/*");
+        ((Activity) context).startActivityForResult(it, SELECT_PICTURE);
+    }
+
+    /**
+     * 解决小米手机上获取图片路径为null的情况
+     * @param intent
+     * @return
+     */
+    public static Uri geturi(Context context,android.content.Intent intent) {
+        Uri uri = intent.getData();
+        String type = intent.getType();
+        if (uri.getScheme().equals("file") && (type.contains("image/"))) {
+            String path = uri.getEncodedPath();
+            if (path != null) {
+                path = Uri.decode(path);
+                ContentResolver cr = context.getContentResolver();
+                StringBuffer buff = new StringBuffer();
+                buff.append("(").append(MediaStore.Images.ImageColumns.DATA).append("=")
+                        .append("'" + path + "'").append(")");
+                Cursor cur = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        new String[] { MediaStore.Images.ImageColumns._ID },
+                        buff.toString(), null, null);
+                int index = 0;
+                for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
+                    index = cur.getColumnIndex(MediaStore.Images.ImageColumns._ID);
+                    // set _id value
+                    index = cur.getInt(index);
+                }
+                if (index == 0) {
+                    // do nothing
+                } else {
+                    Uri uri_temp = Uri
+                            .parse("content://media/external/images/media/"
+                                    + index);
+                    if (uri_temp != null) {
+                        uri = uri_temp;
+                    }
+                }
+            }
+        }
+        return uri;
     }
 }

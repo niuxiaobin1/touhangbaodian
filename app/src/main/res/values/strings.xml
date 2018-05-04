@@ -28,6 +28,7 @@
     <string name="settingsString">设置</string>
     <string name="feedbackString">意见反馈</string>
     <string name="inputHintString">写跟帖</string>
+    <string name="inputString">跟帖</string>
     <string name="inputHint1String">写评论</string>
     <string name="inputCommitString">发表 ✔</string>
     <string name="studyVideoString">学习视频</string>
