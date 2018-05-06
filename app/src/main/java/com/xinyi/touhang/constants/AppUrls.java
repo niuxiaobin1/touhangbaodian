@@ -32,5 +32,6 @@ public class AppUrls {
     public static final String ForumRemove_favoriteUrl = HostAddress + "forum/remove_favorite/";
     public static final String ForumAdd_commentUrl = HostAddress + "forum/add_comment/";
     public static final String UploadForum_imageUrl = HostAddress + "upload/forum_image/";
+    public static final String ForumForum_imageUrl = HostAddress + "forum/forum_image";
 
 }

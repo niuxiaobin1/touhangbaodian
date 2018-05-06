@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -38,6 +39,7 @@ import com.xinyi.touhang.utils.CommonUtils;
 import com.xinyi.touhang.utils.DoParams;
 import com.xinyi.touhang.utils.ImageSelectUtil;
 import com.xinyi.touhang.utils.JsonUtils;
+import com.xinyi.touhang.utils.SpUtils;
 import com.xinyi.touhang.utils.StatusBarUtil;
 import com.xinyi.touhang.utils.UIHelper;
 import com.xinyi.touhang.weight.SelectPhotoPopupwindow;
@@ -54,6 +56,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +66,7 @@ import butterknife.ButterKnife;
 
 public class ReleaseForumActivity extends BaseActivity implements View.OnClickListener {
 
-    public static final String IMAGE_NAME = "forumImage";
+    public static final String IMAGE_NAME = "forumImage.jpg";
     public final static int PHOTO_GRAPH = 1;// 拍照
     public final static int SELECT_PICTURE = 0;// 相册选择
     @BindView(R.id.title_et)
@@ -96,8 +99,6 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
     public static String filePath = "";
     private Uri imageUri;
 
-    private List<Map<String, String>> photosList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +115,6 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
         initTitle("发帖");
         initRightTv("发送", R.color.colorTabSelectedIndicator);
         typeLists = new ArrayList<>();
-        photosList = new ArrayList<>();
         setViewTreeObserver();
         initListener();
         initWebView();
@@ -158,6 +158,12 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
         //不使用缓存:
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
+        // 通过addJavascriptInterface()将Java对象映射到JS对象
+        //参数1：Javascript对象名
+        //参数2：Java对象名
+        webView.addJavascriptInterface(new MyJavaScriptInterface(), "jsInterface");//AndroidtoJS类对象映射到js的test对象
+
+
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -192,6 +198,7 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CommonUtils.hideSoftInput(ReleaseForumActivity.this, title_et);
                 initPermissiton();
             }
         });
@@ -225,7 +232,6 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
     private SelectPhotoPopupwindow photoPopupwindow;
 
     private void selectPhonto() {
-        CommonUtils.hideSoftInput(this, title_et);
         if (photoPopupwindow == null) {
             photoPopupwindow = new SelectPhotoPopupwindow(this, this);
         }
@@ -289,6 +295,15 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onRightClick() {
         super.onRightClick();
+        webView.evaluateJavascript("richTextEditor:window.jsInterface.processHTML('<head>'" +
+                "+document.getElementsByTagName('html')[0].innerHTML+'</head>');", new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String value) {
+                //此处为 js 返回的结果
+                Log.e("nxb",value);
+            }
+        });
+
     }
 
     @Override
@@ -386,7 +401,7 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
             //拍照
             case R.id.btn_take_photo:
                 photoPopupwindow.dismiss();
-                filePath = CommonUtils.takepictures(this, Configer.FileDirString, IMAGE_NAME + System.currentTimeMillis() + ".jpg",
+                filePath = CommonUtils.takepictures(this, Configer.FileDirString, IMAGE_NAME,
                         imageUri, PHOTO_GRAPH);
                 break;
             //相册
@@ -406,8 +421,7 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
             Bitmap bm;
             switch (requestCode) {
                 case PHOTO_GRAPH:
-                    bm = BitmapUtil.compressBitmap(filePath, 500, 500);
-//                    comment_image.setImageBitmap(bm);
+                    addToHtml();
                     break;
                 case SELECT_PICTURE:
                     if (data == null) {
@@ -415,8 +429,7 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
                     }
                     imageUri = data.getData();
                     filePath = ImageSelectUtil.getPath(this, imageUri);
-                    bm = BitmapUtil.compressBitmap(filePath, 500, 500);
-//                    comment_image.setImageBitmap(bm);
+                    addToHtml();
 
                     break;
 
@@ -427,22 +440,76 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
 
     private void addToHtml() {
 
-        String localPath=filePath;
-        String hostPath=AppUrls.UploadForum_imageUrl+filePath.split(".")[1];
+        String localPath = filePath;
+        String ImageName = "android_" + System.currentTimeMillis() + ".jpg";
+        String hostPath = AppUrls.UploadForum_imageUrl + ImageName;
         // Android版本变量
         final int version = Build.VERSION.SDK_INT;
         // 因为该方法在 Android 4.4 版本才可使用，所以使用时需进行版本判断
         if (version < 18) {
-            webView.loadUrl("richTextEditor:insertImage("+""+""+")");
+            webView.loadUrl("richTextEditor:insertImage('" + hostPath+"','" + localPath + "')");
         } else {
-            webView.evaluateJavascript("richTextEditor:insertImage("+""+""+")", new ValueCallback<String>() {
+            webView.evaluateJavascript("richTextEditor:insertImage('" + hostPath +"','" + localPath + "')", new ValueCallback<String>() {
                 @Override
                 public void onReceiveValue(String value) {
                     //此处为 js 返回的结果
                 }
             });
         }
+        File upLoadFile = new File(localPath);
+//        upLoadImage(ImageName,upLoadFile);
     }
 
 
+    private void upLoadImage(String name, File image) {
+        String user_token = (String) SpUtils.get(ReleaseForumActivity.this, SpUtils.USERUSER_TOKEN, "");
+        HttpParams params = new HttpParams();
+        params.put("image", image);
+        params.put("name", name);
+        params.put("user_token", user_token);
+        OkGo.<String>post(AppUrls.ForumForum_imageUrl)
+                .cacheMode(CacheMode.NO_CACHE)
+                .tag(this)
+                .params(DoParams.encryptionparams(ReleaseForumActivity.this, params, user_token))
+                .execute(new DialogCallBack(ReleaseForumActivity.this, false) {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject js = new JSONObject(response.body());
+
+                            if (js.getBoolean("result")) {
+
+                            } else {
+                                UIHelper.toastMsg(js.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            UIHelper.toastMsg(e.getMessage());
+                        }
+                    }
+
+
+                    @Override
+                    public String convertResponse(okhttp3.Response response) throws Throwable {
+                        HandleResponse.handleReponse(response);
+                        return super.convertResponse(response);
+                    }
+
+                    @Override
+                    public void onError(com.lzy.okgo.model.Response<String> response) {
+                        super.onError(response);
+                        HandleResponse.handleException(response, ReleaseForumActivity.this);
+                    }
+                });
+    }
+
+
+    class MyJavaScriptInterface {
+        @JavascriptInterface
+        @SuppressWarnings("unused")
+        public void processHTML(String html) {
+            // process the html as needed by the app
+            Log.i("nxb", "processHTML: ===" + html);
+
+        }
+    }
 }

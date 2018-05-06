@@ -30,7 +30,10 @@
                 outline:none;
                 font-size:14px;
             }
-            
+
+
+
+
 
 
 
@@ -107,16 +110,17 @@
             var selectedElement = document.getElementById(imageName);
             selectedElement.setAttribute('src', imageURL);
         }
-        
-        
+
         
         function placeHTMLToEditor(html)
         {
             editableContent.innerHTML = html;
         }
-        
 
-
+        function getInnerHtml()
+        {
+            return editableContent.innerHTML;
+        }
 
 </script>
 </body>

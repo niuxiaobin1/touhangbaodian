@@ -13,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
@@ -26,6 +29,7 @@ import com.xinyi.touhang.callBack.HandleResponse;
 import com.xinyi.touhang.constants.AppUrls;
 import com.xinyi.touhang.constants.Configer;
 import com.xinyi.touhang.utils.DoParams;
+import com.xinyi.touhang.utils.GlideCircleTransform;
 import com.xinyi.touhang.utils.SpUtils;
 import com.xinyi.touhang.utils.UIHelper;
 
@@ -43,11 +47,25 @@ import okhttp3.Response;
  */
 public class MineFragment extends BaseFragment {
 
+
     private LocalBroadcastManager localBroadcastManager;//本地广播manager
     private LoginBroadcastReceiver mReceiver;
 
+    //未登录
+    @BindView(R.id.login_none_layout)
+    LinearLayout login_none_layout;
+
     @BindView(R.id.login_tv)
     TextView login_tv;
+    //登录
+    @BindView(R.id.login_user_layout)
+    LinearLayout login_user_layout;
+    @BindView(R.id.userImage)
+    ImageView userImage;
+    @BindView(R.id.userName)
+    TextView userName;
+    @BindView(R.id.vipFlag)
+    TextView vipFlag;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -120,7 +138,13 @@ public class MineFragment extends BaseFragment {
 
         String user_token = (String) SpUtils.get(getActivity(), SpUtils.USERUSER_TOKEN, "");
         if (TextUtils.isEmpty(user_token)) {
+            login_none_layout.setVisibility(View.VISIBLE);
+            login_user_layout.setVisibility(View.GONE);
             return;
+        } else {
+            restoreUserInfo();
+            login_none_layout.setVisibility(View.GONE);
+            login_user_layout.setVisibility(View.VISIBLE);
         }
         HttpParams params = new HttpParams();
         params.put("user_token", user_token);
@@ -164,6 +188,14 @@ public class MineFragment extends BaseFragment {
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            initDatas();
         }
     }
 
@@ -262,6 +294,33 @@ public class MineFragment extends BaseFragment {
         SpUtils.put(getActivity(), SpUtils.USERIMAGE, user.getString("image"));
         SpUtils.put(getActivity(), SpUtils.USERVIP_LIMIT, user.getString("vip_limit"));
 
+        userName.setText(user.getString("name"));
+        Glide.with(getActivity()).load(user.getString("image")).transform(new GlideCircleTransform(getActivity()))
+                .into(userImage);
+        if (user.getString("vip").equals("1")) {
+            vipFlag.setBackgroundResource(R.drawable.vip_bg);
+            vipFlag.setTextColor(getResources().getColor(R.color.colorWhite));
+        } else {
+            vipFlag.setBackgroundResource(R.drawable.vip_none_bg);
+            vipFlag.setTextColor(getResources().getColor(R.color.colorMain));
+        }
+
+    }
+
+
+    private void restoreUserInfo() {
+
+        userName.setText((String) SpUtils.get(getActivity(), SpUtils.USERNAME, ""));
+        Glide.with(getActivity()).load((String) SpUtils.get(getActivity(), SpUtils.USERIMAGE, "")).transform(new GlideCircleTransform(getActivity()))
+                .into(userImage);
+        String vip = (String) SpUtils.get(getActivity(), SpUtils.USERVIP, "");
+        if (vip.equals("1")) {
+            vipFlag.setBackgroundResource(R.drawable.vip_bg);
+            vipFlag.setTextColor(getResources().getColor(R.color.colorWhite));
+        } else {
+            vipFlag.setBackgroundResource(R.drawable.vip_none_bg);
+            vipFlag.setTextColor(getResources().getColor(R.color.colorMain));
+        }
     }
 
 }

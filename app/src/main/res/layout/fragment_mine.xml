@@ -41,6 +41,8 @@
 
 
             <LinearLayout
+                android:id="@+id/login_none_layout"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -87,6 +89,42 @@
                         app:layout_constraintTop_toBottomOf="@id/login_layout" />
 
                 </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/login_user_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingBottom="20dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:id="@+id/userImage"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp" />
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text=""
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/vipFlag"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:background="@drawable/vip_bg"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/tv_14sp"
+                    android:text="VIP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -176,19 +214,19 @@
             </LinearLayout>
 
             <View
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/colorLine"
                 android:paddingLeft="@dimen/content_pading_7dp"
                 android:paddingRight="@dimen/content_pading_7dp" />
 
             <LinearLayout
-                android:orientation="vertical"
-                android:paddingRight="@dimen/content_pading_7dp"
-                android:paddingLeft="@dimen/content_pading_7dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/content_pading_7dp"
+                android:paddingRight="@dimen/content_pading_7dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -196,184 +234,189 @@
 
 
                     <TextView
-                        android:textSize="@dimen/tv_14sp"
-                        android:textColor="@color/colorMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/messageNotificationString"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textColor="@color/colorMain"
+                        android:textSize="@dimen/tv_14sp" />
 
                     <ImageView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/arrow_right"
                         android:layout_width="20dp"
-                        android:layout_height="20dp" />
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/arrow_right" />
 
                     <View
-                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="0.5dp"
-                        android:background="@color/colorItem"/>
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorItem" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp">
+                    android:layout_height="45dp"
+                    android:visibility="gone">
 
 
                     <TextView
-                        android:textSize="@dimen/tv_14sp"
-                        android:textColor="@color/colorMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/mycourseString"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textColor="@color/colorMain"
+                        android:textSize="@dimen/tv_14sp" />
 
                     <ImageView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/arrow_right"
                         android:layout_width="20dp"
-                        android:layout_height="20dp" />
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/arrow_right" />
 
                     <View
-                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="0.5dp"
-                        android:background="@color/colorItem"/>
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorItem" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
 
 
                     <TextView
-                        android:textSize="@dimen/tv_14sp"
-                        android:textColor="@color/colorMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/myorderString"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textColor="@color/colorMain"
+                        android:textSize="@dimen/tv_14sp" />
 
                     <ImageView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/arrow_right"
                         android:layout_width="20dp"
-                        android:layout_height="20dp" />
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/arrow_right" />
 
                     <View
-                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="0.5dp"
-                        android:background="@color/colorItem"/>
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorItem" />
                 </RelativeLayout>
+
                 <RelativeLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp">
+                    android:layout_height="45dp"
+                    android:visibility="gone">
 
 
                     <TextView
-                        android:textSize="@dimen/tv_14sp"
-                        android:textColor="@color/colorMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/myAttentionString"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textColor="@color/colorMain"
+                        android:textSize="@dimen/tv_14sp" />
 
                     <ImageView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/arrow_right"
                         android:layout_width="20dp"
-                        android:layout_height="20dp" />
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/arrow_right" />
 
                     <View
-                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="0.5dp"
-                        android:background="@color/colorItem"/>
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorItem" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
 
 
                     <TextView
-                        android:textSize="@dimen/tv_14sp"
-                        android:textColor="@color/colorMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/myPostString"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textColor="@color/colorMain"
+                        android:textSize="@dimen/tv_14sp" />
 
                     <ImageView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/arrow_right"
                         android:layout_width="20dp"
-                        android:layout_height="20dp" />
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/arrow_right" />
 
                     <View
-                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="0.5dp"
-                        android:background="@color/colorItem"/>
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorItem" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
 
 
                     <TextView
-                        android:textSize="@dimen/tv_14sp"
-                        android:textColor="@color/colorMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/updateString"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textColor="@color/colorMain"
+                        android:textSize="@dimen/tv_14sp" />
 
                     <ImageView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/arrow_right"
                         android:layout_width="20dp"
-                        android:layout_height="20dp" />
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/arrow_right" />
 
                     <View
-                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="0.5dp"
-                        android:background="@color/colorItem"/>
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorItem" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
 
 
                     <TextView
-                        android:textSize="@dimen/tv_14sp"
-                        android:textColor="@color/colorMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/feedbackString"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textColor="@color/colorMain"
+                        android:textSize="@dimen/tv_14sp" />
 
                     <ImageView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/arrow_right"
                         android:layout_width="20dp"
-                        android:layout_height="20dp" />
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/arrow_right" />
 
                     <View
-                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="0.5dp"
-                        android:background="@color/colorItem"/>
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorItem" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -382,25 +425,25 @@
 
 
                     <TextView
-                        android:textSize="@dimen/tv_14sp"
-                        android:textColor="@color/colorMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/settingsString"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textColor="@color/colorMain"
+                        android:textSize="@dimen/tv_14sp" />
 
                     <ImageView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/arrow_right"
                         android:layout_width="20dp"
-                        android:layout_height="20dp" />
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/arrow_right" />
 
                     <View
-                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="0.5dp"
-                        android:background="@color/colorItem"/>
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorItem" />
                 </RelativeLayout>
 
             </LinearLayout>
