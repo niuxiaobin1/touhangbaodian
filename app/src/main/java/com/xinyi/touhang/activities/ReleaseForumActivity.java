@@ -10,6 +10,8 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -164,7 +166,6 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
         webView.addJavascriptInterface(new MyJavaScriptInterface(), "jsInterface");//AndroidtoJS类对象映射到js的test对象
 
 
-
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -295,14 +296,23 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onRightClick() {
         super.onRightClick();
-        webView.evaluateJavascript("richTextEditor:window.jsInterface.processHTML('<head>'" +
-                "+document.getElementsByTagName('html')[0].innerHTML+'</head>');", new ValueCallback<String>() {
+//        webView.evaluateJavascript("richTextEditor:window.jsInterface.processHTML('<head>'" +
+//                "+document.getElementsByTagName('html')[0].innerHTML+'</head>');", new ValueCallback<String>() {
+//            @Override
+//            public void onReceiveValue(String value) {
+//                //此处为 js 返回的结果
+//                Log.e("nxb",value);
+//            }
+//        });
+        webView.evaluateJavascript("richTextEditor:window.jsInterface.processHTML(" +
+                "document.getElementById('content').innerHTML);", new ValueCallback<String>() {
             @Override
             public void onReceiveValue(String value) {
                 //此处为 js 返回的结果
-                Log.e("nxb",value);
+
             }
         });
+
 
     }
 
@@ -441,15 +451,15 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
     private void addToHtml() {
 
         String localPath = filePath;
-        String ImageName = "android_" + System.currentTimeMillis() + ".jpg";
-        String hostPath = AppUrls.UploadForum_imageUrl + ImageName;
+        String ImageName = "android" + System.currentTimeMillis();
+        String hostPath = AppUrls.UploadForum_imageUrl + ImageName + ".jpg";
         // Android版本变量
         final int version = Build.VERSION.SDK_INT;
         // 因为该方法在 Android 4.4 版本才可使用，所以使用时需进行版本判断
         if (version < 18) {
-            webView.loadUrl("richTextEditor:insertImage('" + hostPath+"','" + localPath + "')");
+            webView.loadUrl("richTextEditor:insertImage('" + hostPath + "','" + localPath + "')");
         } else {
-            webView.evaluateJavascript("richTextEditor:insertImage('" + hostPath +"','" + localPath + "')", new ValueCallback<String>() {
+            webView.evaluateJavascript("richTextEditor:insertImage('" + hostPath + "','" + localPath + "')", new ValueCallback<String>() {
                 @Override
                 public void onReceiveValue(String value) {
                     //此处为 js 返回的结果
@@ -457,14 +467,24 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
             });
         }
         File upLoadFile = new File(localPath);
-//        upLoadImage(ImageName,upLoadFile);
+        upLoadImage(ImageName, upLoadFile);
     }
 
 
     private void upLoadImage(String name, File image) {
         String user_token = (String) SpUtils.get(ReleaseForumActivity.this, SpUtils.USERUSER_TOKEN, "");
         HttpParams params = new HttpParams();
-        params.put("image", image);
+        File file = null;
+        //如果file大于200kb
+        if (image.length() / 1024 > 200) {
+            Bitmap bitmap = BitmapUtil.compressBitmap(image.getPath(), 1080, 1080);
+            //压缩后的bitmap保存为file
+            file = new File(Configer.FileDirStringForUpload, System.currentTimeMillis() + "compress.jpg");
+            BitmapUtil.compressBmpToFile(bitmap, Configer.FileDirStringForUpload, file);
+        } else {
+            file = image;
+        }
+        params.put("image", file);
         params.put("name", name);
         params.put("user_token", user_token);
         OkGo.<String>post(AppUrls.ForumForum_imageUrl)
@@ -502,14 +522,97 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
                 });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // 用户做出选择以后复查权限，判断是否通过了权限申请
+        mPermissionsManager.recheckPermissions(requestCode, permissions, grantResults);
+    }
 
     class MyJavaScriptInterface {
         @JavascriptInterface
         @SuppressWarnings("unused")
         public void processHTML(String html) {
             // process the html as needed by the app
-            Log.i("nxb", "processHTML: ===" + html);
+            if (TextUtils.isEmpty(html)) {
+                showToast(R.string.contentEmptyString);
+                return;
+            }
+
+            final String titleString = title_et.getText().toString().trim();
+            if (TextUtils.isEmpty(titleString)) {
+                showToast(R.string.NotitleString);
+                return;
+            }
+
+
+            final StringBuffer buffer = new StringBuffer();
+            int index = 0;
+            int index2 = 0;
+
+            index = html.indexOf("<img src=\"");
+            index2 = html.indexOf("id=\"");
+            while (index != -1 && index2 != -1) {
+                buffer.append(html.substring(0, index));
+                buffer.append("<img src=\"");
+//                buffer.append(html.substring(index2 + 4, html.length()));
+                html = html.substring(index2 + 4, html.length());
+                index = html.indexOf("<img src=\"");
+                index2 = html.indexOf("id=\"");
+
+            }
+            buffer.append(html);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    postHtml(titleString, buffer.toString());
+                }
+            });
 
         }
+    }
+
+
+    private void postHtml(String title, String content) {
+
+        String user_token = (String) SpUtils.get(ReleaseForumActivity.this, SpUtils.USERUSER_TOKEN, "");
+        HttpParams params = new HttpParams();
+        params.put("name", title);
+        params.put("content", content);
+        params.put("user_token", user_token);
+        params.put("type", typeId);
+        OkGo.<String>post(AppUrls.ForumAdd_forumUrl)
+                .cacheMode(CacheMode.NO_CACHE)
+                .tag(this)
+                .params(DoParams.encryptionparams(ReleaseForumActivity.this, params, user_token))
+                .execute(new DialogCallBack(ReleaseForumActivity.this, true) {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        try {
+                            JSONObject js = new JSONObject(response.body());
+
+                            if (js.getBoolean("result")) {
+                                finish();
+                            } else {
+                            }
+                            UIHelper.toastMsg(js.getString("message"));
+                        } catch (JSONException e) {
+                            UIHelper.toastMsg(e.getMessage());
+                        }
+                    }
+
+
+                    @Override
+                    public String convertResponse(okhttp3.Response response) throws Throwable {
+                        HandleResponse.handleReponse(response);
+                        return super.convertResponse(response);
+                    }
+
+                    @Override
+                    public void onError(com.lzy.okgo.model.Response<String> response) {
+                        super.onError(response);
+                        HandleResponse.handleException(response, ReleaseForumActivity.this);
+                    }
+                });
     }
 }

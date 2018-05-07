@@ -66,7 +66,7 @@ public class DiscussListActivity extends BaseActivity {
         setContentView(R.layout.activity_discuss_list);
         ButterKnife.bind(this);
         initViews();
-        initDatas();
+
     }
 
 
@@ -98,6 +98,12 @@ public class DiscussListActivity extends BaseActivity {
         }
         Intent it = new Intent(DiscussListActivity.this, ReleaseForumActivity.class);
         startActivity(it);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initDatas();
     }
 
     @Override

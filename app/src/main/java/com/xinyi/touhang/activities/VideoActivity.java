@@ -460,11 +460,12 @@ public class VideoActivity extends BaseActivity {
                                 List<Map<String, String>> list = new ArrayList<>();
                                 Map map = new HashMap();
                                 map.put("image", SpUtils.get(VideoActivity.this, SpUtils.USERIMAGE, ""));
-                                map.put("name", SpUtils.get(VideoActivity.this, SpUtils.USERNAME, ""));
+                                map.put("customer_name", SpUtils.get(VideoActivity.this, SpUtils.USERNAME, ""));
                                 map.put("good_num", "0");
                                 map.put("modified", "刚刚");
                                 map.put("content", comment);
                                 map.put("checked", "0");
+                                map.put("id", js.getJSONObject("data").getString("cid"));
                                 list.add(map);
                                 commentAdapter.addDatas(list);
                             } else {

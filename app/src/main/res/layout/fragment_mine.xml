@@ -133,6 +133,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/focusLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -161,6 +162,7 @@
                     android:background="@color/colorLine" />
 
                 <LinearLayout
+                    android:id="@+id/historyLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -189,6 +191,7 @@
                     android:background="@color/colorLine" />
 
                 <LinearLayout
+                    android:id="@+id/commentLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -229,6 +232,7 @@
                 android:paddingRight="@dimen/content_pading_7dp">
 
                 <RelativeLayout
+                    android:id="@+id/notificationLayout"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
 
@@ -284,6 +288,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/orderLayout"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
 
@@ -339,6 +344,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/forumLayout"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
 
@@ -393,6 +399,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/feedbackLayout"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
 

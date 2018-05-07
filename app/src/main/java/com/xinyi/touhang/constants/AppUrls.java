@@ -33,5 +33,15 @@ public class AppUrls {
     public static final String ForumAdd_commentUrl = HostAddress + "forum/add_comment/";
     public static final String UploadForum_imageUrl = HostAddress + "upload/forum_image/";
     public static final String ForumForum_imageUrl = HostAddress + "forum/forum_image";
+    public static final String ForumAdd_forumUrl = HostAddress + "forum/add_forum/";
+    public static final String NewsFootpathUrl = HostAddress + "news/footpath";
+    public static final String VideoFootpathUrl = HostAddress + "video/footpath/";
+    public static final String ForumFootpathUrl = HostAddress + "forum/footpath/";
+
+
+    public static final String NewsFavoriteUrl = HostAddress + "news/favorite/";
+    public static final String VideoFavoriteUrl = HostAddress + "video/favorite/";
+    public static final String ForumFavoriteUrl = HostAddress + "forum/favorite/";
+
 
 }

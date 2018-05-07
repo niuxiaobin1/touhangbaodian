@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:gravity="center_vertical"
+    android:paddingBottom="10dp"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:maxLines="1"
+            android:textColor="@color/colorMain"
+            android:textSize="@dimen/tv_14sp"
+            android:text="VIP会员购买"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:maxLines="1"
+            android:textColor="@color/colorSubTitle"
+            android:textSize="@dimen/tv_12sp"
+            android:text="使用时间：2018-04-10 20:10:10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/alivc_red"
+        android:textSize="@dimen/tv_16sp"
+        android:text="￥200"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

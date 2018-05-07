@@ -74,7 +74,14 @@
         <activity
             android:name=".activities.ForumDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.ReleaseForumActivity"></activity>
+        <activity android:name=".activities.ReleaseForumActivity" />
+        <activity android:name=".activities.MyFocusActivity" />
+        <activity android:name=".activities.HistoryActivity" />
+        <activity android:name=".activities.MyCommentActivity" />
+        <activity android:name=".activities.MyNotificationActivity" />
+        <activity android:name=".activities.MyOrderActivity" />
+        <activity android:name=".activities.MyForumActivity" />
+        <activity android:name=".activities.UserFeedBackActivity"></activity>
     </application>
 
 </manifest>

@@ -668,16 +668,18 @@ public class ForumDetailActivity extends BaseActivity implements View.OnClickLis
 
                             if (js.getBoolean("result")) {
                                 changeInputEdittextVisibility(View.GONE);
-//                                List<Map<String, String>> list = new ArrayList<>();
-//                                Map map = new HashMap();
-//                                map.put("image", SpUtils.get(ConsulationDetailActivity.this, SpUtils.USERIMAGE, ""));
-//                                map.put("name", SpUtils.get(ConsulationDetailActivity.this, SpUtils.USERNAME, ""));
-//                                map.put("good_num", "0");
-//                                map.put("modified", "刚刚");
-//                                map.put("content", comment);
-//                                map.put("checked", "0");
-//                                list.add(map);
-//                                commentAdapter.addDatas(list);
+                                List<Map<String, String>> list = new ArrayList<>();
+                                Map map = new HashMap();
+                                map.put("image", SpUtils.get(ForumDetailActivity.this, SpUtils.USERIMAGE, ""));
+                                map.put("customer_name", SpUtils.get(ForumDetailActivity.this, SpUtils.USERNAME, ""));
+                                map.put("good_num", "0");
+                                map.put("modified", "刚刚");
+                                map.put("content", comment);
+                                map.put("checked", "0");
+                                map.put("id", js.getJSONObject("data").getString("cid"));
+                                map.put("comment_image", js.getJSONObject("data").getString("url"));
+                                list.add(map);
+                                adapter.addDatas(list);
                             } else {
                                 UIHelper.toastMsg(js.getString("message"));
                             }

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -22,7 +23,14 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.HistoryActivity;
 import com.xinyi.touhang.activities.LoginActivity;
+import com.xinyi.touhang.activities.MyCommentActivity;
+import com.xinyi.touhang.activities.MyFocusActivity;
+import com.xinyi.touhang.activities.MyForumActivity;
+import com.xinyi.touhang.activities.MyNotificationActivity;
+import com.xinyi.touhang.activities.MyOrderActivity;
+import com.xinyi.touhang.activities.UserFeedBackActivity;
 import com.xinyi.touhang.base.BaseFragment;
 import com.xinyi.touhang.callBack.DialogCallBack;
 import com.xinyi.touhang.callBack.HandleResponse;
@@ -47,6 +55,27 @@ import okhttp3.Response;
  */
 public class MineFragment extends BaseFragment {
 
+    //关注
+    @BindView(R.id.focusLayout)
+    LinearLayout focusLayout;
+    //历史
+    @BindView(R.id.historyLayout)
+    LinearLayout historyLayout;
+    //评论
+    @BindView(R.id.commentLayout)
+    LinearLayout commentLayout;
+    //消息通知
+    @BindView(R.id.notificationLayout)
+    RelativeLayout notificationLayout;
+    //订单
+    @BindView(R.id.orderLayout)
+    RelativeLayout orderLayout;
+    //我的帖子
+    @BindView(R.id.forumLayout)
+    RelativeLayout forumLayout;
+    //意见反馈
+    @BindView(R.id.feedbackLayout)
+    RelativeLayout feedbackLayout;
 
     private LocalBroadcastManager localBroadcastManager;//本地广播manager
     private LoginBroadcastReceiver mReceiver;
@@ -126,11 +155,79 @@ public class MineFragment extends BaseFragment {
         login_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(getActivity(), LoginActivity.class);
-                startActivity(it);
+                login();
             }
         });
 
+        focusLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkLogin()) {
+                    Intent it = new Intent(getActivity(), MyFocusActivity.class);
+                    startActivity(it);
+                }
+            }
+        });
+        historyLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkLogin()) {
+                    Intent it = new Intent(getActivity(), HistoryActivity.class);
+                    startActivity(it);
+                }
+            }
+        });
+        commentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkLogin()) {
+                    Intent it = new Intent(getActivity(), MyCommentActivity.class);
+                    startActivity(it);
+                }
+            }
+        });
+        notificationLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkLogin()) {
+                    Intent it = new Intent(getActivity(), MyNotificationActivity.class);
+                    startActivity(it);
+                }
+            }
+        });
+        orderLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkLogin()) {
+                    Intent it = new Intent(getActivity(), MyOrderActivity.class);
+                    startActivity(it);
+                }
+            }
+        });
+        forumLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkLogin()) {
+                    Intent it = new Intent(getActivity(), MyForumActivity.class);
+                    startActivity(it);
+                }
+            }
+        });
+        feedbackLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkLogin()) {
+                    Intent it = new Intent(getActivity(), UserFeedBackActivity.class);
+                    startActivity(it);
+                }
+            }
+        });
+
+    }
+
+    private void login() {
+        Intent it = new Intent(getActivity(), LoginActivity.class);
+        startActivity(it);
     }
 
     @Override
@@ -307,6 +404,16 @@ public class MineFragment extends BaseFragment {
 
     }
 
+
+    private boolean checkLogin() {
+        String user_token = (String) SpUtils.get(getActivity(), SpUtils.USERUSER_TOKEN, "");
+        if (TextUtils.isEmpty(user_token)) {
+            login();
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     private void restoreUserInfo() {
 

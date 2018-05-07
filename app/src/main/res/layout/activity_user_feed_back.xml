@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorWhite"
+    android:fitsSystemWindows="true"
+    tools:context="com.xinyi.touhang.activities.UserFeedBackActivity">
+
+
+    <include layout="@layout/back_title_bar"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:gravity="start"
+            android:textColorHint="@color/colorSubTitle"
+            android:hint="@string/feedback_hintString"
+            android:padding="5dp"
+            android:textColor="@color/colorMain"
+            android:textSize="@dimen/tv_14sp"
+            android:background="@drawable/input_bg"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <RadioGroup
+            android:background="@drawable/input_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </RadioGroup>
+        
+    </LinearLayout>
+
+</LinearLayout>
