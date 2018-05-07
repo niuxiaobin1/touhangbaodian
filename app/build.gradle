@@ -61,4 +61,8 @@ dependencies {
     implementation(name: 'AlivcPlayer-3.4.3', ext: 'aar')
     implementation(name: 'AliyunVodPlayer-3.4.3', ext: 'aar')
     implementation(name: 'AliyunVodPlayerView-3.4.3', ext: 'aar')
+
+    compile('cn.qqtheme.framework:WheelPicker:1.5.5') {
+        exclude group: 'com.android.support'
+    }
 }

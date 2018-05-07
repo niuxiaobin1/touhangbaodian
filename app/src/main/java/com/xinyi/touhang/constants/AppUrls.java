@@ -42,6 +42,7 @@ public class AppUrls {
     public static final String NewsFavoriteUrl = HostAddress + "news/favorite/";
     public static final String VideoFavoriteUrl = HostAddress + "video/favorite/";
     public static final String ForumFavoriteUrl = HostAddress + "forum/favorite/";
+    public static final String CustomerUpdateUrl = HostAddress + "customer/update/";
 
 
 }

@@ -47,15 +47,22 @@ public class BaseActivity extends AppCompatActivity {
             back_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finish();
+                    if (onBackImageClick()) {
+                        finish();
+                    }
                 }
             });
         }
 
     }
 
+
     protected void initDatas() {
 
+    }
+
+    protected boolean onBackImageClick() {
+        return true;
     }
 
 

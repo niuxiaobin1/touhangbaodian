@@ -4,40 +4,145 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorWhite"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context="com.xinyi.touhang.activities.UserFeedBackActivity">
 
 
-    <include layout="@layout/back_title_bar"/>
+    <include layout="@layout/back_title_bar" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:paddingRight="10dp">
 
         <EditText
+            android:id="@+id/editText"
+            android:focusable="false"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/input_bg"
             android:gravity="start"
-            android:textColorHint="@color/colorSubTitle"
             android:hint="@string/feedback_hintString"
             android:padding="5dp"
             android:textColor="@color/colorMain"
-            android:textSize="@dimen/tv_14sp"
-            android:background="@drawable/input_bg"
-            android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:textColorHint="@color/colorSubTitle"
+            android:textSize="@dimen/tv_14sp" />
 
         <RadioGroup
-            android:background="@drawable/input_bg"
+            android:id="@+id/radioGroup"
+            android:layout_marginTop="15dp"
+            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/colorSubTitle"
+                android:textSize="@dimen/tv_15sp"
+                android:text="反馈类型"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:checked="true"
+                    android:id="@+id/rd1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@drawable/radio_bg"
+                    android:text="  程序问题"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_14sp" />
+
+                <RadioButton
+                    android:id="@+id/rd2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@drawable/radio_bg"
+                    android:text="  下载问题"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_14sp" />
+
+                <RadioButton
+                    android:id="@+id/rd3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@drawable/radio_bg"
+                    android:text="  反馈类型"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_14sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rd4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@drawable/radio_bg"
+                    android:text="  广告"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_14sp" />
+
+                <RadioButton
+                    android:id="@+id/rd5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@drawable/radio_bg"
+                    android:text="  内容问题"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_14sp" />
+
+                <RadioButton
+                    android:id="@+id/rd6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@drawable/radio_bg"
+                    android:text="  其他"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_14sp" />
+
+            </LinearLayout>
 
 
         </RadioGroup>
-        
+
+
+
+        <Button
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/commit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/login_btn_bg"
+            android:gravity="center"
+            android:text="确认"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/tv_15sp" />
+
+
     </LinearLayout>
 
 </LinearLayout>

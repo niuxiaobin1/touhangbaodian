@@ -81,7 +81,8 @@
         <activity android:name=".activities.MyNotificationActivity" />
         <activity android:name=".activities.MyOrderActivity" />
         <activity android:name=".activities.MyForumActivity" />
-        <activity android:name=".activities.UserFeedBackActivity"></activity>
+        <activity android:name=".activities.UserFeedBackActivity" />
+        <activity android:name=".activities.SettingsActivity"></activity>
     </application>
 
 </manifest>

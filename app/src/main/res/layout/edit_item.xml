@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:gravity="center"
+        android:padding="5dp"
+        android:id="@+id/content_et"
+        android:textSize="@dimen/tv_14sp"
+        android:textColor="@color/colorMain"
+        android:background="@drawable/input_bg"
+        android:hint="请输入昵称"
+        android:textColorHint="@color/colorSubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</android.support.constraint.ConstraintLayout>

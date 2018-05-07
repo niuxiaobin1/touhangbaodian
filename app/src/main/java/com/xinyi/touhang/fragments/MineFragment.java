@@ -30,6 +30,7 @@ import com.xinyi.touhang.activities.MyFocusActivity;
 import com.xinyi.touhang.activities.MyForumActivity;
 import com.xinyi.touhang.activities.MyNotificationActivity;
 import com.xinyi.touhang.activities.MyOrderActivity;
+import com.xinyi.touhang.activities.SettingsActivity;
 import com.xinyi.touhang.activities.UserFeedBackActivity;
 import com.xinyi.touhang.base.BaseFragment;
 import com.xinyi.touhang.callBack.DialogCallBack;
@@ -76,6 +77,9 @@ public class MineFragment extends BaseFragment {
     //意见反馈
     @BindView(R.id.feedbackLayout)
     RelativeLayout feedbackLayout;
+    //设置
+    @BindView(R.id.settingsLayout)
+    RelativeLayout settingsLayout;
 
     private LocalBroadcastManager localBroadcastManager;//本地广播manager
     private LoginBroadcastReceiver mReceiver;
@@ -222,6 +226,15 @@ public class MineFragment extends BaseFragment {
                 }
             }
         });
+        settingsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkLogin()) {
+                    Intent it = new Intent(getActivity(), SettingsActivity.class);
+                    startActivity(it);
+                }
+            }
+        });
 
     }
 
@@ -331,7 +344,7 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        initDatas();
     }
 
     @Override
@@ -377,6 +390,8 @@ public class MineFragment extends BaseFragment {
         }
     }
 
+
+
     private void savaUserInfo(JSONObject jsonObject) throws JSONException {
         JSONObject user = jsonObject.getJSONObject("user");
         SpUtils.put(getActivity(), SpUtils.USERNAME, user.getString("name"));
@@ -386,6 +401,8 @@ public class MineFragment extends BaseFragment {
         SpUtils.put(getActivity(), SpUtils.USERVIP, user.getString("vip"));
         SpUtils.put(getActivity(), SpUtils.USERUSER_TOKEN, user.getString("user_token"));
         SpUtils.put(getActivity(), SpUtils.USERUDID, user.getString("udid"));
+        SpUtils.put(getActivity(), SpUtils.USERBIRTHDAY, user.getString("birthday"));
+        SpUtils.put(getActivity(), SpUtils.USERSEX, user.getString("sex"));
         SpUtils.put(getActivity(), SpUtils.USERCREATED, user.getString("created"));
         SpUtils.put(getActivity(), SpUtils.USERMODIFIED, user.getString("modified"));
         SpUtils.put(getActivity(), SpUtils.USERIMAGE, user.getString("image"));

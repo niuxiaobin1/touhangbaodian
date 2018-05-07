@@ -24,6 +24,8 @@ public class SpUtils {
     public static final String USERVIP = "_vip";
     public static final String USERUSER_TOKEN = "_user_token";
     public static final String USERUDID = "_udid";
+    public static final String USERBIRTHDAY = "_birthday";
+    public static final String USERSEX = "_sex";
     public static final String USERCREATED = "_created";
     public static final String USERMODIFIED = "_modified";
     public static final String USERIMAGE = "_image";
