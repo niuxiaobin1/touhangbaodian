@@ -83,6 +83,7 @@ public class AppUrls {
     public static final String ForumIc_homeUrl = HostAddress + "forum/ic_home/";
     public static final String ForumIc_searchUrl = HostAddress + "forum/ic_search/";
     public static final String OrderListsUrl = HostAddress + "order/lists/";
+    public static final String ForumCanUrl = HostAddress + "forum/can/";
 
 
 }

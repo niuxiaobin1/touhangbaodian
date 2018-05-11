@@ -145,7 +145,6 @@ public class VideoActivity extends BaseActivity {
         id = getIntent().getStringExtra(VIDEO_ID);
         initTitle(R.string.studyVideoString);
         setViewTreeObserver();
-        upDateLayout(1);
         initVideo();
         comment_RecylerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
             @Override
@@ -280,6 +279,17 @@ public class VideoActivity extends BaseActivity {
                             JSONObject js = new JSONObject(response.body());
                             if (js.getBoolean("result")) {
                                 JSONObject video = js.getJSONObject("data").getJSONObject("video");
+
+                                String pay = video.getString("pay");
+                                double price = Double.parseDouble(video.getString("price"));
+                                if (price > 0 && pay.equals("0")) {
+                                    //需要付费 且没有付费过
+                                    payCostTv.setText("￥" + price);
+                                    upDateLayout(0);
+
+                                } else {
+                                    upDateLayout(1);
+                                }
                                 videoTv.setText(video.getString("name"));
                                 commitorTv.setText(video.getString("author"));
                                 commitTime.setText(video.getString("created"));

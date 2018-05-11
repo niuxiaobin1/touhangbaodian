@@ -3,6 +3,7 @@ package com.xinyi.touhang.activities;
 import android.Manifest;
 import android.app.Activity;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +50,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -354,38 +357,39 @@ public class PersonalSettingsActivity extends BaseActivity implements View.OnCli
     }
 
     public void onYearMonthDayPicker(View view) {
-        final DatePicker picker = new DatePicker(this);
-        picker.setCanceledOnTouchOutside(true);
-        picker.setUseWeight(true);
-        picker.setTopPadding(DensityUtil.dip2px(this, 10));
-        picker.setRangeEnd(2018, 12, 12);
-        picker.setRangeStart(1900, 1, 1);
-        picker.setSelectedItem(2018, 5, 1);
-        picker.setResetWhileWheel(false);
-        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month, String day) {
-                birth_tv.setText(year + "-" + month + "-" + day);
-                birthString = year + "-" + month + "-" + day;
-            }
-        });
-        picker.setOnWheelListener(new DatePicker.OnWheelListener() {
-            @Override
-            public void onYearWheeled(int index, String year) {
-                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
-            }
-
-            @Override
-            public void onMonthWheeled(int index, String month) {
-                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
-            }
-
-            @Override
-            public void onDayWheeled(int index, String day) {
-                picker.setTitleText(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + day);
-            }
-        });
-        picker.show();
+        showSystemDatePick();
+//        final DatePicker picker = new DatePicker(this);
+//        picker.setCanceledOnTouchOutside(true);
+//        picker.setUseWeight(true);
+//        picker.setTopPadding(DensityUtil.dip2px(this, 10));
+//        picker.setRangeEnd(2018, 12, 12);
+//        picker.setRangeStart(1900, 1, 1);
+//        picker.setSelectedItem(2018, 5, 1);
+//        picker.setResetWhileWheel(false);
+//        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+//            @Override
+//            public void onDatePicked(String year, String month, String day) {
+//                birth_tv.setText(year + "-" + month + "-" + day);
+//                birthString = year + "-" + month + "-" + day;
+//            }
+//        });
+//        picker.setOnWheelListener(new DatePicker.OnWheelListener() {
+//            @Override
+//            public void onYearWheeled(int index, String year) {
+//                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
+//            }
+//
+//            @Override
+//            public void onMonthWheeled(int index, String month) {
+//                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
+//            }
+//
+//            @Override
+//            public void onDayWheeled(int index, String day) {
+//                picker.setTitleText(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + day);
+//            }
+//        });
+//        picker.show();
     }
 
 
@@ -426,4 +430,22 @@ public class PersonalSettingsActivity extends BaseActivity implements View.OnCli
                     }
                 }).show();
     }
+
+
+    private void showSystemDatePick() {
+        DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
+                birth_tv.setText(year + "-" + (++month) + "-" + dayOfMonth);
+                birthString = year + "-" + (++month) + "-" + dayOfMonth;
+            }
+
+        };
+        DatePickerDialog dialog = new DatePickerDialog(PersonalSettingsActivity.this, 0, listener, Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));//后边三个参数为显示dialog时默认的日期，月份从0开始，0-11对应1-12个月
+        dialog.show();
+    }
+
+
 }

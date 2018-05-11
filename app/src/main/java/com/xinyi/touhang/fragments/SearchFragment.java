@@ -1,6 +1,7 @@
 package com.xinyi.touhang.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -17,7 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.WebActivity;
 import com.xinyi.touhang.base.BaseFragment;
+import com.xinyi.touhang.constants.AppUrls;
 import com.xinyi.touhang.fragments.searchInner.AccountingFragment;
 import com.xinyi.touhang.fragments.searchInner.IpoFragment;
 import com.xinyi.touhang.fragments.searchInner.LawsFragment;
@@ -112,15 +115,25 @@ public class SearchFragment extends BaseFragment {
 
     @Override
     public void initViews() {
-        parentView.setPadding(0, StatusBarUtil.getStatusBarHeight(getActivity()),0,0);
+        parentView.setPadding(0, StatusBarUtil.getStatusBarHeight(getActivity()), 0, 0);
 
         initTabs();
+        rightTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(getActivity(), WebActivity.class);
+                it.putExtra(WebActivity.TITLESTRING, "能上市吗");
+                it.putExtra(WebActivity.TITLEURL, AppUrls.ForumCanUrl);
+                startActivity(it);
+            }
+        });
     }
 
     @Override
     public void initDatas() {
 
     }
+
 
     private void initTabs() {
         fragments = new ArrayList<>();

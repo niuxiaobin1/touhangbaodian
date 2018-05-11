@@ -2,6 +2,7 @@ package com.xinyi.touhang.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -41,10 +42,21 @@ import com.xinyi.touhang.utils.StatusBarUtil;
 import com.xinyi.touhang.utils.UIHelper;
 import com.xinyi.touhang.weight.ObservableScrollView;
 
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.WrapPagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +69,11 @@ import okhttp3.Response;
  */
 public class BusinessOpportunitiesFragment extends BaseFragment {
 
+    @BindView(R.id.magic_indicator)
+    MagicIndicator magic_indicator;
+
+    @BindView(R.id.select_tv)
+    TextView select_tv;
 
     @BindView(R.id.parentView)
     LinearLayout parentView;
@@ -74,6 +91,7 @@ public class BusinessOpportunitiesFragment extends BaseFragment {
     RecyclerView recylerView;
 
     private String[] titles = new String[]{"并购投资", "非标资产","银行间"};
+    private String[] mDataList = new String[]{"项目供方","项目需方"};
 
     private BusinessOpportunitiesAdapter adapter;
 
@@ -137,6 +155,10 @@ public class BusinessOpportunitiesFragment extends BaseFragment {
     @Override
     public void initViews() {
         initTabs();
+        try {
+            initMagicIndicator();
+        } catch (JSONException e) {
+        }
         parentView.setPadding(0, StatusBarUtil.getStatusBarHeight(getActivity()),0,0);
 
         refresh_layout.setMode(PullRefreshLayout.BOTH);
@@ -176,7 +198,68 @@ public class BusinessOpportunitiesFragment extends BaseFragment {
             }
         });
 
+        select_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (magic_indicator.getVisibility()==View.VISIBLE){
+                    magic_indicator.setVisibility(View.GONE);
+                }else{
+                    magic_indicator.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
     }
+
+
+    private void initMagicIndicator() throws JSONException {
+        magic_indicator.setBackgroundColor(Color.WHITE);
+        CommonNavigator commonNavigator = new CommonNavigator(getActivity());
+        commonNavigator.setScrollPivotX(0.35f);
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+            @Override
+            public int getCount() {
+                return mDataList == null ? 0 : mDataList.length;
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+                final SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
+                simplePagerTitleView.setText(mDataList[index]);
+                simplePagerTitleView.setTextSize(12);
+                simplePagerTitleView.setNormalColor(Color.parseColor("#4A4A4A"));
+                simplePagerTitleView.setSelectedColor(Color.parseColor("#000000"));
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        magic_indicator.onPageSelected(index);
+                        magic_indicator.onPageScrolled(index, 0, 0);
+                        if (index==0) {
+                            url = AppUrls.SupplySearchUrl;
+                            adapter.setType(0);
+                        } else {
+                            url = AppUrls.DemandSearchUrl;
+                            adapter.setType(1);
+                        }
+                        page = 1;
+                        initDatas();
+
+                    }
+                });
+                return simplePagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                WrapPagerIndicator indicator = new WrapPagerIndicator(context);
+                indicator.setFillColor(Color.parseColor("#FFD700"));
+                return indicator;
+            }
+        });
+        magic_indicator.setNavigator(commonNavigator);
+
+    }
+
 
     private void initTabs() {
 
@@ -187,15 +270,7 @@ public class BusinessOpportunitiesFragment extends BaseFragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getText().equals(titles[0])) {
-                    url = AppUrls.SupplySearchUrl;
-                    adapter.setType(0);
-                } else {
-                    url = AppUrls.DemandSearchUrl;
-                    adapter.setType(1);
-                }
-                page = 1;
-                initDatas();
+
             }
 
             @Override

@@ -124,6 +124,7 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/select_tv"
                 android:drawableRight="@mipmap/select_icon_new"
                 android:textSize="@dimen/tv_14sp"
                 android:textColor="@color/colorSubTitle"
@@ -132,6 +133,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:visibility="gone"
+            android:id="@+id/magic_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+       />
 
         <com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout
             android:id="@+id/refresh_layout"
