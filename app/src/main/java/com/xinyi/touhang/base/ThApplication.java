@@ -6,8 +6,10 @@ import android.content.res.Configuration;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.alivc.player.AliVcMediaPlayer;
+import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -34,7 +36,7 @@ import okhttp3.OkHttpClient;
 
 public class ThApplication extends Application {
 
-
+    private boolean loadX5Sttus = false;
     private Timer timer;//整个app的倒计时
     private boolean isCountDowning;//true：timer运行中，false:timer==null
     private String tel;
@@ -79,8 +81,19 @@ public class ThApplication extends Application {
             }
         });
         //tencent tbs
-        QbSdk.initX5Environment(getApplicationContext(), null);
+        QbSdk.initX5Environment(getApplicationContext(), new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
+
+            }
+
+            @Override
+            public void onViewInitFinished(boolean b) {
+                setLoadX5Sttus(true);
+            }
+        });
         QbSdk.setDownloadWithoutWifi(true);
+
     }
 
 
@@ -159,5 +172,15 @@ public class ThApplication extends Application {
         }, 0, 1000);
 
     }
+
+
+    public boolean isLoadX5Sttus() {
+        return loadX5Sttus;
+    }
+
+    public void setLoadX5Sttus(boolean loadX5Sttus) {
+        this.loadX5Sttus = loadX5Sttus;
+    }
+
 
 }

@@ -9,15 +9,33 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
+import com.lzy.okgo.model.HttpParams;
+import com.xinyi.touhang.PullRefreshLayout.OnRefreshListener;
+import com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.adapter.IpoAdapter;
+import com.xinyi.touhang.adapter.RegroupAdapter;
 import com.xinyi.touhang.base.BaseFragment;
+import com.xinyi.touhang.callBack.DialogCallBack;
+import com.xinyi.touhang.callBack.HandleResponse;
+import com.xinyi.touhang.constants.AppUrls;
+import com.xinyi.touhang.utils.CommonUtils;
 import com.xinyi.touhang.utils.DensityUtil;
 import com.xinyi.touhang.utils.DividerDecoration;
+import com.xinyi.touhang.utils.DoParams;
+import com.xinyi.touhang.utils.UIHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Response;
 
 /**
  * 重组
@@ -25,10 +43,22 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class RegroupFragment extends BaseFragment {
+    @BindView(R.id.search_et)
+    EditText search_et;
 
+    @BindView(R.id.search_image)
+    ImageView search_image;
+
+    @BindView(R.id.refresh_layout)
+    PullRefreshLayout refresh_layout;
 
     @BindView(R.id.regroup_recylerView)
     RecyclerView regroupRecylerView;
+
+    private int page=1;
+    private String name="";//搜索的关键字
+
+    private RegroupAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -83,6 +113,24 @@ public class RegroupFragment extends BaseFragment {
 
     @Override
     public void initViews() {
+
+        refresh_layout.setMode(PullRefreshLayout.PULL_FROM_START);
+        refresh_layout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onPullDownRefresh() {
+                page = 1;
+                initDatas();
+            }
+
+            @Override
+            public void onPullUpRefresh() {
+                page++;
+                initDatas();
+
+            }
+        });
+
+
         regroupRecylerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false){
             @Override
             public boolean canScrollVertically() {
@@ -91,12 +139,68 @@ public class RegroupFragment extends BaseFragment {
         });
         regroupRecylerView.addItemDecoration(new DividerDecoration(getActivity(),R.color.colorItem,
                 DensityUtil.dip2px(getActivity(),5)));
-        regroupRecylerView.setAdapter(new IpoAdapter(getActivity()));
+        adapter=new RegroupAdapter(getActivity());
+        regroupRecylerView.setAdapter(adapter);
+
+        search_et.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonUtils.showInputMethod(search_et);
+            }
+        });
+
+        search_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonUtils.hideInputMethod(search_et,getActivity());
+                name=search_et.getText().toString().trim();
+                page=1;
+                initDatas();
+
+            }
+        });
     }
 
     @Override
     public void initDatas() {
+        HttpParams params = new HttpParams();
+        params.put("name",name);
 
+        OkGo.<String>post(AppUrls.ReorganizationIndexUrl)
+                .cacheMode(CacheMode.NO_CACHE)
+                .params(DoParams.encryptionparams(getActivity(), params, ""))
+                .tag(this)
+                .execute(new DialogCallBack(getActivity(), false) {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        refresh_layout.onRefreshComplete();
+                        try {
+                            JSONObject js = new JSONObject(response.body());
+                            if (js.getBoolean("result")) {
+                                JSONObject data=js.getJSONObject("data");
+                                adapter.setData(data.toString());
+                            } else {
+                                UIHelper.toastMsg(js.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            UIHelper.toastMsg(e.getMessage());
+                        }
+
+                    }
+
+                    @Override
+                    public String convertResponse(Response response) throws Throwable {
+                        HandleResponse.handleReponse(response);
+                        return super.convertResponse(response);
+                    }
+
+                    @Override
+                    public void onError(com.lzy.okgo.model.Response<String> response) {
+                        super.onError(response);
+                        refresh_layout.onRefreshComplete();
+                        HandleResponse.handleException(response, getActivity());
+                    }
+                });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

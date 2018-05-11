@@ -14,10 +14,10 @@
     
     <ImageView
         android:layout_marginTop="20dp"
-        android:src="@mipmap/banner_parker_replace"
+        android:src="@mipmap/app_icon"
         android:scaleType="fitXY"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_width="75dp"
+        android:layout_height="75dp" />
 
     <LinearLayout
         android:gravity="center_vertical"

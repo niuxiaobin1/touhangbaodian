@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     android:orientation="vertical"
+    android:id="@+id/parentView"
     tools:context="com.xinyi.touhang.fragments.CommunicationFragment">
 
     <RelativeLayout
@@ -28,6 +29,13 @@
             android:visibility="visible" />
 
     </RelativeLayout>
+
+    <com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout
+        android:id="@+id/refresh_layout"
+        app:refreshMode="both"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+      >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -84,25 +92,37 @@
                     android:src="@mipmap/arrow_right" />
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
+                android:background="@color/colorWhite"
+                android:paddingBottom="5dp"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/content_pading_7dp"
                 android:paddingRight="@dimen/content_pading_7dp">
 
                 <com.xinyi.touhang.weight.MyGridView
+                    android:horizontalSpacing="10dp"
                     android:id="@+id/gridview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:numColumns="2"></com.xinyi.touhang.weight.MyGridView>
-            </RelativeLayout>
+                <com.xinyi.touhang.weight.MyGridView
+                    android:horizontalSpacing="10dp"
+                    android:id="@+id/gridview2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="2"></com.xinyi.touhang.weight.MyGridView>
+            </LinearLayout>
 
             <View
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:background="@color/colorLine" />
 
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:descendantFocusability="blocksDescendants"
@@ -184,6 +204,6 @@
         </LinearLayout>
     </ScrollView>
 
-
+    </com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout>
 </LinearLayout>
 

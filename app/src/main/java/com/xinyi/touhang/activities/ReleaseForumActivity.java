@@ -452,7 +452,7 @@ public class ReleaseForumActivity extends BaseActivity implements View.OnClickLi
 
         String localPath = filePath;
         String ImageName = "android" + System.currentTimeMillis();
-        String hostPath = AppUrls.UploadForum_imageUrl + ImageName + ".jpg";
+        String hostPath = AppUrls.UploadForum_imageUrl + ImageName + "."+filePath.split("\\.")[1];
         // Android版本变量
         final int version = Build.VERSION.SDK_INT;
         // 因为该方法在 Android 4.4 版本才可使用，所以使用时需进行版本判断

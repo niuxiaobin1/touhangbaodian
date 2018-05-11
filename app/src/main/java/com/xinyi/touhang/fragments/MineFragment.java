@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +23,16 @@ import com.lzy.okgo.model.HttpParams;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.activities.HistoryActivity;
 import com.xinyi.touhang.activities.LoginActivity;
+import com.xinyi.touhang.activities.MainActivity;
 import com.xinyi.touhang.activities.MyCommentActivity;
 import com.xinyi.touhang.activities.MyFocusActivity;
 import com.xinyi.touhang.activities.MyForumActivity;
 import com.xinyi.touhang.activities.MyNotificationActivity;
 import com.xinyi.touhang.activities.MyOrderActivity;
+import com.xinyi.touhang.activities.PersonalSettingsActivity;
 import com.xinyi.touhang.activities.SettingsActivity;
 import com.xinyi.touhang.activities.UserFeedBackActivity;
+import com.xinyi.touhang.activities.VipActivity;
 import com.xinyi.touhang.base.BaseFragment;
 import com.xinyi.touhang.callBack.DialogCallBack;
 import com.xinyi.touhang.callBack.HandleResponse;
@@ -40,6 +41,7 @@ import com.xinyi.touhang.constants.Configer;
 import com.xinyi.touhang.utils.DoParams;
 import com.xinyi.touhang.utils.GlideCircleTransform;
 import com.xinyi.touhang.utils.SpUtils;
+import com.xinyi.touhang.utils.StatusBarUtil;
 import com.xinyi.touhang.utils.UIHelper;
 
 import org.json.JSONException;
@@ -56,15 +58,17 @@ import okhttp3.Response;
  */
 public class MineFragment extends BaseFragment {
 
+    @BindView(R.id.parentView)
+    LinearLayout parentView;
     //关注
     @BindView(R.id.focusLayout)
-    LinearLayout focusLayout;
+    RelativeLayout focusLayout;
     //历史
     @BindView(R.id.historyLayout)
-    LinearLayout historyLayout;
+    RelativeLayout historyLayout;
     //评论
     @BindView(R.id.commentLayout)
-    LinearLayout commentLayout;
+    RelativeLayout commentLayout;
     //消息通知
     @BindView(R.id.notificationLayout)
     RelativeLayout notificationLayout;
@@ -74,9 +78,6 @@ public class MineFragment extends BaseFragment {
     //我的帖子
     @BindView(R.id.forumLayout)
     RelativeLayout forumLayout;
-    //意见反馈
-    @BindView(R.id.feedbackLayout)
-    RelativeLayout feedbackLayout;
     //设置
     @BindView(R.id.settingsLayout)
     RelativeLayout settingsLayout;
@@ -163,6 +164,16 @@ public class MineFragment extends BaseFragment {
             }
         });
 
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkLogin()) {
+                    Intent it = new Intent(getActivity(), PersonalSettingsActivity.class);
+                    startActivity(it);
+                }
+            }
+        });
+
         focusLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,20 +228,20 @@ public class MineFragment extends BaseFragment {
                 }
             }
         });
-        feedbackLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkLogin()) {
-                    Intent it = new Intent(getActivity(), UserFeedBackActivity.class);
-                    startActivity(it);
-                }
-            }
-        });
+
         settingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent it = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(it);
+            }
+        });
+
+        vipFlag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if (checkLogin()) {
-                    Intent it = new Intent(getActivity(), SettingsActivity.class);
+                    Intent it = new Intent(getActivity(), VipActivity.class);
                     startActivity(it);
                 }
             }
@@ -248,10 +259,14 @@ public class MineFragment extends BaseFragment {
 
         String user_token = (String) SpUtils.get(getActivity(), SpUtils.USERUSER_TOKEN, "");
         if (TextUtils.isEmpty(user_token)) {
+            StatusBarUtil.StatusBarLightMode(getActivity());
             login_none_layout.setVisibility(View.VISIBLE);
             login_user_layout.setVisibility(View.GONE);
+            parentView.setPadding(0, StatusBarUtil.getStatusBarHeight(getActivity()), 0, 0);
             return;
         } else {
+            parentView.setPadding(0, 0, 0, 0);
+            StatusBarUtil.StatusBarDarkMode(getActivity());
             restoreUserInfo();
             login_none_layout.setVisibility(View.GONE);
             login_user_layout.setVisibility(View.VISIBLE);
@@ -389,7 +404,6 @@ public class MineFragment extends BaseFragment {
             }
         }
     }
-
 
 
     private void savaUserInfo(JSONObject jsonObject) throws JSONException {

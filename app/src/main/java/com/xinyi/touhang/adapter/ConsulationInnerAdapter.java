@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.activities.ConsulationDetailActivity;
 import com.xinyi.touhang.utils.DensityUtil;
+import com.xinyi.touhang.weight.EllipsizingTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class ConsulationInnerAdapter extends RecyclerView.Adapter<ConsulationInn
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Map<String, String> map = datas.get(position);
-        Glide.with(context).load(map.get("image")).into(holder.news_image);
+        Glide.with(context).load(map.get("image")).placeholder(R.mipmap.loading_image).into(holder.news_image);
         holder.newsTitleTv.setText(map.get("name"));
         holder.newsEditorTv.setText(map.get("author"));
         holder.news_readNum.setText(map.get("read_num") + "阅读");
@@ -79,7 +80,7 @@ public class ConsulationInnerAdapter extends RecyclerView.Adapter<ConsulationInn
 
         public LinearLayout left_layout;
         private ImageView news_image;
-        private TextView newsTitleTv;
+        private EllipsizingTextView newsTitleTv;
         private TextView newsEditorTv;
         private TextView news_time;
         private TextView news_readNum;

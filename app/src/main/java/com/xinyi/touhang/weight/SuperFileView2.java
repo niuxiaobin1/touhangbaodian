@@ -53,7 +53,6 @@ public class SuperFileView2 extends FrameLayout implements TbsReaderView.ReaderC
     }
 
     public void displayFile(File mFile) {
-
         if (mFile != null && !TextUtils.isEmpty(mFile.toString())) {
             //增加下面一句解决没有TbsReaderTemp文件夹存在导致加载文件失败
             String bsReaderTemp = "/storage/emulated/0/TbsReaderTemp";
@@ -64,13 +63,10 @@ public class SuperFileView2 extends FrameLayout implements TbsReaderView.ReaderC
                 if (!mkdir) {
                 }
             }
-
             //加载文件
             Bundle localBundle = new Bundle();
-            localBundle.putString("filePath", mFile.toString());
-
+            localBundle.putString("filePath", mFile.getPath());
             localBundle.putString("tempPath", Environment.getExternalStorageDirectory() + "/" + "TbsReaderTemp");
-
             if (this.mTbsReaderView == null)
                 this.mTbsReaderView = getTbsReaderView(context);
             boolean bool = this.mTbsReaderView.preOpen(getFileType(mFile.toString()), false);

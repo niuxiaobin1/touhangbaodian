@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
+import com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.adapter.BaseAdapter;
 import com.xinyi.touhang.adapter.focus.BusinessAdapter;
@@ -47,6 +48,9 @@ import okhttp3.Response;
  * create an instance of this fragment.
  */
 public class MyHistoryListFragment extends BaseFragment {
+
+    @BindView(R.id.refresh_layout)
+    PullRefreshLayout refresh_layout;
 
     @BindView(R.id.recylerView)
     RecyclerView recylerView;
@@ -98,7 +102,7 @@ public class MyHistoryListFragment extends BaseFragment {
         if (type.equals("0")) {
             urlString = AppUrls.NewsFootpathUrl;
         }else if(type.equals("1")){
-            urlString = "";
+            urlString = AppUrls.SupplyFootpathUrl;
         }else if(type.equals("2")){
             urlString = AppUrls.VideoFootpathUrl;
         }else{
@@ -117,6 +121,7 @@ public class MyHistoryListFragment extends BaseFragment {
 
     @Override
     public void initViews() {
+        refresh_layout.setMode(PullRefreshLayout.DISABLED);
         recylerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recylerView.addItemDecoration(new DividerDecoration(getActivity(), R.color.colorLine, DensityUtil.dip2px(
                 getActivity(), 0.5f
@@ -165,12 +170,22 @@ public class MyHistoryListFragment extends BaseFragment {
                             JSONObject js = new JSONObject(response.body());
 
                             if (js.getBoolean("result")) {
+                                adapter.clearDatas();
                                 if (adapter != null) {
-                                    adapter.addDatas(JsonUtils.ArrayToList(
-                                            js.getJSONObject("data").getJSONArray("history"), new String[]{
-                                                    "id", "name", "image"
-                                            }
-                                    ));
+                                    if (type.equals("1")) {
+                                        adapter.addDatas(JsonUtils.ArrayToList(
+                                                js.getJSONObject("data").getJSONArray("history"), new String[]{
+                                                        "id", "name", "type"
+                                                }
+                                        ));
+                                    }else{
+                                        adapter.addDatas(JsonUtils.ArrayToList(
+                                                js.getJSONObject("data").getJSONArray("history"), new String[]{
+                                                        "id", "name", "image"
+                                                }
+                                        ));
+                                    }
+
                                 }
                             } else {
                                 UIHelper.toastMsg(js.getString("message"));

@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingBottom="10dp"
+    android:paddingBottom="15dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
     android:paddingLeft="@dimen/content_pading_7dp"
     android:paddingRight="@dimen/content_pading_7dp"
-    android:paddingTop="10dp">
+    android:paddingTop="15dp">
 
     <LinearLayout
         android:id="@+id/left_layout"
@@ -19,7 +19,8 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
+        <com.xinyi.touhang.weight.EllipsizingTextView
+            android:ellipsize="end"
             android:id="@+id/newsTitleTv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -27,7 +28,7 @@
             android:maxLines="2"
             android:text="美媒慌了：财政靠山忽被搬走人民币对美元的伤害更甚"
             android:textColor="@color/colorMain"
-            android:textSize="@dimen/tv_14sp" />
+            android:textSize="@dimen/tv_16sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -42,7 +43,7 @@
                 android:gravity="center_vertical"
                 android:text="网易新闻"
                 android:textColor="@color/colorSubTitle"
-                android:textSize="@dimen/tv_12sp" />
+                android:textSize="@dimen/tv_10sp" />
 
             <TextView
 
@@ -54,7 +55,7 @@
                 android:gravity="center_vertical"
                 android:text="9分钟前"
                 android:textColor="@color/colorSubTitle"
-                android:textSize="@dimen/tv_12sp" />
+                android:textSize="@dimen/tv_10sp" />
 
 
             <TextView
@@ -67,7 +68,7 @@
                 android:gravity="center_vertical"
                 android:text="333阅读"
                 android:textColor="@color/colorSubTitle"
-                android:textSize="@dimen/tv_12sp" />
+                android:textSize="@dimen/tv_10sp" />
 
         </RelativeLayout>
 

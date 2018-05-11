@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -16,6 +17,7 @@ import com.xinyi.touhang.fragments.CommunicationFragment;
 import com.xinyi.touhang.fragments.ConsulationFragment;
 import com.xinyi.touhang.fragments.MineFragment;
 import com.xinyi.touhang.fragments.SearchFragment;
+import com.xinyi.touhang.utils.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +65,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initViews();
@@ -120,6 +123,13 @@ public class MainActivity extends BaseActivity {
      * @param index
      */
     private void switchTab(int index) {
+
+        if (index==footers.size()-1){
+            StatusBarUtil.StatusBarLightMode(MainActivity.this);
+        }else{
+            StatusBarUtil.StatusBarDarkMode(MainActivity.this);
+        }
+
         for (int i = 0; i < footers.size(); i++) {
             if (i == index) {
                 footers.get(i).getChildAt(0).setSelected(true);

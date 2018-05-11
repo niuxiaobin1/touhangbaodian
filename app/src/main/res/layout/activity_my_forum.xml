@@ -11,11 +11,22 @@
 
     <include layout="@layout/back_title_bar" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recylerView"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"></android.support.v7.widget.RecyclerView>
+        android:layout_height="0.5dp"
+        android:background="@color/colorLine" />
 
+    <com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:refreshMode="both">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recylerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    </com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout>
 </LinearLayout>

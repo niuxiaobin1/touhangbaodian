@@ -6,11 +6,12 @@
     android:paddingBottom="10dp"
     android:paddingTop="10dp">
 
-    <TextView
+    <com.xinyi.touhang.weight.EllipsizingTextView
+        android:ellipsize="end"
         android:id="@+id/forumName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"
+        android:maxLines="2"
         android:text="MBA研究班教学：带你走进成功的殿堂"
         android:textColor="@color/colorMain"
         android:textSize="@dimen/tv_15sp" />

@@ -137,7 +137,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:ellipsize="end"
-                    android:maxLines="3"
+                    android:maxLines="100"
                     android:text=""
                     android:textColor="@color/colorSubTitle"
                     android:textSize="@dimen/tv_14sp" />
@@ -251,7 +251,7 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/favo_tv_bg" />
+                android:background="@mipmap/share_icon" />
 
             <TextView
                 android:id="@+id/favo_tv"

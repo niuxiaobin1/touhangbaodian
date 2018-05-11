@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.BusinessDetailActivity;
 import com.xinyi.touhang.activities.ConsulationDetailActivity;
 import com.xinyi.touhang.adapter.BaseAdapter;
+import com.xinyi.touhang.constants.AppUrls;
 import com.xinyi.touhang.utils.DensityUtil;
 
 import butterknife.BindView;
@@ -42,16 +44,22 @@ public class BusinessAdapter extends BaseAdapter<BusinessAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-//        holder.textView.setText(datas.get(position).get("name"));
-//
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent it = new Intent(context, ConsulationDetailActivity.class);
-//                it.putExtra(ConsulationDetailActivity.NEWS_ID, datas.get(position).get("id"));
-//                context.startActivity(it);
-//            }
-//        });
+        holder.textView.setText(datas.get(position).get("name"));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it=new Intent(context, BusinessDetailActivity.class);
+                if (datas.get(position).get("type").equals("0") ) {
+                    it.putExtra(BusinessDetailActivity.DATAURL, AppUrls.SupplyDetailUrl);
+                }else{
+                    it.putExtra(BusinessDetailActivity.DATAURL, AppUrls.DemandDetailUrl);
+                }
+
+                it.putExtra(BusinessDetailActivity.BUSINESSID,datas.get(position).get("id"));
+                context.startActivity(it);
+            }
+        });
     }
 
     @Override

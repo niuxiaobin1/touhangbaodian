@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
+import com.xinyi.touhang.PullRefreshLayout.OnRefreshListener;
+import com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.adapter.BaseAdapter;
 import com.xinyi.touhang.adapter.MyCommentAdapter;
@@ -21,6 +23,7 @@ import com.xinyi.touhang.adapter.OrderAdapter;
 import com.xinyi.touhang.base.BaseFragment;
 import com.xinyi.touhang.callBack.DialogCallBack;
 import com.xinyi.touhang.callBack.HandleResponse;
+import com.xinyi.touhang.constants.AppUrls;
 import com.xinyi.touhang.utils.DensityUtil;
 import com.xinyi.touhang.utils.DividerDecoration;
 import com.xinyi.touhang.utils.DoParams;
@@ -45,12 +48,17 @@ import okhttp3.Response;
  */
 public class OrderListFragment extends BaseFragment {
 
+
+    @BindView(R.id.refresh_layout)
+    PullRefreshLayout refresh_layout;
+
     @BindView(R.id.recylerView)
     RecyclerView recylerView;
 
     private BaseAdapter adapter;
 
     private String urlString;
+    private int page = 1;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,7 +101,7 @@ public class OrderListFragment extends BaseFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         if (type.equals("0")) {
-            urlString = "";
+            urlString = AppUrls.OrderListsUrl;
         } else if (type.equals("1")) {
             urlString = "";
         } else if (type.equals("2")) {
@@ -119,8 +127,23 @@ public class OrderListFragment extends BaseFragment {
         )));
 
         adapter = new OrderAdapter(getActivity());
-
         recylerView.setAdapter(adapter);
+
+        refresh_layout.setMode(PullRefreshLayout.BOTH);
+        refresh_layout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onPullDownRefresh() {
+                page = 1;
+                initDatas();
+            }
+
+            @Override
+            public void onPullUpRefresh() {
+                page++;
+                initDatas();
+
+            }
+        });
     }
 
     @Override
@@ -133,6 +156,11 @@ public class OrderListFragment extends BaseFragment {
 
         HttpParams params = new HttpParams();
         params.put("user_token", user_token);
+        params.put("page", String.valueOf(page));
+        params.put("type", "2");
+        if (page == 1) {
+            adapter.clearDatas();
+        }
         OkGo.<String>post(urlString)
                 .cacheMode(CacheMode.NO_CACHE)
                 .params(DoParams.encryptionparams(getActivity(), params, user_token))
@@ -146,8 +174,9 @@ public class OrderListFragment extends BaseFragment {
                             if (js.getBoolean("result")) {
                                 if (adapter != null) {
                                     adapter.addDatas(JsonUtils.ArrayToList(
-                                            js.getJSONObject("data").getJSONArray("favorite"), new String[]{
-                                                    "id", "name", "image", "fid"
+                                            js.getJSONObject("data").getJSONArray("order"), new String[]{
+                                                    "order_id", "status", "type", "button", "status_name",
+                                                    "name", "image", "descrie", "price", "total_price", "vid", "time"
                                             }
                                     ));
                                 }
@@ -196,16 +225,7 @@ public class OrderListFragment extends BaseFragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

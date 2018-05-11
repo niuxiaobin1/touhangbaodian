@@ -8,6 +8,8 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.base.BaseActivity;
@@ -21,6 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MyNotificationActivity extends BaseActivity {
+
+    @BindView(R.id.notifyNumTv)
+    TextView notifyNumTv;
 
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
@@ -36,6 +41,15 @@ public class MyNotificationActivity extends BaseActivity {
             "评论我的", "通知"
     };
 
+    public void setNum(int num) {
+        notifyNumTv.setText(num + "");
+        notifyNumTv.setVisibility(View.VISIBLE);
+    }
+
+    public void hideNum() {
+        notifyNumTv.setText("");
+        notifyNumTv.setVisibility(View.GONE);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +66,24 @@ public class MyNotificationActivity extends BaseActivity {
         super.initViews();
         initTitle("消息通知");
         initTabs();
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position==1){
+                    hideNum();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -82,11 +114,10 @@ public class MyNotificationActivity extends BaseActivity {
     }
 
 
-
     private void initTabs() {
         fragments = new ArrayList<>();
         for (int i = 0; i < titles.length; i++) {
-            fragments.add(NotificationFragment.newInstance(""+i, ""));
+            fragments.add(NotificationFragment.newInstance("" + i, ""));
         }
         adapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setOffscreenPageLimit(4);

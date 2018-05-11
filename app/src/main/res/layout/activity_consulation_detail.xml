@@ -131,7 +131,7 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/favo_tv_bg" />
+                android:background="@mipmap/share_icon" />
 
             <TextView
                 android:id="@+id/favo_tv"

@@ -49,10 +49,11 @@ public class VideoAdapter extends BaseAdapter<VideoAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Map<String, String> map = datas.get(position);
-        Glide.with(context).load(map.get("image")).placeholder(R.mipmap.banner_parker_replace)
+        Glide.with(context).load(map.get("image")).placeholder(R.mipmap.loading_image)
                 .into(holder.imageView);
         holder.titleTv.setText(map.get("name"));
-        holder.commitInfoTv.setText(map.get("author") + "  " + map.get("modified"));
+        holder.commitInfoTv.setText(map.get("author") );
+        holder.commitTimeTv.setText(map.get("passed") );
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +86,9 @@ public class VideoAdapter extends BaseAdapter<VideoAdapter.ViewHolder> {
 
         @BindView(R.id.commitInfoTv)
         TextView commitInfoTv;
+
+        @BindView(R.id.commitTimeTv)
+        TextView commitTimeTv;
 
         public ViewHolder(View itemView) {
             super(itemView);

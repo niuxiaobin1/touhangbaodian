@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
+import com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.adapter.BaseAdapter;
 import com.xinyi.touhang.adapter.focus.BusinessAdapter;
@@ -47,6 +48,10 @@ import okhttp3.Response;
  * create an instance of this fragment.
  */
 public class MyFocusListFragment extends BaseFragment {
+
+
+    @BindView(R.id.refresh_layout)
+    PullRefreshLayout refresh_layout;
 
     @BindView(R.id.recylerView)
     RecyclerView recylerView;
@@ -98,7 +103,7 @@ public class MyFocusListFragment extends BaseFragment {
         if (type.equals("0")) {
             urlString = AppUrls.NewsFavoriteUrl;
         }else if(type.equals("1")){
-            urlString = "";
+            urlString = AppUrls.SupplyFavoriteUrl;
         }else if(type.equals("2")){
             urlString = AppUrls.VideoFavoriteUrl;
         }else{
@@ -117,6 +122,7 @@ public class MyFocusListFragment extends BaseFragment {
 
     @Override
     public void initViews() {
+        refresh_layout.setMode(PullRefreshLayout.DISABLED);
         recylerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recylerView.addItemDecoration(new DividerDecoration(getActivity(), R.color.colorLine, DensityUtil.dip2px(
                 getActivity(), 0.5f
@@ -157,11 +163,21 @@ public class MyFocusListFragment extends BaseFragment {
 
                             if (js.getBoolean("result")) {
                                 if (adapter != null) {
-                                    adapter.addDatas(JsonUtils.ArrayToList(
-                                            js.getJSONObject("data").getJSONArray("favorite"), new String[]{
-                                                    "id", "name", "image","fid"
-                                            }
-                                    ));
+                                    if (type.equals("1")) {
+                                        adapter.addDatas(JsonUtils.ArrayToList(
+                                                js.getJSONObject("data").getJSONArray("favorite"), new String[]{
+                                                        "id", "name", "type","fid"
+                                                }
+                                        ));
+                                    }else{
+                                        adapter.addDatas(JsonUtils.ArrayToList(
+                                                js.getJSONObject("data").getJSONArray("favorite"), new String[]{
+                                                        "id", "name", "image","fid"
+                                                }
+                                        ));
+                                    }
+
+
                                 }
                             } else {
                                 UIHelper.toastMsg(js.getString("message"));

@@ -14,13 +14,17 @@ import android.view.ViewGroup;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
+import com.xinyi.touhang.PullRefreshLayout.OnRefreshListener;
+import com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout;
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.MyNotificationActivity;
 import com.xinyi.touhang.adapter.BaseAdapter;
 import com.xinyi.touhang.adapter.MyCommentAdapter;
 import com.xinyi.touhang.adapter.focus.NotificationAdapter;
 import com.xinyi.touhang.base.BaseFragment;
 import com.xinyi.touhang.callBack.DialogCallBack;
 import com.xinyi.touhang.callBack.HandleResponse;
+import com.xinyi.touhang.constants.AppUrls;
 import com.xinyi.touhang.utils.DensityUtil;
 import com.xinyi.touhang.utils.DividerDecoration;
 import com.xinyi.touhang.utils.DoParams;
@@ -44,6 +48,11 @@ import okhttp3.Response;
  * create an instance of this fragment.
  */
 public class NotificationFragment extends BaseFragment {
+
+    @BindView(R.id.refresh_layout)
+    PullRefreshLayout refresh_layout;
+
+    private int page = 1;
 
     @BindView(R.id.recylerView)
     RecyclerView recylerView;
@@ -93,12 +102,9 @@ public class NotificationFragment extends BaseFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         if (type.equals("0")) {
-            urlString = "";
+            urlString = AppUrls.ForumNotifyUrl;
         } else if (type.equals("1")) {
-            urlString = "";
-        } else if (type.equals("2")) {
-            urlString = "";
-        } else {
+            urlString = AppUrls.FrontNotifyUrl;
         }
     }
 
@@ -119,8 +125,23 @@ public class NotificationFragment extends BaseFragment {
         )));
 
         adapter = new NotificationAdapter(getActivity());
-
         recylerView.setAdapter(adapter);
+
+        refresh_layout.setMode(PullRefreshLayout.BOTH);
+        refresh_layout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onPullDownRefresh() {
+                page = 1;
+                initDatas();
+            }
+
+            @Override
+            public void onPullUpRefresh() {
+                page++;
+                initDatas();
+
+            }
+        });
     }
 
     @Override
@@ -133,6 +154,10 @@ public class NotificationFragment extends BaseFragment {
 
         HttpParams params = new HttpParams();
         params.put("user_token", user_token);
+        params.put("page", String.valueOf(page));
+        if (page == 1) {
+            adapter.clearDatas();
+        }
         OkGo.<String>post(urlString)
                 .cacheMode(CacheMode.NO_CACHE)
                 .params(DoParams.encryptionparams(getActivity(), params, user_token))
@@ -140,16 +165,36 @@ public class NotificationFragment extends BaseFragment {
                 .execute(new DialogCallBack(getActivity(), false) {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        refresh_layout.onRefreshComplete();
                         try {
                             JSONObject js = new JSONObject(response.body());
 
                             if (js.getBoolean("result")) {
                                 if (adapter != null) {
-                                    adapter.addDatas(JsonUtils.ArrayToList(
-                                            js.getJSONObject("data").getJSONArray("favorite"), new String[]{
-                                                    "id", "name", "image", "fid"
-                                            }
-                                    ));
+
+
+                                    if (type.equals("0")) {
+                                        adapter.addDatas(JsonUtils.ArrayToList(
+                                                js.getJSONObject("data").getJSONArray("list"), new String[]{
+                                                        "id", "title", "customer_name", "customer_image",
+                                                        "content", "passed"
+                                                }
+                                        ));
+                                        int notify = js.getJSONObject("data").getInt("notify");
+                                        if (notify > 0) {
+                                            ((MyNotificationActivity) getActivity()).setNum(notify);
+                                        } else {
+                                            ((MyNotificationActivity) getActivity()).hideNum();
+                                        }
+                                    } else if (type.equals("1")) {
+                                        adapter.addDatas(JsonUtils.ArrayToList(
+                                                js.getJSONArray("data"), new String[]{
+                                                        "id", "name", "content", "customer_id",
+                                                        "status", "created", "modified", "image"
+                                                }
+                                        ));
+                                    }
+
                                 }
                             } else {
                                 UIHelper.toastMsg(js.getString("message"));
@@ -169,6 +214,7 @@ public class NotificationFragment extends BaseFragment {
                     @Override
                     public void onError(com.lzy.okgo.model.Response<String> response) {
                         super.onError(response);
+                        refresh_layout.onRefreshComplete();
                         HandleResponse.handleException(response, getActivity());
                     }
                 });

@@ -1,68 +1,148 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/content_pading_7dp"
-    android:paddingRight="@dimen/content_pading_7dp"
     tools:context="com.xinyi.touhang.fragments.BusinessOpportunitiesFragment">
 
     <TextView
-        android:paddingBottom="10dp"
         android:id="@+id/titleTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:paddingBottom="10dp"
         android:text="@string/footerBussinessOpportunitiedString"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/tv_14sp"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
-    <com.xinyi.touhang.weight.ObservableScrollView
-        android:id="@+id/mScrollView"
+
+    <!--<com.xinyi.touhang.weight.ObservableScrollView-->
+
+    <!--android:id="@+id/mScrollView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:scrollbars="none">-->
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/subTitleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/BussinessOpportunitiedSubtitleString"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/tv_16sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/release_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/content_pading_7dp"
+                android:drawableRight="@mipmap/release_icon_new"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="发布"
+                android:textColor="@color/colorMain"
+                android:textSize="@dimen/tv_12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorLine" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                app:tabIndicatorColor="@color/colorTabSelectedIndicator"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/colorBlack"
+                app:tabTextColor="@color/colorMain"></android.support.design.widget.TabLayout>
+
+        </RelativeLayout>
 
         <LinearLayout
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp">
 
-                <TextView
-                    android:id="@+id/subTitleTv"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/BussinessOpportunitiedSubtitleString"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/tv_16sp"
-                    android:visibility="visible" />
+                <EditText
+                    android:id="@+id/search_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/laws_search_bg"
+                    android:focusable="false"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="40dp"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_14sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/search_image"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:drawablePadding="@dimen/content_pading_7dp"
-                    android:drawableRight="@mipmap/release_icon"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="@string/productReleaseString"
-                    android:textColor="@color/colorMain"
-                    android:textSize="@dimen/tv_12sp" />
+                    android:layout_marginRight="20dp"
+                    android:src="@mipmap/search_icon" />
             </RelativeLayout>
 
+            <TextView
+                android:drawableRight="@mipmap/select_icon_new"
+                android:textSize="@dimen/tv_14sp"
+                android:textColor="@color/colorSubTitle"
+                android:text="筛选"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:refreshMode="both">
+
             <RelativeLayout
-                android:paddingBottom="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingBottom="5dp">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recylerView"
@@ -71,7 +151,9 @@
 
 
             </RelativeLayout>
-        </LinearLayout>
+        </com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout>
+    </LinearLayout>
 
-    </com.xinyi.touhang.weight.ObservableScrollView>
+    <!--</com.xinyi.touhang.weight.ObservableScrollView-->
+    <!--&gt;-->
 </LinearLayout>

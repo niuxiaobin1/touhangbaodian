@@ -18,15 +18,16 @@
         android:scaleType="fitXY"
         android:src="@mipmap/banner_parker_replace" />
 
-    <TextView
+    <com.xinyi.touhang.weight.EllipsizingTextView
+        android:ellipsize="end"
         android:id="@+id/newsTitleTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:maxLines="1"
+        android:maxLines="2"
         android:text="中美贸易逆差从何而来"
         android:textColor="@color/colorMain"
-        android:textSize="@dimen/tv_14sp" />
+        android:textSize="@dimen/tv_16sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"

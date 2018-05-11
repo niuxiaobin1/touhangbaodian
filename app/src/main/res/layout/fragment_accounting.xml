@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
@@ -8,7 +9,12 @@
     android:paddingLeft="@dimen/content_pading_7dp"
     android:paddingRight="@dimen/content_pading_7dp"
     tools:context="com.xinyi.touhang.fragments.searchInner.AccountingFragment">
-
+    <com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout
+        android:descendantFocusability="blocksDescendants"
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:refreshMode="both">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -22,12 +28,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
 
-                <TextView
+                <EditText
+                    android:id="@+id/search_et"
+                    android:paddingRight="40dp"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_14sp"
+                    android:focusable="false"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="@drawable/laws_search_bg" />
 
                 <ImageView
+                    android:id="@+id/search_image"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentRight="true"
@@ -41,7 +55,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp" />
-
+            <net.lucode.hackware.magicindicator.MagicIndicator
+                android:id="@+id/sub_magic_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
+                android:visibility="gone" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -54,5 +73,5 @@
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-
+    </com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout>
 </LinearLayout>

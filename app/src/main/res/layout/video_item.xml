@@ -50,15 +50,30 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/commitInfoTv"
+        <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/commitInfoTv"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:text="甲方发布  2018-04-10"
+            android:text="甲方发布"
             android:textColor="@color/colorSubTitle"
             android:textSize="@dimen/tv_12sp" />
-
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/commitTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="甲方发布"
+            android:textColor="@color/colorSubTitle"
+            android:textSize="@dimen/tv_12sp" />
+        </RelativeLayout>
     </LinearLayout>
 
 

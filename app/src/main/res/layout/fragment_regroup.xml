@@ -2,10 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     android:paddingTop="10dp"
     tools:context="com.xinyi.touhang.fragments.searchInner.RegroupFragment">
+
+    <com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout
+        android:descendantFocusability="blocksDescendants"
+        android:id="@+id/refresh_layout"
+        app:refreshMode="both"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+      >
     <ScrollView
         android:scrollbars="none"
         android:layout_width="match_parent"
@@ -22,12 +31,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
 
-                <TextView
+                <EditText
+                    android:id="@+id/search_et"
+                    android:paddingRight="40dp"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_14sp"
+                    android:focusable="false"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="@drawable/laws_search_bg" />
 
                 <ImageView
+                    android:id="@+id/search_image"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentRight="true"
@@ -49,5 +66,5 @@
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-
+    </com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout>
 </LinearLayout>

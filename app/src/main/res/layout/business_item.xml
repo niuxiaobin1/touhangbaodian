@@ -24,12 +24,12 @@
             android:visibility="gone" />
 
         <TextView
+            android:id="@+id/titleTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:text="湖南国有控股企业（国家级高新区基建主体）232323"
             android:textColor="@color/colorMain"
             android:textSize="@dimen/tv_15sp" />
 
@@ -41,127 +41,336 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/supply_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:visibility="visible">
 
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/amountString"
-            android:textColor="@color/colorMain"
-            android:textSize="@dimen/tv_12sp" />
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:text="25亿"
-            android:textColor="@color/colorPink"
-            android:textSize="@dimen/tv_12sp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/amountString"
-            android:textColor="@color/colorMain"
-            android:textSize="@dimen/tv_12sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="所在地区："
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_12sp" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:text="7.5%"
-            android:textColor="@color/colorPink"
-            android:textSize="@dimen/tv_12sp" />
+                <TextView
+                    android:id="@+id/sTv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPink"
+                    android:textSize="@dimen/tv_12sp" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/termString"
-            android:textColor="@color/colorMain"
-            android:textSize="@dimen/tv_12sp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="融资用途："
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_12sp" />
+
+                <TextView
+                    android:id="@+id/sTv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPink"
+                    android:textSize="@dimen/tv_12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="项目阶段："
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_12sp" />
+
+                <TextView
+                    android:id="@+id/sTv3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPink"
+                    android:textSize="@dimen/tv_12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:text="7.5%"
-            android:textColor="@color/colorPink"
-            android:textSize="@dimen/tv_12sp" />
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="公司行业："
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_12sp" />
+
+                <TextView
+                    android:id="@+id/sTv4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPink"
+                    android:textSize="@dimen/tv_12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="融资金额："
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_12sp" />
+
+                <TextView
+                    android:id="@+id/sTv5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPink"
+                    android:textSize="@dimen/tv_12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="出让股权比例："
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_12sp" />
+
+                <TextView
+                    android:id="@+id/sTv6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPink"
+                    android:textSize="@dimen/tv_12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/demand_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/stateOwnedString"
-            android:textColor="@color/colorMain"
-            android:textSize="@dimen/tv_12sp" />
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="拟投资地区："
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_12sp" />
+
+                <TextView
+                    android:id="@+id/dTv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPink"
+                    android:textSize="@dimen/tv_12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="投资金额："
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_12sp" />
+
+                <TextView
+                    android:id="@+id/dTv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPink"
+                    android:textSize="@dimen/tv_12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="项目阶段："
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_12sp" />
+
+                <TextView
+                    android:id="@+id/dTv3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPink"
+                    android:textSize="@dimen/tv_12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:text="否"
-            android:textColor="@color/colorPink"
-            android:textSize="@dimen/tv_12sp" />
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/guaranteeString"
-            android:textColor="@color/colorMain"
-            android:textSize="@dimen/tv_12sp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:text="无"
-            android:textColor="@color/colorPink"
-            android:textSize="@dimen/tv_12sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="投资行业："
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_12sp" />
 
-        <TextView
+                <TextView
+                    android:id="@+id/dTv4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPink"
+                    android:textSize="@dimen/tv_12sp" />
+            </LinearLayout>
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rateString"
-            android:textColor="@color/colorMain"
-            android:textSize="@dimen/tv_12sp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:text="主体AA/债项AA"
-            android:textColor="@color/colorPink"
-            android:textSize="@dimen/tv_12sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="投资占比："
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_12sp" />
+
+                <TextView
+                    android:id="@+id/dTv5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPink"
+                    android:textSize="@dimen/tv_12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

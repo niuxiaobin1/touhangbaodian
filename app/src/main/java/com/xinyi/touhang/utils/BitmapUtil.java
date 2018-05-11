@@ -226,7 +226,7 @@ public class BitmapUtil {
     public static File saveFile(Bitmap bm, String path, String fileName) throws IOException {
         File dirFile = new File(path);
         if (!dirFile.exists()) {
-            dirFile.mkdir();
+            dirFile.mkdirs();
         }
         File myCaptureFile = new File(path, fileName);
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
@@ -241,7 +241,7 @@ public class BitmapUtil {
     public static void compressBmpToFile(Bitmap bmp, String path, File file) {
         File dirFile = new File(path);
         if (!dirFile.exists()) {
-            dirFile.mkdir();
+            dirFile.mkdirs();
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int options = 80;//个人喜欢从80开始,

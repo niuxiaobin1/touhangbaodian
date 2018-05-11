@@ -8,6 +8,7 @@
     android:paddingTop="10dp">
 
     <com.xinyi.touhang.weight.EllipsizingTextView
+        android:id="@+id/commentNameTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -22,6 +23,7 @@
         android:gravity="center_vertical">
 
         <com.xinyi.touhang.weight.EllipsizingTextView
+            android:id="@+id/commentContentTv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -31,6 +33,7 @@
             android:textSize="@dimen/tv_12sp" />
 
         <TextView
+            android:id="@+id/commentTimeTv"
             android:textSize="@dimen/tv_12sp"
             android:textColor="@color/colorSubTitle"
             android:layout_marginLeft="15dp"

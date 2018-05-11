@@ -8,10 +8,10 @@
     android:paddingTop="10dp">
 
     <TextView
+        android:id="@+id/titleTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="1"
-        android:text="全国中小企业股份转让系统挂牌公司信息披露细则"
         android:textColor="@color/colorMain"
         android:textSize="@dimen/tv_15sp" />
 
@@ -21,14 +21,15 @@
         android:layout_marginTop="5dp">
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/textview1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="股转系统公告[2017]664号"
             android:textColor="@color/colorSubTitle"
             android:textSize="@dimen/tv_12sp" />
 
         <View
+            android:visibility="gone"
             android:id="@+id/view1"
             android:layout_width="1dp"
             android:layout_height="0dp"
@@ -42,35 +43,12 @@
             android:id="@+id/textview2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="有效"
             android:textColor="@color/colorSubTitle"
             android:textSize="@dimen/tv_12sp"
             app:layout_constraintBottom_toBottomOf="@id/view1"
             app:layout_constraintLeft_toRightOf="@id/view1"
             app:layout_constraintTop_toTopOf="@id/view1" />
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="5dp"
-            android:background="@color/colorMain"
-            app:layout_constraintBottom_toBottomOf="@id/textview2"
-            app:layout_constraintLeft_toRightOf="@id/textview2"
-            app:layout_constraintTop_toTopOf="@id/textview2" />
-
-        <TextView
-            android:id="@+id/textview3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="2018-04-18"
-            android:textColor="@color/colorSubTitle"
-            android:textSize="@dimen/tv_12sp"
-            app:layout_constraintBottom_toBottomOf="@id/view2"
-            app:layout_constraintLeft_toRightOf="@id/view2"
-            app:layout_constraintTop_toTopOf="@id/view2" />
 
     </android.support.constraint.ConstraintLayout>
 

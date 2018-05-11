@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
+import com.xinyi.touhang.PullRefreshLayout.OnRefreshListener;
+import com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.adapter.DiscussListAdapter;
 import com.xinyi.touhang.base.BaseActivity;
@@ -50,15 +52,20 @@ import butterknife.ButterKnife;
 
 public class DiscussListActivity extends BaseActivity {
 
+    @BindView(R.id.refresh_layout)
+    PullRefreshLayout refresh_layout;
+
     @BindView(R.id.magic_indicator)
     MagicIndicator magicIndicator;
 
     @BindView(R.id.recylerView)
     RecyclerView recylerView;
 
+    private String type = "";
     private List<Map<String, String>> typeLists;
 
     private DiscussListAdapter adapter;
+    private int page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +73,14 @@ public class DiscussListActivity extends BaseActivity {
         setContentView(R.layout.activity_discuss_list);
         ButterKnife.bind(this);
         initViews();
-
+        initDatas();
     }
 
 
     @Override
     protected void initViews() {
         super.initViews();
-        initTitle("讨论交流");
+        initTitle("交流");
         initRightTv("发帖", getResources().getDrawable(R.mipmap.release_icon));
         typeLists = new ArrayList<>();
 
@@ -83,7 +90,21 @@ public class DiscussListActivity extends BaseActivity {
         )));
         adapter = new DiscussListAdapter(this);
         recylerView.setAdapter(adapter);
+        refresh_layout.setMode(PullRefreshLayout.PULL_FROM_END);
+        refresh_layout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onPullDownRefresh() {
+                page = 1;
+                refreshList();
+            }
 
+            @Override
+            public void onPullUpRefresh() {
+                page++;
+                refreshList();
+
+            }
+        });
 
     }
 
@@ -103,7 +124,7 @@ public class DiscussListActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initDatas();
+
     }
 
     @Override
@@ -128,7 +149,8 @@ public class DiscussListActivity extends BaseActivity {
                                         "id", "name", "created", "modified"
                                 }));
                                 if (typeLists.size() > 0) {
-                                    refreshList(typeLists.get(0).get("id"));
+                                    type = typeLists.get(0).get("id");
+                                    refreshList();
                                 }
                                 initMagicIndicator();
                             } else {
@@ -179,7 +201,9 @@ public class DiscussListActivity extends BaseActivity {
                     public void onClick(View v) {
                         magicIndicator.onPageSelected(index);
                         magicIndicator.onPageScrolled(index, 0, 0);
-                        refreshList(typeLists.get(index).get("id"));
+                        type = typeLists.get(index).get("id");
+                        page = 1;
+                        refreshList();
 
                     }
                 });
@@ -196,9 +220,13 @@ public class DiscussListActivity extends BaseActivity {
         magicIndicator.setNavigator(commonNavigator);
     }
 
-    private void refreshList(String typeId) {
+    private void refreshList() {
         HttpParams params = new HttpParams();
-        params.put("type", typeId);
+        params.put("type", type);
+        params.put("page", String.valueOf(page));
+        if (page == 1) {
+            adapter.clearDatas();
+        }
         OkGo.<String>post(AppUrls.ForumListsUrl)
                 .cacheMode(CacheMode.NO_CACHE)
                 .tag(this)
@@ -206,11 +234,11 @@ public class DiscussListActivity extends BaseActivity {
                 .execute(new DialogCallBack(DiscussListActivity.this, true) {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        refresh_layout.onRefreshComplete();
                         try {
                             JSONObject js = new JSONObject(response.body());
 
                             if (js.getBoolean("result")) {
-                                adapter.clearDatas();
                                 adapter.addDatas(JsonUtils.ArrayToList(
                                         js.getJSONObject("data").getJSONArray("forum"),
                                         new String[]{"id", "name", "content", "customer_id", "read_num", "good_num", "top", "vip"
@@ -237,6 +265,7 @@ public class DiscussListActivity extends BaseActivity {
                     @Override
                     public void onError(com.lzy.okgo.model.Response<String> response) {
                         super.onError(response);
+                        refresh_layout.onRefreshComplete();
                         HandleResponse.handleException(response, DiscussListActivity.this);
                     }
                 });

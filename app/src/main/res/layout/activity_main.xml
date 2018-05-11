@@ -131,7 +131,7 @@
         android:layout_height="match_parent"
         android:layout_above="@id/footer_layout"
         android:background="@color/colorWhite"
-        android:fitsSystemWindows="true">
+       >
 
 
     </FrameLayout>

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/topLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true">
@@ -48,20 +49,6 @@
 
 
     </RelativeLayout>
-
-
-    <net.lucode.hackware.magicindicator.MagicIndicator
-        android:id="@+id/magic_indicator1"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp" />
-
-    <net.lucode.hackware.magicindicator.MagicIndicator
-        android:id="@+id/magic_indicator2"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="5dp" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

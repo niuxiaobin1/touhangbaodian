@@ -25,6 +25,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StudyListActivity extends BaseActivity {
+    public static final String INDEX = "_index";
+    private int index = 0;
 
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
@@ -33,7 +35,7 @@ public class StudyListActivity extends BaseActivity {
     ViewPager viewPager;
     private List<Fragment> fragments;
     private String[] titles = new String[]{"学习视频", "培训信息", "学习资料"};
-    private String[] Urls = new String[]{AppUrls.VideoListsUrl, AppUrls.AdviseListsUrl, ""};
+    private String[] Urls = new String[]{AppUrls.VideoListsUrl, AppUrls.AdviseListsUrl, AppUrls.FileListsUrl};
     private MyPagerAdapter adapter;
 
     @Override
@@ -41,6 +43,7 @@ public class StudyListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_list);
         ButterKnife.bind(this);
+        index = getIntent().getIntExtra(INDEX, 0);
         initViews();
         initDatas();
     }
@@ -68,6 +71,15 @@ public class StudyListActivity extends BaseActivity {
         ViewCompat.setElevation(tabLayout, 10);
 
         tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (index != 0) {
+                    viewPager.setCurrentItem(index);
+                }
+            }
+        }, 100);
 
     }
 

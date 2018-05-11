@@ -20,6 +20,8 @@ import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
+import com.xinyi.touhang.PullRefreshLayout.OnRefreshListener;
+import com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.adapter.ConsulationInnerAdapter;
 import com.xinyi.touhang.base.BaseFragment;
@@ -32,6 +34,7 @@ import com.xinyi.touhang.utils.DividerDecoration;
 import com.xinyi.touhang.utils.DoParams;
 import com.xinyi.touhang.utils.JsonUtils;
 import com.xinyi.touhang.utils.UIHelper;
+import com.xinyi.touhang.weight.EllipsizingTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,6 +55,10 @@ import okhttp3.Response;
  * create an instance of this fragment.
  */
 public class ConsulationInnerFragment extends BaseFragment {
+
+
+    @BindView(R.id.refresh_layout)
+    PullRefreshLayout refresh_layout;
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;
@@ -124,6 +131,23 @@ public class ConsulationInnerFragment extends BaseFragment {
         adapter = new MyPageraAdapter();
         viewPager.setAdapter(adapter);
 
+
+        refresh_layout.setMode(PullRefreshLayout.BOTH);
+        refresh_layout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onPullDownRefresh() {
+                page = 1;
+                initDatas();
+            }
+
+            @Override
+            public void onPullUpRefresh() {
+                page++;
+                initDatas();
+
+            }
+        });
+
         recylerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
             @Override
             public boolean canScrollVertically() {
@@ -140,6 +164,9 @@ public class ConsulationInnerFragment extends BaseFragment {
         HttpParams params = new HttpParams();
         params.put("type", mParam1);
         params.put("page", String.valueOf(page));
+        if (page == 1) {
+            innerAdapter.clearDatas();
+        }
         OkGo.<String>post(AppUrls.NewsIndexUrl)
                 .cacheMode(CacheMode.NO_CACHE)
                 .params(DoParams.encryptionparams(getActivity(), params, ""))
@@ -147,6 +174,7 @@ public class ConsulationInnerFragment extends BaseFragment {
                 .execute(new DialogCallBack(getActivity(), false) {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        refresh_layout.onRefreshComplete();
                         try {
                             JSONObject js = new JSONObject(response.body());
 
@@ -154,7 +182,7 @@ public class ConsulationInnerFragment extends BaseFragment {
                                 JSONObject data = js.getJSONObject("data");
                                 JSONArray top = data.getJSONArray("top");
                                 topList = JsonUtils.ArrayToList(top, new String[]{"id", "name", "author", "read_num",
-                                        "editer", "top", "news_type_id", "created", "modified", "author_img", "image", "passed"});
+                                        "top", "news_type_id", "created", "modified", "author_img", "image", "passed"});
                                 //top
                                 views.clear();
                                 for (int i = 0; i < topList.size(); i++) {
@@ -163,9 +191,9 @@ public class ConsulationInnerFragment extends BaseFragment {
                                 adapter.notifyDataSetChanged();
 
                                 //news
-                                JSONArray news=data.getJSONArray("news");
-                                innerAdapter.addDatas(JsonUtils.ArrayToList(news,new String[]{"id", "name", "author", "read_num",
-                                        "editer", "top", "news_type_id", "created", "modified", "author_img", "image", "passed"}));
+                                JSONArray news = data.getJSONArray("news");
+                                innerAdapter.addDatas(JsonUtils.ArrayToList(news, new String[]{"id", "name", "author", "read_num",
+                                       "top", "news_type_id", "created", "modified", "author_img", "image", "passed"}));
 
                             } else {
                                 UIHelper.toastMsg(js.getString("message"));
@@ -185,6 +213,7 @@ public class ConsulationInnerFragment extends BaseFragment {
                     @Override
                     public void onError(com.lzy.okgo.model.Response<String> response) {
                         super.onError(response);
+                        refresh_layout.onRefreshComplete();
                         HandleResponse.handleException(response, getActivity());
                     }
                 });
@@ -197,14 +226,14 @@ public class ConsulationInnerFragment extends BaseFragment {
         int contentWidth = DensityUtil.getScreenWidth(getActivity())
                 - DensityUtil.dip2px(getActivity(), 7) * 4;
         ImageView imageView = view.findViewById(R.id.imageView);
-        TextView newsTitleTv = view.findViewById(R.id.newsTitleTv);
+        EllipsizingTextView newsTitleTv = view.findViewById(R.id.newsTitleTv);
         TextView newsEditorTv = view.findViewById(R.id.newsEditorTv);
         TextView newsTimeTv = view.findViewById(R.id.newsTimeTv);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
         params.width = contentWidth / 2;
         params.height = (int) (params.width * 0.6);
         imageView.setLayoutParams(params);
-        Glide.with(getActivity()).load(map.get("image")).into(imageView);
+        Glide.with(getActivity()).load(map.get("image")).placeholder(R.mipmap.loading_image).into(imageView);
         newsTitleTv.setText(map.get("name"));
         newsEditorTv.setText(map.get("author"));
         newsTimeTv.setText(map.get("passed"));

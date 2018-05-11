@@ -147,7 +147,7 @@ public class LoginActivity extends BaseActivity {
             showToast(R.string.telIsNotCorrectString);
             return;
         }
-
+        getCodeTv.setEnabled(false);
         HttpParams params = new HttpParams();
         params.put("phone", telString);
         OkGo.<String>post(AppUrls.GetidentifyingUrl)
@@ -157,6 +157,7 @@ public class LoginActivity extends BaseActivity {
                 .execute(new DialogCallBack(LoginActivity.this, false) {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        getCodeTv.setEnabled(true);
                         try {
                             JSONObject js = new JSONObject(response.body());
                             UIHelper.toastMsg(js.getString("message"));
@@ -178,6 +179,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onError(com.lzy.okgo.model.Response<String> response) {
                         super.onError(response);
+                        getCodeTv.setEnabled(true);
                         HandleResponse.handleException(response, LoginActivity.this);
                     }
                 });
@@ -272,6 +274,8 @@ public class LoginActivity extends BaseActivity {
         SpUtils.put(this, SpUtils.USERVIP, user.getString("vip"));
         SpUtils.put(this, SpUtils.USERUSER_TOKEN, user.getString("user_token"));
         SpUtils.put(this, SpUtils.USERUDID, user.getString("udid"));
+        SpUtils.put(this, SpUtils.USERBIRTHDAY, user.getString("birthday"));
+        SpUtils.put(this, SpUtils.USERSEX, user.getString("sex"));
         SpUtils.put(this, SpUtils.USERCREATED, user.getString("created"));
         SpUtils.put(this, SpUtils.USERMODIFIED, user.getString("modified"));
         SpUtils.put(this, SpUtils.USERIMAGE, user.getString("image"));

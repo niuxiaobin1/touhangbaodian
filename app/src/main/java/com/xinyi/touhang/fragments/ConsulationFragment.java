@@ -26,6 +26,7 @@ import com.xinyi.touhang.constants.AppUrls;
 import com.xinyi.touhang.utils.DensityUtil;
 import com.xinyi.touhang.utils.DoParams;
 import com.xinyi.touhang.utils.JsonUtils;
+import com.xinyi.touhang.utils.StatusBarUtil;
 import com.xinyi.touhang.utils.UIHelper;
 
 import org.json.JSONArray;
@@ -34,6 +35,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +49,9 @@ import okhttp3.Response;
  * create an instance of this fragment.
  */
 public class ConsulationFragment extends BaseFragment {
+
+    @BindView(R.id.parentView)
+    LinearLayout parentView;
 
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
@@ -113,7 +118,7 @@ public class ConsulationFragment extends BaseFragment {
 
     @Override
     public void initViews() {
-
+        parentView.setPadding(0, StatusBarUtil.getStatusBarHeight(getActivity()),0,0);
 
     }
 
@@ -136,7 +141,14 @@ public class ConsulationFragment extends BaseFragment {
                             if (js.getBoolean("result")) {
                                 JSONObject data = js.getJSONObject("data");
                                 JSONArray type_list = data.getJSONArray("type_list");
-                                titles = JsonUtils.ArrayToList(type_list, new String[]{"id", "name", "created", "modified"});
+                                titles.clear();
+                                Map<String, String> allMap = new HashMap<>();
+                                allMap.put("id", "");
+                                allMap.put("name", "全部");
+                                allMap.put("created", "created");
+                                allMap.put("modified", "modified");
+                                titles.add(allMap);
+                                titles.addAll(JsonUtils.ArrayToList(type_list, new String[]{"id", "name", "created", "modified"}));
                                 initTabs(data);
                             } else {
                                 UIHelper.toastMsg(js.getString("message"));
@@ -173,7 +185,7 @@ public class ConsulationFragment extends BaseFragment {
             }
         }
         adapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
-        viewPager.setOffscreenPageLimit(4);
+        viewPager.setOffscreenPageLimit(7);
         viewPager.setAdapter(adapter);
         ViewCompat.setElevation(tabLayout, 10);
 

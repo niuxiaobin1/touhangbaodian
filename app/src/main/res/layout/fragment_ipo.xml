@@ -2,53 +2,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     android:paddingTop="10dp"
     tools:context="com.xinyi.touhang.fragments.searchInner.IpoFragment">
 
-    <ScrollView
-        android:scrollbars="none"
+    <com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout
+        android:descendantFocusability="blocksDescendants"
+        android:id="@+id/refresh_layout"
+        app:refreshMode="both"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+      >
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:scrollbars="none">
 
-            <RelativeLayout
-                android:paddingLeft="@dimen/content_pading_7dp"
-                android:paddingRight="@dimen/content_pading_7dp"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="@drawable/laws_search_bg" />
+                    android:layout_height="40dp"
+                    android:paddingLeft="@dimen/content_pading_7dp"
+                    android:paddingRight="@dimen/content_pading_7dp">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp"
-                    android:src="@mipmap/search_icon" />
-            </RelativeLayout>
+                    <EditText
+                        android:id="@+id/search_et"
+                        android:paddingRight="40dp"
+                        android:textColor="@color/colorMain"
+                        android:textSize="@dimen/tv_14sp"
+                        android:focusable="false"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:background="@drawable/laws_search_bg" />
+
+                    <ImageView
+                        android:id="@+id/search_image"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:src="@mipmap/search_icon" />
+                </RelativeLayout>
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/ipo_recylerView"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                    android:layout_height="wrap_content">
 
-            </RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/ipo_recylerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+    </com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout>
 </LinearLayout>

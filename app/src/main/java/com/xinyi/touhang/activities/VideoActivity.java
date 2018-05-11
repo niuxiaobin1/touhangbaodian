@@ -285,6 +285,7 @@ public class VideoActivity extends BaseActivity {
                                 commitTime.setText(video.getString("created"));
                                 readNumTv.setText(video.getString("read_num"));
                                 contentTv.setText(video.getString("content"));
+                                setPlaySource(video.getString("url"));
                                 editorTv.setText("责任编辑：" + video.getString("editer"));
                                 commentAdapter.addDatas(JsonUtils.ArrayToList(
                                         js.getJSONObject("data").getJSONArray("comments"), new String[]{
@@ -495,7 +496,7 @@ public class VideoActivity extends BaseActivity {
      * init video
      */
     private void initVideo() {
-        setPlaySource();
+
         //设置播放器监听
         mAliyunVodPlayerView.setTitleBarCanShow(false);
         mAliyunVodPlayerView.setOnPreparedListener(new IAliyunVodPlayer.OnPreparedListener() {
@@ -541,13 +542,13 @@ public class VideoActivity extends BaseActivity {
         });
     }
 
-    private void setPlaySource() {
+    private void setPlaySource(String vUrl) {
 
 
 //        if (type.equals("localSource")) {
 
         AliyunLocalSource.AliyunLocalSourceBuilder alsb = new AliyunLocalSource.AliyunLocalSourceBuilder();
-        alsb.setSource("http://video.xingfulaile.net/5f9ee99cf3c54e93a1048ee50bee7f78/4d3bfdf721bc40ea811198677e4571d5-5287d2089db37e62345123a1be272f8b.mp4?from=groupmessage&isappinstalled=0");
+        alsb.setSource(vUrl);
         AliyunLocalSource localSource = alsb.build();
         mAliyunVodPlayerView.setLocalSource(localSource);
 

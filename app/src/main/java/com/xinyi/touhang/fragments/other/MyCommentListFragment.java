@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
+import com.xinyi.touhang.PullRefreshLayout.OnRefreshListener;
+import com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.adapter.BaseAdapter;
 import com.xinyi.touhang.adapter.MyCommentAdapter;
@@ -49,12 +51,16 @@ import okhttp3.Response;
  */
 public class MyCommentListFragment extends BaseFragment {
 
+    @BindView(R.id.refresh_layout)
+    PullRefreshLayout refresh_layout;
+
     @BindView(R.id.recylerView)
     RecyclerView recylerView;
 
     private BaseAdapter adapter;
-
     private String urlString;
+
+    private int page = 1;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -97,11 +103,11 @@ public class MyCommentListFragment extends BaseFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         if (type.equals("0")) {
-            urlString = "";
+            urlString = AppUrls.NewsTo_listsUrl;
         } else if (type.equals("1")) {
-            urlString = "";
+            urlString = AppUrls.VideoTo_listsUrl;
         } else if (type.equals("2")) {
-            urlString = "";
+            urlString = AppUrls.ForumTo_listsUrl;
         } else {
         }
     }
@@ -122,9 +128,24 @@ public class MyCommentListFragment extends BaseFragment {
                 getActivity(), 0.5f
         )));
 
-        adapter = new MyCommentAdapter(getActivity());
-
+        adapter = new MyCommentAdapter(getActivity(),type);
         recylerView.setAdapter(adapter);
+
+        refresh_layout.setMode(PullRefreshLayout.BOTH);
+        refresh_layout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onPullDownRefresh() {
+                page = 1;
+                initDatas();
+            }
+
+            @Override
+            public void onPullUpRefresh() {
+                page++;
+                initDatas();
+
+            }
+        });
     }
 
     @Override
@@ -137,6 +158,10 @@ public class MyCommentListFragment extends BaseFragment {
 
         HttpParams params = new HttpParams();
         params.put("user_token", user_token);
+        params.put("page", String.valueOf(page));
+        if (page==1){
+            adapter.clearDatas();
+        }
         OkGo.<String>post(urlString)
                 .cacheMode(CacheMode.NO_CACHE)
                 .params(DoParams.encryptionparams(getActivity(), params, user_token))
@@ -144,14 +169,15 @@ public class MyCommentListFragment extends BaseFragment {
                 .execute(new DialogCallBack(getActivity(), false) {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        refresh_layout.onRefreshComplete();
                         try {
                             JSONObject js = new JSONObject(response.body());
 
                             if (js.getBoolean("result")) {
                                 if (adapter != null) {
                                     adapter.addDatas(JsonUtils.ArrayToList(
-                                            js.getJSONObject("data").getJSONArray("favorite"), new String[]{
-                                                    "id", "name", "image", "fid"
+                                            js.getJSONObject("data").getJSONArray("list"), new String[]{
+                                                    "id", "title", "content", "passed"
                                             }
                                     ));
                                 }
@@ -173,6 +199,7 @@ public class MyCommentListFragment extends BaseFragment {
                     @Override
                     public void onError(com.lzy.okgo.model.Response<String> response) {
                         super.onError(response);
+                        refresh_layout.onRefreshComplete();
                         HandleResponse.handleException(response, getActivity());
                     }
                 });

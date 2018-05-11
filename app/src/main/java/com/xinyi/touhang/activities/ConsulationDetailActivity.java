@@ -1,6 +1,7 @@
 package com.xinyi.touhang.activities;
 
 import android.graphics.Rect;
+import android.net.http.SslError;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -123,11 +125,13 @@ public class ConsulationDetailActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        initTitle("法律法规");
+        initTitle("资讯");
         id = getIntent().getStringExtra(NEWS_ID);
         setViewTreeObserver();
         initWebView();
+//        initWeb();
         initListener();
+
 
         comment_RecylerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
             @Override
@@ -147,15 +151,8 @@ public class ConsulationDetailActivity extends BaseActivity {
         inputTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                scrollView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        changeInputEdittextVisibility(View.VISIBLE);
-                    }
-                }, 500);
 
-
+                changeInputEdittextVisibility(View.VISIBLE);
             }
         });
         empty_view.setOnClickListener(new View.OnClickListener() {
@@ -202,6 +199,65 @@ public class ConsulationDetailActivity extends BaseActivity {
         });
     }
 
+    private void initWeb() {
+        webView.getSettings().setJavaScriptEnabled(true);
+        // 设置可以支持缩放
+        webView.getSettings().setSupportZoom(true);
+        //扩大比例的缩放
+        webView.getSettings().setUseWideViewPort(true);
+        //自适应屏幕
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setSavePassword(false);
+
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setSavePassword(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return false;
+            }
+        });
+
+        //webview加载完成再显示评论
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100) {
+                    //comment
+                    if (bodyLayout.getVisibility() == View.INVISIBLE) {
+                        bodyLayout.setVisibility(View.VISIBLE);
+                        try {
+                            JSONArray comments = data.getJSONArray("comments");
+                            commentAdapter.addDatas(JsonUtils.ArrayToList(comments, new String[]{
+                                    "id", "name", "customer_id", "news_id", "content", "good_num", "created", "modified",
+                                    "passed", "comment_image", "customer_name", "image", "checked"
+                            }));
+                        } catch (JSONException e) {
+
+                        }
+                    }
+
+                }
+            }
+        });
+
+    }
 
     /**
      * 初始化webview
@@ -240,7 +296,9 @@ public class ConsulationDetailActivity extends BaseActivity {
 
         //不使用缓存:
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -270,6 +328,13 @@ public class ConsulationDetailActivity extends BaseActivity {
                     }
 
                 }
+            }
+
+        });
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed(); // 接受网站证书
             }
         });
 
@@ -320,15 +385,7 @@ public class ConsulationDetailActivity extends BaseActivity {
                                 data = js.getJSONObject("data");
                                 //init webView
                                 String newsContent = data.getJSONObject("news").getString("content");
-                                String name = data.getJSONObject("news").getString("name");
-                                String author = data.getJSONObject("news").getString("author");
-                                String read_num = data.getJSONObject("news").getString("read_num");
-                                String editer = data.getJSONObject("news").getString("editer");
-                                String author_img = data.getJSONObject("news").getString("author_img");
-                                String passed = data.getJSONObject("news").getString("passed");
-//                                webView.loadDataWithBaseURL(null, CommonUtils.addHeadToHtml(newsContent,
-//                                        name, author, passed, author_img, read_num, editer), "text/html", "UTF-8", null);
-                                webView.loadDataWithBaseURL(null, CommonUtils.resolveHtml(newsContent), "text/html", "UTF-8", null);
+                                webView.loadDataWithBaseURL(AppUrls.HostAddress, newsContent, "text/html", "UTF-8", null);
                                 favorite_flg = data.getString("favorite_flg");
                                 if (favorite_flg.equals("0")) {
                                     favo_tv.setSelected(false);
@@ -403,6 +460,12 @@ public class ConsulationDetailActivity extends BaseActivity {
                                 map.put("id", js.getJSONObject("data").getString("cid"));
                                 list.add(map);
                                 commentAdapter.addDatas(list);
+                                scrollView.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                    }
+                                },100);
                             } else {
                                 UIHelper.toastMsg(js.getString("message"));
                             }
@@ -542,4 +605,6 @@ public class ConsulationDetailActivity extends BaseActivity {
                     }
                 });
     }
+
+
 }

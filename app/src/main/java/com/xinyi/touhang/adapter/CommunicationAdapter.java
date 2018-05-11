@@ -24,19 +24,13 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2018/4/21.
  */
 
-public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdapter.ViewHolder> {
+public class CommunicationAdapter extends BaseAdapter<CommunicationAdapter.ViewHolder> {
 
-    List<Map<String, String>> datas;
     private Context context;
 
     public CommunicationAdapter(Context context) {
-        datas = new ArrayList<>();
+        super();
         this.context = context;
-    }
-
-    public void setData(List<Map<String, String>> datas) {
-        this.datas.addAll(datas);
-        notifyDataSetChanged();
     }
 
     @Override
@@ -48,7 +42,7 @@ public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Map<String, String> map = datas.get(position);
-        if (position == 0) {
+        if (map.get("top").equals("1")) {
             holder.isTop_image.setVisibility(View.VISIBLE);
         } else {
             holder.isTop_image.setVisibility(View.GONE);
@@ -61,6 +55,7 @@ public class CommunicationAdapter extends RecyclerView.Adapter<CommunicationAdap
             public void onClick(View v) {
                 Intent intent = new Intent(context, FileDisplayActivity.class);
                 intent.putExtra(FileDisplayActivity.FILE_URL, map.get("file"));
+                intent.putExtra(FileDisplayActivity.FILE_ID, map.get("id"));
                 intent.putExtra(FileDisplayActivity.FILE_NAME, map.get("name") + "." +
                         map.get("ext"));
                 context.startActivity(intent);

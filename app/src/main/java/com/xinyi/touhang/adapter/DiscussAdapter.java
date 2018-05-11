@@ -49,7 +49,7 @@ public class DiscussAdapter extends BaseAdapter<DiscussAdapter.ViewHolder> {
         holder.forumName.setText(map.get("name"));
         holder.forumContent.setText(map.get("content"));
         holder.forumAauthor.setText(map.get("author"));
-        holder.forumTime.setText(map.get("modified"));
+        holder.forumTime.setText(map.get("passed"));
         holder.forumReadNum.setText(map.get("read_num"));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

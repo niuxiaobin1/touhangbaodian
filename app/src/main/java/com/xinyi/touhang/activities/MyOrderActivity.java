@@ -49,7 +49,7 @@ public class MyOrderActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        initTitle("收藏");
+        initTitle("我的订单");
         initTabs();
     }
 

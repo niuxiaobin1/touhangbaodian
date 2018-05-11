@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Tou Hang</string>
+    <string name="app_name">投行帮</string>
     <string name="title_activity_base">BaseActivity</string>
 
 
-    <string name="footerConsulatationString">咨询</string>
+    <string name="footerConsulatationString">资讯</string>
     <string name="footerBussinessOpportunitiedString">业务机会</string>
     <string name="footerSearchString">搜索</string>
     <string name="footerCommunicationString">学习交流</string>
@@ -14,7 +14,7 @@
     <string name="BussinessOpportunitiedSubtitleString">并购投资项目</string>
     <string name="productReleaseString">资管产品发布</string>
     <string name="studyString">学习</string>
-    <string name="discussString">讨论交流</string>
+    <string name="discussString">交流</string>
     <string name="loginOrRegistString">登录/注册</string>
     <string name="favoriteString">收藏</string>
     <string name="historyString">历史</string>
@@ -59,4 +59,11 @@
     <string name="videoCostString">此视频为收费视频暂时无法观看，请在购买后继续观看哦！</string>
     <string name="NotitleString">请先添加帖子标题</string>
     <string name="contentEmptyString">帖子内容为空</string>
+
+
+    <string name="pull_down_refresh_label">下拉可以刷新</string>
+    <string name="pull_down_release_label">松开立即刷新</string>
+    <string name="pull_down_refreshing_label">正在刷新数据</string>
+    <string name="pull_up_load_label">上拉加载</string>
+    <string name="pull_up_loading_label">正在加载数据</string>
 </resources>

@@ -43,7 +43,7 @@ public class ConsulationAdapter extends BaseAdapter<ConsulationAdapter.ViewHolde
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.textView.setText(datas.get(position).get("name"));
-        Glide.with(context).load(datas.get(position).get("image"))
+        Glide.with(context).load(datas.get(position).get("image")).placeholder(R.mipmap.loading_image)
                 .into(holder.imageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

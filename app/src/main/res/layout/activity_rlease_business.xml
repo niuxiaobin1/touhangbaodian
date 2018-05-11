@@ -1,0 +1,1004 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.xinyi.touhang.activities.RleaseBusinessActivity">
+
+    <include layout="@layout/back_title_bar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorLine" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorLine" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            app:tabIndicatorColor="@color/colorTabSelectedIndicator"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/colorBlack"
+            app:tabTextColor="@color/colorMain"></android.support.design.widget.TabLayout>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+           android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/suply_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_15sp"
+                    android:textStyle="bold"
+                    android:text="项目基本信息"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    
+                    <TextView
+                        android:text="标题"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/et1"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入您的标题"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+                    
+                </LinearLayout>
+
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="联系方式"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/et2"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入您的联系方式"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="所在地区"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/et3"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入您所在的地区"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="公司行业"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/et4"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入公司所属行业"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="融资用途"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/et5"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入融资用途"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="融资金额"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/et6"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入融资金额"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="出让股权比例"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/et7"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入出让股权比例"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:id="@+id/layout1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="项目阶段"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <TextView
+                        android:id="@+id/tv8"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请选择项目阶段"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/arrow_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:id="@+id/layout2"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="融资方式"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <TextView
+                        android:id="@+id/tv9"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请选择融资方式"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/arrow_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:id="@+id/layout3"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="对赌等特殊条款"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <TextView
+                        android:id="@+id/tv10"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请选择对赌等特殊条款"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/arrow_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:id="@+id/layout4"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+
+                        android:text="退出方式"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <TextView
+                        android:id="@+id/tv11"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请选择退出方式"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/arrow_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/colorLine"/>
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_15sp"
+                    android:textStyle="bold"
+                    android:text="公司及项目简介"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+
+                    android:id="@+id/et12"
+                    android:maxLines="1"
+                    android:focusable="false"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@null"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:gravity="start"
+                    android:hint="请输入公司及项目简介"
+                    android:textColorHint="@color/colorSubTitle"
+                    android:textSize="@dimen/tv_14sp"
+                    android:textColor="@color/colorMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/demand_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_15sp"
+                    android:textStyle="bold"
+                    android:text="项目基本信息"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="标题"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/det1"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入您的标题"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="联系方式"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/det2"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入您的联系方式"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="拟投资地区"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/det3"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入投资地区"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="投资行业"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/det4"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入投资所属行业"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="融资金额"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/det5"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入融资金额"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="投资占比"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <EditText
+                        android:id="@+id/det6"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请输入投资占比"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:id="@+id/dlayout1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="项目阶段"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <TextView
+                        android:id="@+id/dtv7"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请选择项目阶段"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/arrow_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:id="@+id/dlayout2"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="融资方式"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <TextView
+                        android:id="@+id/dtv8"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请选择融资方式"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/arrow_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:id="@+id/dlayout3"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="对赌等特殊条款"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <TextView
+                        android:id="@+id/dtv9"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请选择对赌等特殊条款"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/arrow_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorLine"/>
+
+                <LinearLayout
+                    android:id="@+id/dlayout4"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:text="退出方式"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"/>
+
+
+                    <TextView
+                        android:id="@+id/dtv10"
+                        android:maxLines="1"
+                        android:focusable="false"
+                        android:textSize="@dimen/tv_14sp"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:background="@null"
+                        android:hint="请选择退出方式"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/arrow_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/colorLine"/>
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_15sp"
+                    android:textStyle="bold"
+                    android:text="公司及项目简介"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/det11"
+                    android:maxLines="1"
+                    android:focusable="false"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@null"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:gravity="start"
+                    android:hint="请输入公司及项目简介"
+                    android:textColorHint="@color/colorSubTitle"
+                    android:textSize="@dimen/tv_14sp"
+                    android:textColor="@color/colorMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/colorLine" />
+
+            <Button
+
+                android:id="@+id/commit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/login_btn_bg"
+                android:gravity="center"
+                android:text="确认发布"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/tv_15sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+
+

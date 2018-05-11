@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -24,6 +25,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -199,7 +201,7 @@ public class ForumDetailActivity extends BaseActivity implements View.OnClickLis
                                 commitorTv.setText(forum.getString("author"));
                                 commitTime.setText(forum.getString("created"));
                                 readNumTv.setText(forum.getString("read_num"));
-                                webView.loadDataWithBaseURL(null, CommonUtils.resolveHtml(forum.getString("content")), "text/html", "UTF-8", null);
+                                webView.loadDataWithBaseURL(AppUrls.HostAddress, CommonUtils.resolveHtml(forum.getString("content")), "text/html", "UTF-8", null);
                                 favorite_flg = data.getString("favorite_flg");
                                 if (favorite_flg.equals("0")) {
                                     favo_tv.setSelected(false);
@@ -273,7 +275,9 @@ public class ForumDetailActivity extends BaseActivity implements View.OnClickLis
         //不使用缓存:
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -305,6 +309,14 @@ public class ForumDetailActivity extends BaseActivity implements View.OnClickLis
                 }
             }
         });
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed(); // 接受网站证书
+            }
+        });
+
 
     }
 

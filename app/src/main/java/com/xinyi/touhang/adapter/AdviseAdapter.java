@@ -1,7 +1,9 @@
 package com.xinyi.touhang.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.VideoActivity;
+import com.xinyi.touhang.activities.WebActivity;
+import com.xinyi.touhang.constants.AppUrls;
 import com.xinyi.touhang.utils.DensityUtil;
 import com.xinyi.touhang.weight.EllipsizingTextView;
 
@@ -43,7 +49,28 @@ public class AdviseAdapter extends BaseAdapter<AdviseAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final Map<String, String> map = datas.get(position);
+        Glide.with(context).load(map.get("image")).placeholder(R.mipmap.loading_image)
+                .into(holder.imageView);
+        holder.titleTv.setText(map.get("name"));
+        holder.commitorTv.setText(map.get("author"));
+        holder.readNumTv.setText(map.get("read_num") + "阅读");
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = map.get("url");
+                Intent it = new Intent(context, WebActivity.class);
+                it.putExtra(WebActivity.TITLESTRING, map.get("name"));
+                if (!TextUtils.isEmpty(url)) {
+                    it.putExtra(WebActivity.TITLEURL, url);
+                } else {
+                    it.putExtra(WebActivity.TITLEURL, AppUrls.AdviseDetailUrl+map.get("id"));
+                }
+                context.startActivity(it);
+
+            }
+        });
     }
 
     @Override

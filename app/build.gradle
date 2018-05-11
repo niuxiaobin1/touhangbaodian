@@ -1,6 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    signingConfigs {
+        config {
+            keyAlias 'touhang'
+            keyPassword '123456'
+            storeFile file('D:/touhang0510.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.xinyi.touhang"
@@ -10,17 +19,42 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-//        ndk { abiFilters "armeabi", "x86" }
+        //X5兼容64位手机
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
         }
     }
     repositories {
         flatDir { dirs 'libs' }
     }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "app_release_V${defaultConfig.versionName}_${buildTime()}.apk"
+        }
+    }
+}
+
+
+def buildTime() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd')
+    return formattedDate
 }
 
 dependencies {
@@ -55,13 +89,11 @@ dependencies {
     implementation files('libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar')
     //PermissionsManager
     implementation 'com.github.kongqw:PermissionsManager:1.1.0'
-
     //video
     implementation(name: 'AlivcReporter-1.1', ext: 'aar')
     implementation(name: 'AlivcPlayer-3.4.3', ext: 'aar')
     implementation(name: 'AliyunVodPlayer-3.4.3', ext: 'aar')
     implementation(name: 'AliyunVodPlayerView-3.4.3', ext: 'aar')
-
     compile('cn.qqtheme.framework:WheelPicker:1.5.5') {
         exclude group: 'com.android.support'
     }

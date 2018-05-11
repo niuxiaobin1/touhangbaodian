@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.ForumDetailActivity;
 import com.xinyi.touhang.activities.VideoActivity;
+import com.xinyi.touhang.weight.EllipsizingTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,18 +40,34 @@ public class MyFourmAdapter extends BaseAdapter<MyFourmAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
+        holder.forumName.setText(datas.get(position).get("name"));
+        holder.forumAauthor.setText(datas.get(position).get("author"));
+        holder.forumTime.setText(datas.get(position).get("passed"));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(context,ForumDetailActivity.class);
+                it.putExtra(ForumDetailActivity.FORUM_ID,datas.get(position).get("id"));
+                context.startActivity(it);
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
-        return datas.size() == 0 ? 10 : datas.size();
+        return datas.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.textView)
-        TextView textView;
+        @BindView(R.id.forumName)
+        EllipsizingTextView forumName;
 
+        @BindView(R.id.forumAauthor)
+        TextView forumAauthor;
+        @BindView(R.id.forumTime)
+        TextView forumTime;
 
         public ViewHolder(View itemView) {
             super(itemView);

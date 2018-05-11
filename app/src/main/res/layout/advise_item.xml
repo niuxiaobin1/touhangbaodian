@@ -20,6 +20,7 @@
             android:src="@mipmap/banner_parker_replace" />
 
         <ImageView
+            android:visibility="gone"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"

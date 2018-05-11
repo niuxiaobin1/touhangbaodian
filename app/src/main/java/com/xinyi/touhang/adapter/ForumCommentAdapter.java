@@ -61,7 +61,7 @@ public class ForumCommentAdapter extends BaseAdapter<ForumCommentAdapter.ViewHol
         Glide.with(context).load(map.get("image")).transform(new GlideCircleTransform(context)).into(holder.imageView);
         if (!TextUtils.isEmpty(map.get("comment_image"))) {
             holder.comment_image.setVisibility(View.VISIBLE);
-            Glide.with(context).load(map.get("comment_image")).into(holder.comment_image);
+            Glide.with(context).load(map.get("comment_image")).placeholder(R.mipmap.loading_image).into(holder.comment_image);
         }else{
             holder.comment_image.setVisibility(View.GONE);
         }

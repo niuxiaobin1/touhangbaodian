@@ -14,9 +14,12 @@ import android.view.ViewGroup;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
+import com.xinyi.touhang.PullRefreshLayout.OnRefreshListener;
+import com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.adapter.AdviseAdapter;
 import com.xinyi.touhang.adapter.BaseAdapter;
+import com.xinyi.touhang.adapter.CommunicationAdapter;
 import com.xinyi.touhang.adapter.VideoAdapter;
 import com.xinyi.touhang.base.BaseFragment;
 import com.xinyi.touhang.callBack.DialogCallBack;
@@ -44,6 +47,10 @@ import okhttp3.Response;
  * create an instance of this fragment.
  */
 public class StudyListFragment extends BaseFragment {
+
+
+    @BindView(R.id.refresh_layout)
+    PullRefreshLayout refresh_layout;
 
     @BindView(R.id.recylerView)
     RecyclerView recylerView;
@@ -93,6 +100,23 @@ public class StudyListFragment extends BaseFragment {
 
     @Override
     public void initViews() {
+
+        refresh_layout.setMode(PullRefreshLayout.BOTH);
+        refresh_layout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onPullDownRefresh() {
+                page = 1;
+                initDatas();
+            }
+
+            @Override
+            public void onPullUpRefresh() {
+                page++;
+                initDatas();
+
+            }
+        });
+
         recylerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recylerView.addItemDecoration(new DividerDecoration(getActivity(), R.color.colorLine, DensityUtil.dip2px(
                 getActivity(), 0.5f
@@ -105,7 +129,7 @@ public class StudyListFragment extends BaseFragment {
         } else if (urlString.equals(AppUrls.AdviseListsUrl)) {
             adapter = new AdviseAdapter(getActivity());
         } else {
-
+            adapter = new CommunicationAdapter(getActivity());
         }
         recylerView.setAdapter(adapter);
     }
@@ -117,6 +141,9 @@ public class StudyListFragment extends BaseFragment {
         }
         HttpParams params = new HttpParams();
         params.put("page", String.valueOf(page));
+        if (page == 1) {
+            adapter.clearDatas();
+        }
         OkGo.<String>post(urlString)
                 .cacheMode(CacheMode.NO_CACHE)
                 .params(DoParams.encryptionparams(getActivity(), params, ""))
@@ -124,18 +151,39 @@ public class StudyListFragment extends BaseFragment {
                 .execute(new DialogCallBack(getActivity(), false) {
                     @Override
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                        refresh_layout.onRefreshComplete();
+
                         try {
                             JSONObject js = new JSONObject(response.body());
 
                             if (js.getBoolean("result")) {
                                 if (adapter != null) {
-                                    adapter.addDatas(JsonUtils.ArrayToList(
-                                            js.getJSONArray("data"), new String[]{
-                                                    "id", "name", "price", "author", "good_num",
-                                                    "read_num", "editer", "video_type_id", "video_id"
-                                                    , "pay", "created", "modified", "image", "passed"
-                                            }
-                                    ));
+                                    if (urlString.equals(AppUrls.VideoListsUrl)) {
+                                        adapter.addDatas(JsonUtils.ArrayToList(
+                                                js.getJSONArray("data"), new String[]{
+                                                        "id", "name", "price", "author", "good_num",
+                                                        "read_num", "editer", "video_type_id", "video_id"
+                                                        , "pay", "created", "modified", "image", "passed"
+                                                }
+                                        ));
+                                    } else if (urlString.equals(AppUrls.AdviseListsUrl)) {
+                                        adapter.addDatas(JsonUtils.ArrayToList(
+                                                js.getJSONArray("data"), new String[]{
+                                                        "id", "name", "content", "url", "author",
+                                                        "top", "read_num", "created", "modified"
+                                                        , "image"
+                                                }
+                                        ));
+                                    } else {
+                                        adapter.addDatas(JsonUtils.ArrayToList(
+                                                js.getJSONArray("data"), new String[]{
+                                                        "id", "name", "read_num", "down_num",
+                                                        "type", "top", "created", "modified", "file", "passed"
+                                                        , "ext"
+                                                }
+                                        ));
+                                    }
+
                                 }
                             } else {
                                 UIHelper.toastMsg(js.getString("message"));
@@ -155,6 +203,7 @@ public class StudyListFragment extends BaseFragment {
                     @Override
                     public void onError(com.lzy.okgo.model.Response<String> response) {
                         super.onError(response);
+                        refresh_layout.onRefreshComplete();
                         HandleResponse.handleException(response, getActivity());
                     }
                 });

@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.base.BaseFragment;
@@ -21,6 +23,7 @@ import com.xinyi.touhang.fragments.searchInner.IpoFragment;
 import com.xinyi.touhang.fragments.searchInner.LawsFragment;
 import com.xinyi.touhang.fragments.searchInner.QueryFragment;
 import com.xinyi.touhang.fragments.searchInner.RegroupFragment;
+import com.xinyi.touhang.utils.StatusBarUtil;
 import com.xinyi.touhang.utils.TabLayoutUtils;
 
 import java.util.ArrayList;
@@ -35,6 +38,13 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class SearchFragment extends BaseFragment {
+
+
+    @BindView(R.id.parentView)
+    LinearLayout parentView;
+
+    @BindView(R.id.rightTv)
+    TextView rightTv;
 
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
@@ -102,6 +112,8 @@ public class SearchFragment extends BaseFragment {
 
     @Override
     public void initViews() {
+        parentView.setPadding(0, StatusBarUtil.getStatusBarHeight(getActivity()),0,0);
+
         initTabs();
     }
 
@@ -120,9 +132,25 @@ public class SearchFragment extends BaseFragment {
         fragments.add(QueryFragment.newInstance("", ""));
 
         adapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
-        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setOffscreenPageLimit(5);
         mViewPager.setAdapter(adapter);
         ViewCompat.setElevation(tabLayout, 10);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         tabLayout.setupWithViewPager(mViewPager);
 

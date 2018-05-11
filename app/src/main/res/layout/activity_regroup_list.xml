@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.xinyi.touhang.activities.RegroupListActivity">
+
+    <include layout="@layout/back_title_bar" />
+
+    <com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:refreshMode="both">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:paddingLeft="@dimen/content_pading_7dp"
+                    android:paddingRight="@dimen/content_pading_7dp">
+
+                    <EditText
+                        android:id="@+id/search_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:background="@drawable/laws_search_bg"
+                        android:focusable="false"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="40dp"
+                        android:textColor="@color/colorMain"
+                        android:textSize="@dimen/tv_14sp" />
+
+                    <ImageView
+                        android:id="@+id/search_image"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:src="@mipmap/search_icon" />
+                </RelativeLayout>
+
+                <net.lucode.hackware.magicindicator.MagicIndicator
+                    android:paddingLeft="@dimen/content_pading_7dp"
+                    android:paddingRight="@dimen/content_pading_7dp"
+                    android:id="@+id/magic_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp" />
+
+                <net.lucode.hackware.magicindicator.MagicIndicator
+                    android:paddingLeft="@dimen/content_pading_7dp"
+                    android:paddingRight="@dimen/content_pading_7dp"
+                    android:id="@+id/sub_magic_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:paddingLeft="@dimen/content_pading_7dp"
+                    android:paddingRight="@dimen/content_pading_7dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/regroup_recylerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+    </com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout>
+</LinearLayout>
