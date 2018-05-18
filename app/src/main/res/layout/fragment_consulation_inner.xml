@@ -1,18 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     tools:context="com.xinyi.touhang.fragments.ConsulationInnerFragment">
 
     <com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout
         android:id="@+id/refresh_layout"
-        app:refreshMode="both"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-  >
+        app:refreshMode="both">
 
         <com.xinyi.touhang.weight.VerticalScrollView
             android:layout_width="match_parent"

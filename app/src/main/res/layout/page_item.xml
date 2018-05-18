@@ -2,30 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:padding="@dimen/content_pading_7dp">
 
 
     <ImageView
-        android:layout_marginTop="5dp"
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:scaleType="fitXY"
         android:src="@mipmap/banner_parker_replace" />
 
-    <com.xinyi.touhang.weight.EllipsizingTextView
-        android:ellipsize="end"
+    <TextView
         android:id="@+id/newsTitleTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:ellipsize="end"
         android:maxLines="2"
-        android:text="中美贸易逆差从何而来"
         android:textColor="@color/colorMain"
         android:textSize="@dimen/tv_16sp" />
 
@@ -42,24 +41,23 @@
             android:drawableLeft="@mipmap/top_icon"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
-            android:text="网易新闻"
             android:maxLines="1"
+            android:text="网易新闻"
             android:textColor="@color/colorSubTitle"
             android:textSize="@dimen/tv_12sp" />
 
         <TextView
-            android:maxLines="1"
             android:id="@+id/newsTimeTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
+            android:maxLines="1"
             android:text="9分钟前"
             android:textColor="@color/colorSubTitle"
             android:textSize="@dimen/tv_12sp" />
 
     </RelativeLayout>
-
 
 </LinearLayout>

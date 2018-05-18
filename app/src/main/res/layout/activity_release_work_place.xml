@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.xinyi.touhang.activities.ReleaseWorkPlaceActivity">
+
+    <include layout="@layout/back_title_bar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorLine" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="基本信息"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_15sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="标题"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp" />
+
+
+                    <EditText
+                        android:id="@+id/et1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:hint="请输入您的标题"
+                        android:maxLines="1"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="招聘人数"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp" />
+
+
+                    <EditText
+                        android:id="@+id/et2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:hint="请输入招聘人数"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="薪资待遇"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp" />
+
+
+                    <EditText
+                        android:id="@+id/et3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:hint="请输入薪资待遇"
+                        android:maxLines="1"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="工作地点"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp" />
+
+
+                    <EditText
+                        android:id="@+id/et4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:hint="请输入工作地点"
+                        android:maxLines="1"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="招聘公司"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp" />
+
+
+                    <EditText
+                        android:id="@+id/et5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:hint="请输入招聘公司"
+                        android:maxLines="1"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:id="@+id/layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="类型"
+                        android:textColor="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp" />
+
+
+                    <TextView
+                        android:id="@+id/tv6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:hint="请选择类型"
+                        android:maxLines="1"
+                        android:textColor="@color/colorMain"
+                        android:textColorHint="@color/colorSubTitle"
+                        android:textSize="@dimen/tv_14sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/arrow_right" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/colorLine" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="职位描述"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_15sp"
+                    android:textStyle="bold" />
+
+                <EditText
+
+                    android:id="@+id/et7"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@null"
+                    android:focusable="false"
+                    android:gravity="start"
+                    android:hint="请输入职位描述"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:textColor="@color/colorMain"
+                    android:textColorHint="@color/colorSubTitle"
+                    android:textSize="@dimen/tv_14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/colorLine" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="应聘须知"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_15sp"
+                    android:textStyle="bold" />
+
+                <EditText
+
+                    android:id="@+id/et8"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@null"
+                    android:focusable="false"
+                    android:gravity="start"
+                    android:hint="请输入应聘须知"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:textColor="@color/colorMain"
+                    android:textColorHint="@color/colorSubTitle"
+                    android:textSize="@dimen/tv_14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/colorLine" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="联系方式"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/tv_15sp"
+                    android:textStyle="bold" />
+
+                <EditText
+
+                    android:id="@+id/et9"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@null"
+                    android:focusable="false"
+                    android:gravity="start"
+                    android:hint="请输入联系方式"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:textColor="@color/colorMain"
+                    android:textColorHint="@color/colorSubTitle"
+                    android:textSize="@dimen/tv_14sp" />
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/colorLine" />
+
+            <Button
+
+                android:id="@+id/commit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/login_btn_bg"
+                android:gravity="center"
+                android:text="确认发布"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/tv_15sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+
+

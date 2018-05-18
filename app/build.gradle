@@ -16,7 +16,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         //X5兼容64位手机
@@ -29,10 +29,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+            manifestPlaceholders = [qqappid: "你的qq appid"]
         }
         debug {
             signingConfig signingConfigs.config
+            manifestPlaceholders = [qqappid: "你的qq appid"]
         }
+
+
     }
     repositories {
         flatDir { dirs 'libs' }
@@ -48,6 +52,7 @@ android {
             outputFileName = "app_release_V${defaultConfig.versionName}_${buildTime()}.apk"
         }
     }
+
 }
 
 
@@ -97,4 +102,11 @@ dependencies {
     compile('cn.qqtheme.framework:WheelPicker:1.5.5') {
         exclude group: 'com.android.support'
     }
+    //u-meng
+    implementation 'com.umeng.sdk:share-core:latest.integration'
+    implementation 'com.umeng.sdk:share-qq:6.9.1.1'
+    implementation 'com.umeng.sdk:share-wechat:latest.integration'
+    implementation 'com.umeng.sdk:shareboard-widget:latest.integration'
+    implementation 'com.umeng.sdk:common:latest.integration'
+    implementation 'com.umeng.sdk:debug:latest.integration'
 }

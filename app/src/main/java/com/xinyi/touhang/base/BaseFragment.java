@@ -76,6 +76,13 @@ public abstract class BaseFragment extends Fragment {
         toast.show();
     }
 
+    public void onButton1Click(String key) {
+
+    }
+
+    public void onButton2Click(String key) {
+
+    }
 
 
 }

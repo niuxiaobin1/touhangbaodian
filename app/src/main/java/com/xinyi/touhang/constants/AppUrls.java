@@ -82,8 +82,23 @@ public class AppUrls {
     public static final String FrontClear_historyUrl = HostAddress + "front/clear_history/";
     public static final String ForumIc_homeUrl = HostAddress + "forum/ic_home/";
     public static final String ForumIc_searchUrl = HostAddress + "forum/ic_search/";
+    public static final String ForumIcon_searchUrl = HostAddress + "forum/icon_search/";
+    public static final String ForumPatent_searchUrl = HostAddress + "forum/patent_search/";
     public static final String OrderListsUrl = HostAddress + "order/lists/";
     public static final String ForumCanUrl = HostAddress + "forum/can/";
+    public static final String NonStandardSaveUrl = HostAddress + "non_standard_assets/save/";
+    public static final String NonStandardDetailUrl = HostAddress + "non_standard_assets/detail/";
+    public static final String NonStandardAdd_favoriteUrl = HostAddress + "non_standard_assets/add_favorite";
+    public static final String BankSaveUrl = HostAddress + "bank/save/";
+    public static final String BankSearchUrl = HostAddress + "bank/search";
+    public static final String BankDetailUrl = HostAddress + "bank/detail";
+    public static final String BankAdd_favoriteUrl = HostAddress + "bank/add_favorite";
+    public static final String OfferSaveUrl = HostAddress + "offer/save/";
+    public static final String OfferSearchUrl = HostAddress + "offer/search/";
+    public static final String OfferDetailUrl = HostAddress + "offer/detail/";
+    public static final String CustomerConfirmUrl = HostAddress + "customer/confirm/";
+    public static final String NewsTop_detailUrl = HostAddress + "news/top_detail/";
+    public static final String VideoType_listUrl = HostAddress + "video/type_list/";
 
 
 }

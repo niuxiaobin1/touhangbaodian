@@ -19,7 +19,8 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.xinyi.touhang.weight.EllipsizingTextView
+        <TextView
+
             android:ellipsize="end"
             android:id="@+id/newsTitleTv"
             android:layout_width="match_parent"

@@ -1,20 +1,30 @@
 package com.xinyi.touhang.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -26,13 +36,19 @@ import com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.activities.LoginActivity;
 import com.xinyi.touhang.activities.MyNotificationActivity;
+import com.xinyi.touhang.activities.ReleaseBankActivity;
+import com.xinyi.touhang.activities.ReleaseNonStandActivity;
 import com.xinyi.touhang.activities.RleaseBusinessActivity;
 import com.xinyi.touhang.adapter.BusinessOpportunitiesAdapter;
 import com.xinyi.touhang.base.BaseFragment;
 import com.xinyi.touhang.callBack.DialogCallBack;
 import com.xinyi.touhang.callBack.HandleResponse;
 import com.xinyi.touhang.constants.AppUrls;
+import com.xinyi.touhang.fragments.business.BusinessInner1ragment;
+import com.xinyi.touhang.fragments.business.BusinessInner2ragment;
+import com.xinyi.touhang.fragments.business.BusinessInner3ragment;
 import com.xinyi.touhang.fragments.other.NotificationFragment;
+import com.xinyi.touhang.utils.CommonUtils;
 import com.xinyi.touhang.utils.DensityUtil;
 import com.xinyi.touhang.utils.DividerDecoration;
 import com.xinyi.touhang.utils.DoParams;
@@ -41,6 +57,7 @@ import com.xinyi.touhang.utils.SpUtils;
 import com.xinyi.touhang.utils.StatusBarUtil;
 import com.xinyi.touhang.utils.UIHelper;
 import com.xinyi.touhang.weight.ObservableScrollView;
+import com.xinyi.touhang.weight.popupwindow.BusinessFilterPopupWindow;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
@@ -69,11 +86,17 @@ import okhttp3.Response;
  */
 public class BusinessOpportunitiesFragment extends BaseFragment {
 
-    @BindView(R.id.magic_indicator)
-    MagicIndicator magic_indicator;
+    @BindView(R.id.businessviewPager)
+    ViewPager businessviewPager;
 
     @BindView(R.id.select_tv)
     TextView select_tv;
+
+    @BindView(R.id.search_image)
+    ImageView search_image;
+
+    @BindView(R.id.search_et)
+    EditText search_et;
 
     @BindView(R.id.parentView)
     LinearLayout parentView;
@@ -81,22 +104,28 @@ public class BusinessOpportunitiesFragment extends BaseFragment {
     @BindView(R.id.release_tv)
     TextView release_tv;
 
-    @BindView(R.id.refresh_layout)
-    PullRefreshLayout refresh_layout;
 
     @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
+    TabLayout tabLayouts;
 
-    @BindView(R.id.recylerView)
-    RecyclerView recylerView;
+    @BindView(R.id.titleLayout)
+    RelativeLayout titleLayout;
 
-    private String[] titles = new String[]{"并购投资", "非标资产","银行间"};
-    private String[] mDataList = new String[]{"项目供方","项目需方"};
+    private BusinessFilterPopupWindow popupWindow;
+    private String[] selects1 = new String[]{"", "", "", ""};
+    private String[] selects2 = new String[]{"", "", ""};
 
-    private BusinessOpportunitiesAdapter adapter;
+    private String[] titles = new String[]{"并购投资", "非标资产", "银行间"};
+    private List<Map<String, String>> list1;
+    private List<Map<String, String>> list2;
+    private List<Map<String, String>> list3;
+    private List<Map<String, String>> list4;
 
-    private int page = 1;
-    private String url = AppUrls.SupplySearchUrl;
+    private List<BaseFragment> fragments;
+    private MyPagerAdapter adapter;
+
+    private int currentIndex = 0;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -146,54 +175,48 @@ public class BusinessOpportunitiesFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_business_opportunities, container, false);
         ButterKnife.bind(this, rootView);
-//        titleTv = rootView.findViewById(R.id.titleTv);
-//        subTitleTv = rootView.findViewById(R.id.subTitleTv);
-//        mScrollView = rootView.findViewById(R.id.mScrollView);
         return rootView;
     }
 
     @Override
     public void initViews() {
         initTabs();
-        try {
-            initMagicIndicator();
-        } catch (JSONException e) {
-        }
-        parentView.setPadding(0, StatusBarUtil.getStatusBarHeight(getActivity()),0,0);
-
-        refresh_layout.setMode(PullRefreshLayout.BOTH);
-        refresh_layout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onPullDownRefresh() {
-                page = 1;
-                initDatas();
-            }
-
-            @Override
-            public void onPullUpRefresh() {
-                page++;
-                initDatas();
-
-            }
-        });
-
-        adapter = new BusinessOpportunitiesAdapter(getActivity());
-        recylerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recylerView.addItemDecoration(new DividerDecoration(getActivity(), R.color.colorItem,
-                DensityUtil.dip2px(getActivity(), 0.5f)));
-        recylerView.setAdapter(adapter);
+        initSelect();
+        parentView.setPadding(0, StatusBarUtil.getStatusBarHeight(getActivity()), 0, 0);
 
         release_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user_token = (String) SpUtils.get(getActivity(), SpUtils.USERUSER_TOKEN, "");
-                if (TextUtils.isEmpty(user_token)) {
-                    Intent it = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(it);
+
+                String confirm = (String) SpUtils.get(getActivity(), SpUtils.USERCONFIRM, "");
+                if (!TextUtils.isEmpty(confirm) && confirm.equals("2")) {
+                    showSelectDialog("请选择发布类型", titles);
                 } else {
-                    Intent it = new Intent(getActivity(), RleaseBusinessActivity.class);
-                    startActivity(it);
+                    UIHelper.toastMsg("请您先进行实名认证");
                 }
+
+
+            }
+        });
+
+        businessviewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentIndex = position;
+                if (position == 0) {
+                    select_tv.setVisibility(View.GONE);
+                } else {
+                    select_tv.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
             }
         });
@@ -201,139 +224,101 @@ public class BusinessOpportunitiesFragment extends BaseFragment {
         select_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (magic_indicator.getVisibility()==View.VISIBLE){
-                    magic_indicator.setVisibility(View.GONE);
-                }else{
-                    magic_indicator.setVisibility(View.VISIBLE);
-                }
+                showPopup();
             }
         });
 
-    }
-
-
-    private void initMagicIndicator() throws JSONException {
-        magic_indicator.setBackgroundColor(Color.WHITE);
-        CommonNavigator commonNavigator = new CommonNavigator(getActivity());
-        commonNavigator.setScrollPivotX(0.35f);
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+        search_et.setOnClickListener(new View.OnClickListener() {
             @Override
-            public int getCount() {
-                return mDataList == null ? 0 : mDataList.length;
-            }
-
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
-                final SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
-                simplePagerTitleView.setText(mDataList[index]);
-                simplePagerTitleView.setTextSize(12);
-                simplePagerTitleView.setNormalColor(Color.parseColor("#4A4A4A"));
-                simplePagerTitleView.setSelectedColor(Color.parseColor("#000000"));
-                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        magic_indicator.onPageSelected(index);
-                        magic_indicator.onPageScrolled(index, 0, 0);
-                        if (index==0) {
-                            url = AppUrls.SupplySearchUrl;
-                            adapter.setType(0);
-                        } else {
-                            url = AppUrls.DemandSearchUrl;
-                            adapter.setType(1);
-                        }
-                        page = 1;
-                        initDatas();
-
-                    }
-                });
-                return simplePagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                WrapPagerIndicator indicator = new WrapPagerIndicator(context);
-                indicator.setFillColor(Color.parseColor("#FFD700"));
-                return indicator;
+            public void onClick(View v) {
+                CommonUtils.showInputMethod(search_et);
             }
         });
-        magic_indicator.setNavigator(commonNavigator);
 
+        search_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonUtils.hideSoftInput(getActivity(), search_et);
+                fragments.get(currentIndex).onButton1Click(search_et.getText().toString().trim());
+            }
+        });
     }
-
 
     private void initTabs() {
+        fragments = new ArrayList<>();
+        fragments.add(BusinessInner1ragment.newInstance("", ""));
+        fragments.add(BusinessInner2ragment.newInstance("", ""));
+        fragments.add(BusinessInner3ragment.newInstance("", ""));
+        adapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
+        businessviewPager.setOffscreenPageLimit(3);
+        businessviewPager.setAdapter(adapter);
+        ViewCompat.setElevation(tabLayouts, 10);
+        tabLayouts.setupWithViewPager(businessviewPager);
+        select_tv.setVisibility(View.GONE);
+    }
 
-        for (int i = 0; i < titles.length; i++) {
-            tabLayout.addTab(tabLayout.newTab().setText(titles[i]));
+    private void showPopup() {
+        if (popupWindow != null) {
+            popupWindow = null;
         }
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        popupWindow = new BusinessFilterPopupWindow(getActivity(), list1, list2, list3, currentIndex == 2 ? null : list4);
+        popupWindow.setOnLeftClickListener(new BusinessFilterPopupWindow.OnLeftClickListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
+            public void onLeftClick() {
+                if (currentIndex == 1) {
+                    selects1[0] = "";
+                    selects1[1] = "";
+                    selects1[2] = "";
+                    selects1[3] = "";
+                } else if (currentIndex == 2) {
+                    selects2[0] = "";
+                    selects2[1] = "";
+                    selects2[2] = "";
+                }
+                fragments.get(currentIndex).onButton2Click("");
 
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
+        popupWindow.setOnRightClickListener(new BusinessFilterPopupWindow.OnRightClickListener() {
+            @Override
+            public void onRightClick(String key1, String key2, String key3, String key4) {
+                if (currentIndex == 1) {
+                    selects1[0] = key1;
+                    selects1[1] = key2;
+                    selects1[2] = key3;
+                    selects1[3] = key4;
+                    fragments.get(currentIndex).onButton2Click(key1 + "_" + key2 + "_" + key3 + "_" + key4);
+                } else if (currentIndex == 2) {
+                    selects2[0] = key1;
+                    selects2[1] = key2;
+                    selects2[2] = key3;
+                    fragments.get(currentIndex).onButton2Click(key1 + "_" + key2 + "_" + key3 + "_" + "");
+
+                }
+
+            }
+        });
+        if (currentIndex == 1) {
+            popupWindow.setSelected(selects1[0], selects1[1], selects1[2], selects1[3]);
+        } else if (currentIndex == 2) {
+            popupWindow.setSelected(selects2[0], selects2[1], selects2[2], "");
+        }
+
+
+        if (Build.VERSION.SDK_INT >= 24) {
+            Rect visibleFrame = new Rect();
+            titleLayout.getGlobalVisibleRect(visibleFrame);
+            int height = titleLayout.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
+            popupWindow.setHeight(height);
+            popupWindow.showAsDropDown(titleLayout, 0, 0);
+        } else {
+            popupWindow.showAsDropDown(titleLayout, 0, 0);
+        }
     }
 
     @Override
     public void initDatas() {
-        HttpParams params = new HttpParams();
-        params.put("page", String.valueOf(page));
-        if (page == 1) {
-            adapter.clearDatas();
-        }
-        OkGo.<String>post(url)
-                .cacheMode(CacheMode.NO_CACHE)
-                .params(DoParams.encryptionparams(getActivity(), params, ""))
-                .tag(this)
-                .execute(new DialogCallBack(getActivity(), false) {
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-                        refresh_layout.onRefreshComplete();
-                        try {
-                            JSONObject js = new JSONObject(response.body());
-                            if (js.getBoolean("result")) {
-                                adapter.addDatas(JsonUtils.ArrayToList(
-                                        js.getJSONArray("data"), new String[]{
-                                                "id", "name", "industry", "customer_id", "address",
-                                                "price", "points", "stage", "type", "special",
-                                                "out", "content", "telephone", "confirm", "top",
-                                                "created", "modified"
-                                        }
-                                ));
-                            } else {
-                                UIHelper.toastMsg(js.getString("message"));
-                            }
-                        } catch (JSONException e) {
-                            UIHelper.toastMsg(e.getMessage());
-                        }
-
-                    }
-
-                    @Override
-                    public String convertResponse(Response response) throws Throwable {
-                        HandleResponse.handleReponse(response);
-                        return super.convertResponse(response);
-                    }
-
-                    @Override
-                    public void onError(com.lzy.okgo.model.Response<String> response) {
-                        super.onError(response);
-                        refresh_layout.onRefreshComplete();
-                        HandleResponse.handleException(response, getActivity());
-                    }
-                });
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -349,8 +334,6 @@ public class BusinessOpportunitiesFragment extends BaseFragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -373,5 +356,83 @@ public class BusinessOpportunitiesFragment extends BaseFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private class MyPagerAdapter extends FragmentPagerAdapter {
+
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles[position];
+        }
+    }
+
+    AlertDialog.Builder builder;
+
+    private void showSelectDialog(String title, final String[] lists) {
+        builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle(title)
+                .setItems(lists, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String user_token = (String) SpUtils.get(getActivity(), SpUtils.USERUSER_TOKEN, "");
+                        if (TextUtils.isEmpty(user_token)) {
+                            Intent it = new Intent(getActivity(), LoginActivity.class);
+                            startActivity(it);
+                        } else {
+                            Intent it = null;
+                            if (which == 0) {
+                                it = new Intent(getActivity(), RleaseBusinessActivity.class);
+                            } else if (which == 1) {
+                                it = new Intent(getActivity(), ReleaseNonStandActivity.class);
+                            } else {
+                                it = new Intent(getActivity(), ReleaseBankActivity.class);
+                            }
+                            startActivity(it);
+                        }
+
+                    }
+                }).show();
+    }
+
+
+    private void initSelect() {
+        list1 = new ArrayList<>();
+        list2 = new ArrayList<>();
+        list3 = new ArrayList<>();
+        list4 = new ArrayList<>();
+        initList(new String[]{"0", "1", "2", "3", "4"}, new String[]{"不限", "3%以下",
+                "3%-5%", "5%-8%", "8%以上"}, list1);
+        initList(new String[]{"0", "1", "2", "3", "4", "5"}, new String[]{"不限", "8个月以下",
+                "6-12个月", "12-36个月", "36-60个月", "60个月以上"}, list2);
+        initList(new String[]{"0", "1", "2", "3", "4", "5"}, new String[]{"不限", "5千万以下",
+                "5千万至一亿", "1亿至3亿", "3亿至5亿", "5亿以上"}, list3);
+        initList(new String[]{"0", "1", "2", "3", "4"}, new String[]{"不限", "AAA",
+                "AAA-AA", "AA-A+", "A+以下"}, list4);
+
+    }
+
+    private void initList(String[] ids, String[] names, List<Map<String, String>> mList) {
+        mList.clear();
+        for (int i = 0; i < ids.length; i++) {
+            Map<String, String> map = new HashMap<>();
+            map.put("id", ids[i]);
+            map.put("name", names[i]);
+            mList.add(map);
+        }
     }
 }

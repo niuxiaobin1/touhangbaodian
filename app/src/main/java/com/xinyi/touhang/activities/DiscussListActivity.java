@@ -81,7 +81,7 @@ public class DiscussListActivity extends BaseActivity {
     protected void initViews() {
         super.initViews();
         initTitle("交流");
-        initRightTv("发帖", getResources().getDrawable(R.mipmap.release_icon));
+        initRightTv("发帖", R.color.colorTabSelectedIndicator,getResources().getDrawable(R.mipmap.release_icon_new));
         typeLists = new ArrayList<>();
 
         recylerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

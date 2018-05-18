@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     android:orientation="vertical"
-    android:id="@+id/parentView"
     tools:context="com.xinyi.touhang.fragments.MineFragment">
 
     <RelativeLayout
@@ -118,17 +118,34 @@
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/tv_15sp" />
 
-                <TextView
-                    android:id="@+id/vipFlag"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/vip_bg"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="VIP"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/tv_14sp" />
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/vipFlag"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/vip_bg"
+                        android:gravity="center"
+                        android:text="VIP"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/tv_12sp" />
+
+                    <TextView
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/authenFlag"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/vip_bg"
+                        android:gravity="center"
+                        android:text="实名认证"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/tv_12sp" />
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -206,6 +223,34 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="我的评论"
+                        android:textColor="@color/colorMain"
+                        android:textSize="@dimen/tv_14sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/arrow_right" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="0.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorItem" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/workPlaceLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="我的职场"
                         android:textColor="@color/colorMain"
                         android:textSize="@dimen/tv_14sp" />
 
@@ -308,7 +353,6 @@
                 </RelativeLayout>
 
 
-
                 <RelativeLayout
                     android:id="@+id/orderLayout"
                     android:layout_width="match_parent"
@@ -336,7 +380,6 @@
                         android:layout_alignParentBottom="true"
                         android:background="@color/colorItem" />
                 </RelativeLayout>
-
 
                 <RelativeLayout
                     android:id="@+id/settingsLayout"

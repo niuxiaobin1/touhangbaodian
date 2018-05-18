@@ -85,6 +85,20 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    protected void initRightTv(String title,@ColorRes int color, Drawable drawable) {
+        if (right_tv != null) {
+            right_tv.setText(title);
+            right_tv.setTextColor(getResources().getColor(color));
+            right_tv.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
+            right_tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onRightClick();
+                }
+            });
+        }
+    }
+
     protected void initRightTv(String title, @ColorRes int color) {
         if (right_tv != null) {
             right_tv.setText(title);

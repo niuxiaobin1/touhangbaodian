@@ -175,7 +175,7 @@ public class MyHistoryListFragment extends BaseFragment {
                                     if (type.equals("1")) {
                                         adapter.addDatas(JsonUtils.ArrayToList(
                                                 js.getJSONObject("data").getJSONArray("history"), new String[]{
-                                                        "id", "name", "type"
+                                                        "id", "name", "type","sub_type_name"
                                                 }
                                         ));
                                     }else{

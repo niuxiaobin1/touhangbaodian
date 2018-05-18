@@ -32,6 +32,43 @@
 
     </RelativeLayout>
 
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <EditText
+            android:id="@+id/search_et"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/laws_search_bg"
+            android:focusable="false"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="40dp"
+            android:textColor="@color/colorMain"
+            android:textSize="@dimen/tv_14sp" />
+
+        <ImageView
+            android:id="@+id/search_image"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/search_icon" />
+    </RelativeLayout>
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/magic_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:visibility="visible" />
+
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"

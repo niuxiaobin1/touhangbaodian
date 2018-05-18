@@ -57,6 +57,8 @@ public class StudyListFragment extends BaseFragment {
 
     private BaseAdapter adapter;
 
+    private String type="";
+    private String name="";
     private int page = 1;
     private static final String TITLE = "paramTitle";
     private static final String LISTURL = "paramUrl";
@@ -141,6 +143,8 @@ public class StudyListFragment extends BaseFragment {
         }
         HttpParams params = new HttpParams();
         params.put("page", String.valueOf(page));
+        params.put("type", type);
+        params.put("name", name);
         if (page == 1) {
             adapter.clearDatas();
         }
@@ -244,5 +248,20 @@ public class StudyListFragment extends BaseFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onButton1Click(String key) {
+        super.onButton1Click(key);
+        page=1;
+        this.type=key;
+        initDatas();
+    }
+    @Override
+    public void onButton2Click(String key) {
+        super.onButton1Click(key);
+        page=1;
+        this.name=key;
+        initDatas();
     }
 }

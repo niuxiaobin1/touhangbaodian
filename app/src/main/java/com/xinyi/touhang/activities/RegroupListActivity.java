@@ -258,8 +258,15 @@ public class RegroupListActivity extends BaseActivity {
     //二级分类
     private void initSubMagicIndicator(String data) throws JSONException {
         subList.clear();
-        subList = JsonUtils.ArrayToList(new JSONArray(data)
-                , new String[]{"id", "name"});
+        JSONArray array=new JSONArray(data);
+        if (array.length()!=0){
+            Map<String, String> fMap = new HashMap<>();
+            fMap.put("id", "");
+            fMap.put("name", "全部");
+            subList.add(fMap);
+            subList .addAll(JsonUtils.ArrayToList(array
+                    , new String[]{"id", "name"}));
+        }
         if (subList.size() == 0) {
             sub_magic_indicator.setVisibility(View.GONE);
             cid2 = "";

@@ -3,6 +3,7 @@ package com.xinyi.touhang.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.activities.WebActivity;
 import com.xinyi.touhang.constants.AppUrls;
+import com.xinyi.touhang.utils.CommonUtils;
 
 import java.util.Map;
 
@@ -24,6 +26,8 @@ import butterknife.ButterKnife;
 public class LawsAdapter extends BaseAdapter<LawsAdapter.ViewHolder> {
 
     private Context context;
+
+    private String key="";
 
     public LawsAdapter(Context context) {
         super();
@@ -40,7 +44,13 @@ public class LawsAdapter extends BaseAdapter<LawsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Map<String,String> map=datas.get(position);
-        holder.titleTv.setText(map.get("name"));
+        if (TextUtils.isEmpty(key)){
+            holder.titleTv.setText(map.get("name"));
+        }else{
+            holder.titleTv.setText(CommonUtils.changeKeyColor(context,
+                    R.color.colorTabSelectedIndicator,map.get("name"),key));
+        }
+
         holder.textview1.setText(map.get("num"));
         holder.textview2.setText("发布时间："+map.get("date"));
 
@@ -49,6 +59,8 @@ public class LawsAdapter extends BaseAdapter<LawsAdapter.ViewHolder> {
             public void onClick(View v) {
                 Intent it=new Intent(context, WebActivity.class);
                 it.putExtra(WebActivity.TITLESTRING,map.get("name"));
+                it.putExtra(WebActivity.TITLECANDOWNLOAD,true);
+                it.putExtra(WebActivity.DOWNLOADURL,map.get("file"));
                 it.putExtra(WebActivity.TITLEURL, AppUrls.LawsDetailUrl+map.get("id"));
                 context.startActivity(it);
             }
@@ -59,6 +71,14 @@ public class LawsAdapter extends BaseAdapter<LawsAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return datas.size();
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

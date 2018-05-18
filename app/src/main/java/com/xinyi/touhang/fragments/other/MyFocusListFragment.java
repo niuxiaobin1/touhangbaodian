@@ -166,7 +166,7 @@ public class MyFocusListFragment extends BaseFragment {
                                     if (type.equals("1")) {
                                         adapter.addDatas(JsonUtils.ArrayToList(
                                                 js.getJSONObject("data").getJSONArray("favorite"), new String[]{
-                                                        "id", "name", "type","fid"
+                                                        "id", "name", "type","fid","sub_type_name"
                                                 }
                                         ));
                                     }else{

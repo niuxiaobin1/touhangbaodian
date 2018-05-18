@@ -30,6 +30,7 @@ public class SpUtils {
     public static final String USERMODIFIED = "_modified";
     public static final String USERIMAGE = "_image";
     public static final String USERVIP_LIMIT = "_vip_limit";
+    public static final String USERCONFIRM = "_confirm";
 
     public SpUtils() {
         /* cannot be instantiated */

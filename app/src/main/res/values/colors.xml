@@ -18,6 +18,7 @@
     <color name="colorLine">#E6E6E6</color>
     <color name="mask_color">#88888888</color>
     <color name="hint_color">#D6D2D2</color>
-
+    <color name="popu_dim_color">#8c000000</color>
+    <color name="colorGreen">#7ED321</color>
 
 </resources>

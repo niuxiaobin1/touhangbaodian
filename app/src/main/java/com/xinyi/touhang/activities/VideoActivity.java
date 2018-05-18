@@ -280,9 +280,9 @@ public class VideoActivity extends BaseActivity {
                             if (js.getBoolean("result")) {
                                 JSONObject video = js.getJSONObject("data").getJSONObject("video");
 
-                                String pay = video.getString("pay");
+                                String pay_flg = js.getJSONObject("data").getString("pay_flg");
                                 double price = Double.parseDouble(video.getString("price"));
-                                if (price > 0 && pay.equals("0")) {
+                                if (price > 0 && pay_flg.equals("0")) {
                                     //需要付费 且没有付费过
                                     payCostTv.setText("￥" + price);
                                     upDateLayout(0);

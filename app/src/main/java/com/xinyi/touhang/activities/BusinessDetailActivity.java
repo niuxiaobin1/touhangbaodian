@@ -99,9 +99,11 @@ public class BusinessDetailActivity extends BaseActivity {
 
     public static final String DATAURL = "_url";
     public static final String BUSINESSID = "_id";
+    public static final String BUSINESSTYPE = "_type";
 
     private String url = "";
     private String id = "";
+    private String type = "";
     private String favorite_flg;//是否收藏
 
     @Override
@@ -118,13 +120,14 @@ public class BusinessDetailActivity extends BaseActivity {
         super.initViews();
         url = getIntent().getStringExtra(DATAURL);
         id = getIntent().getStringExtra(BUSINESSID);
+        type = getIntent().getStringExtra(BUSINESSTYPE);
         checkIsVip();
-        if (url.equals(AppUrls.SupplyDetailUrl)) {
-            initTitle("供方详情");
+        if (type.equals("1")) {
+            initTitle("投资方详情");
             sLayout.setVisibility(View.VISIBLE);
             dLayout.setVisibility(View.GONE);
-        } else if (url.equals(AppUrls.DemandDetailUrl)) {
-            initTitle("需方详情");
+        } else if (type.equals("2")) {
+            initTitle("融资方详情");
             sLayout.setVisibility(View.GONE);
             dLayout.setVisibility(View.VISIBLE);
         }
@@ -157,6 +160,7 @@ public class BusinessDetailActivity extends BaseActivity {
         String user_token = (String) SpUtils.get(this, SpUtils.USERUSER_TOKEN, "");
         HttpParams params = new HttpParams();
         params.put("id", id);
+        params.put("type", type);
         params.put("user_token", user_token);
 
         OkGo.<String>post(url)
@@ -180,7 +184,7 @@ public class BusinessDetailActivity extends BaseActivity {
 
                                 titleTv.setText(res.getString("name"));
                                 introduceTv.setText(res.getString("content"));
-                                if (url.equals(AppUrls.SupplyDetailUrl)) {
+                                if (type.equals("1")) {
                                     tv1.setText(res.getString("address"));
                                     tv2.setText(res.getString("industry"));
                                     tv3.setText(res.getString("purpose"));
@@ -190,7 +194,7 @@ public class BusinessDetailActivity extends BaseActivity {
                                     tv7.setText(res.getString("type"));
                                     tv8.setText(res.getString("special"));
                                     tv9.setText(res.getString("out"));
-                                } else if (url.equals(AppUrls.DemandDetailUrl)) {
+                                } else if (type.equals("2")) {
                                     dtv1.setText(res.getString("address"));
                                     dtv2.setText(res.getString("industry"));
                                     dtv3.setText(res.getString("price"));
@@ -244,14 +248,8 @@ public class BusinessDetailActivity extends BaseActivity {
             params.put("fid", favorite_flg);
         } else {
             //收藏
-            if (url.equals(AppUrls.SupplyDetailUrl)) {
-                favoUrl = AppUrls.SupplyAdd_favoriteUrl;
-                params.put("supply_id", id);
-            } else if (url.equals(AppUrls.DemandDetailUrl)) {
-                favoUrl = AppUrls.DemandAdd_favoriteUrl;
-                params.put("demand_id", id);
-            }
-
+            favoUrl = AppUrls.SupplyAdd_favoriteUrl;
+            params.put("supply_id", id);
 
         }
         params.put("user_token", user_token);

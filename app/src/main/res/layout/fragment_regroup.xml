@@ -9,7 +9,6 @@
     tools:context="com.xinyi.touhang.fragments.searchInner.RegroupFragment">
 
     <com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout
-        android:descendantFocusability="blocksDescendants"
         android:id="@+id/refresh_layout"
         app:refreshMode="both"
         android:layout_width="match_parent"

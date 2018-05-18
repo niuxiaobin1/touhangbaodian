@@ -120,6 +120,7 @@
 
 
                     <EditText
+                        android:inputType="number"
                         android:id="@+id/et2"
                         android:maxLines="1"
                         android:focusable="false"
@@ -507,7 +508,7 @@
                     android:textColor="@color/colorMain"
                     android:textSize="@dimen/tv_15sp"
                     android:textStyle="bold"
-                    android:text="公司及项目简介"
+                    android:text="项目详情"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -523,7 +524,7 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:gravity="start"
-                    android:hint="请输入公司及项目简介"
+                    android:hint="请输入项目详情"
                     android:textColorHint="@color/colorSubTitle"
                     android:textSize="@dimen/tv_14sp"
                     android:textColor="@color/colorMain"
@@ -605,6 +606,7 @@
 
 
                     <EditText
+                        android:inputType="number"
                         android:id="@+id/det2"
                         android:maxLines="1"
                         android:focusable="false"
@@ -954,13 +956,12 @@
                     android:textColor="@color/colorMain"
                     android:textSize="@dimen/tv_15sp"
                     android:textStyle="bold"
-                    android:text="公司及项目简介"
+                    android:text="项目详情"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <EditText
                     android:id="@+id/det11"
-                    android:maxLines="1"
                     android:focusable="false"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -969,7 +970,7 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:gravity="start"
-                    android:hint="请输入公司及项目简介"
+                    android:hint="请输入项目详情"
                     android:textColorHint="@color/colorSubTitle"
                     android:textSize="@dimen/tv_14sp"
                     android:textColor="@color/colorMain"

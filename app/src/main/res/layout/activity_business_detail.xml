@@ -534,7 +534,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:text="公司及项目简介"
+                    android:text="项目详情"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/tv_14sp"
                     app:layout_constraintLeft_toLeftOf="parent" />

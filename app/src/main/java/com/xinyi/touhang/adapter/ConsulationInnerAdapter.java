@@ -2,7 +2,16 @@ package com.xinyi.touhang.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.activities.ConsulationDetailActivity;
+import com.xinyi.touhang.utils.CommonUtils;
 import com.xinyi.touhang.utils.DensityUtil;
 import com.xinyi.touhang.weight.EllipsizingTextView;
 
@@ -55,7 +65,13 @@ public class ConsulationInnerAdapter extends RecyclerView.Adapter<ConsulationInn
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Map<String, String> map = datas.get(position);
         Glide.with(context).load(map.get("image")).placeholder(R.mipmap.loading_image).into(holder.news_image);
-        holder.newsTitleTv.setText(map.get("name"));
+
+        if (map.get("top").equals("1")) {
+            CommonUtils.setIcon(context,holder.newsTitleTv, " " + map.get("name"));
+        } else {
+            holder.newsTitleTv.setText(map.get("name"));
+        }
+
         holder.newsEditorTv.setText(map.get("author"));
         holder.news_readNum.setText(map.get("read_num") + "阅读");
         holder.news_time.setText(map.get("passed"));
@@ -71,6 +87,7 @@ public class ConsulationInnerAdapter extends RecyclerView.Adapter<ConsulationInn
 
     }
 
+
     @Override
     public int getItemCount() {
         return datas.size();
@@ -80,7 +97,7 @@ public class ConsulationInnerAdapter extends RecyclerView.Adapter<ConsulationInn
 
         public LinearLayout left_layout;
         private ImageView news_image;
-        private EllipsizingTextView newsTitleTv;
+        private TextView newsTitleTv;
         private TextView newsEditorTv;
         private TextView news_time;
         private TextView news_readNum;
@@ -109,4 +126,8 @@ public class ConsulationInnerAdapter extends RecyclerView.Adapter<ConsulationInn
 
         }
     }
+
+
+
+
 }

@@ -150,7 +150,7 @@ public class RleaseBusinessActivity extends BaseActivity {
     private List<String> dVaules;
     OptionPicker picker;
     AlertDialog.Builder builder;
-    private String[] titles = new String[]{"项目供方", "项目需方"};
+    private String[] titles = new String[]{"投资方", "融资方"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -528,10 +528,11 @@ public class RleaseBusinessActivity extends BaseActivity {
         params.put("price", sVaules.get(5));
         params.put("points", sVaules.get(6));
         params.put("stage", getStageId(sVaules.get(7)));
-        params.put("type", getTypeId(sVaules.get(8)));
+        params.put("cate", getTypeId(sVaules.get(8)));
         params.put("special", getSpecialId(sVaules.get(9)));
         params.put("out", getOutId(sVaules.get(10)));
         params.put("content", sVaules.get(11));
+        params.put("type", "1");
 
         OkGo.<String>post(AppUrls.SupplySaveUrl)
                 .cacheMode(CacheMode.NO_CACHE)
@@ -587,12 +588,12 @@ public class RleaseBusinessActivity extends BaseActivity {
         params.put("price", sVaules.get(4));
         params.put("points", sVaules.get(5));
         params.put("stage", getStageId(sVaules.get(6)));
-        params.put("type", getTypeId(sVaules.get(7)));
+        params.put("cate", getTypeId(sVaules.get(7)));
         params.put("special", getSpecialId(sVaules.get(8)));
         params.put("out", getOutId(sVaules.get(9)));
         params.put("content", sVaules.get(10));
-
-        OkGo.<String>post(AppUrls.DemandSaveUrl)
+        params.put("type", "2");
+        OkGo.<String>post(AppUrls.SupplySaveUrl)
                 .cacheMode(CacheMode.NO_CACHE)
                 .tag(this)
                 .params(DoParams.encryptionparams(RleaseBusinessActivity.this, params, user_token))
@@ -735,7 +736,7 @@ public class RleaseBusinessActivity extends BaseActivity {
     }
 
     private void showSelectDialog4(String title, final String[] lists, final int left) {
-         builder = new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(this);
 
         builder.setTitle(title)
                 .setItems(lists, new DialogInterface.OnClickListener() {

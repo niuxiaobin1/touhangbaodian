@@ -1,9 +1,14 @@
 package com.xinyi.touhang.activities;
 
+import android.Manifest;
+import android.app.Dialog;
 import android.net.http.SslError;
 import android.os.Build;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -11,25 +16,51 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.kongqw.permissionslibrary.PermissionsManager;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Progress;
+import com.lzy.okgo.request.GetRequest;
+import com.lzy.okserver.OkDownload;
+import com.lzy.okserver.download.DownloadListener;
+import com.lzy.okserver.download.DownloadTask;
+import com.lzy.okserver.task.XExecutor;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.base.BaseActivity;
 import com.xinyi.touhang.constants.AppUrls;
 import com.xinyi.touhang.utils.JsonUtils;
+import com.xinyi.touhang.utils.UIHelper;
+import com.xinyi.touhang.weight.CustomProgressDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WebActivity extends BaseActivity {
+public class WebActivity extends BaseActivity implements XExecutor.OnAllTaskEndListener {
 
     @BindView(R.id.webView)
     WebView webView;
 
-    public static final String TITLESTRING="web_title";
-    public static final String TITLEURL="web_url";
+    private Dialog dialog;
 
+    public static final String TITLESTRING = "web_title";
+    public static final String TITLEURL = "web_url";
+    public static final String TITLECANDOWNLOAD = "web_canDownLoad";
+    public static final String DOWNLOADURL = "web_download_url";
+
+    private String name = "";
+    private boolean isDownLoad;
+    private String downLoadUrl;
+
+    public final static String FILE_PATH = "/touhang/download";
+    private OkDownload okDownload;
+    private DownloadTask userTask;
+    private String downLoadpath;//文件外部本地保存路径 用户可见
+
+    private PermissionsManager mPermissionsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +74,126 @@ public class WebActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
+        downLoadUrl = getIntent().getStringExtra(DOWNLOADURL);
+        name = getIntent().getStringExtra(TITLESTRING);
+        isDownLoad = getIntent().getBooleanExtra(TITLECANDOWNLOAD, false);
         initTitle(getIntent().getStringExtra(TITLESTRING));
+        if (isDownLoad) {
+            initRightTv("", getResources().getDrawable(R.mipmap.download_icon));
+        }
         initWebView();
+        dialog = CustomProgressDialog.createLoadingDialog(this, "");
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+
+
+    private void initPermissiton() {
+        // 初始化
+        mPermissionsManager = new PermissionsManager(this) {
+            @Override
+            public void authorized(int requestCode) {
+                userDownLoad();
+            }
+
+            @Override
+            public void noAuthorization(int requestCode, String[] lacksPermissions) {
+            }
+
+            @Override
+            public void ignore(int requestCode) {
+                userDownLoad();
+            }
+        };
+
+        // 要校验的权限
+        String[] PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE};
+        // 检查权限
+        mPermissionsManager.checkPermissions(0, PERMISSIONS);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // 用户做出选择以后复查权限，判断是否通过了权限申请
+        mPermissionsManager.recheckPermissions(requestCode, permissions, grantResults);
+    }
+
+
+    @Override
+    protected void onRightClick() {
+        super.onRightClick();
+        initPermissiton();
+
+    }
+
+    private void userDownLoad() {
+
+        okDownload = OkDownload.getInstance();
+        downLoadpath = Environment.getExternalStorageDirectory() + FILE_PATH;
+        okDownload.getThreadPool().setCorePoolSize(3);
+        okDownload.addOnAllTaskEndListener(this);
+
+        GetRequest<File> request = OkGo.<File>get(downLoadUrl);
+        userTask = OkDownload.request(name + "_user", request)
+                .folder(downLoadpath)
+                .fileName(name+"."+getFileType(downLoadUrl))
+                .save()
+                .register(new DownloadListener(name + "_user") {
+                    @Override
+                    public void onStart(Progress progress) {
+                        dialog = CustomProgressDialog.createLoadingDialog(WebActivity.this,
+                                "下载中...");
+                        dialog.setCancelable(false);
+                        dialog.show();
+                    }
+
+                    @Override
+                    public void onProgress(Progress progress) {
+
+                    }
+
+                    @Override
+                    public void onError(Progress progress) {
+                        dialog.dismiss();
+                        UIHelper.toastMsg("下载失败");
+                    }
+
+                    @Override
+                    public void onFinish(File file, Progress progress) {
+                        dialog.dismiss();
+                        UIHelper.toastMsg("下载成功");
+                    }
+
+                    @Override
+                    public void onRemove(Progress progress) {
+                    }
+                });
+        userTask.start();
+    }
+
+    /***
+     * 获取文件类型
+     *
+     * @param paramString
+     * @return
+     */
+    private String getFileType(String paramString) {
+        String str = "";
+
+        if (TextUtils.isEmpty(paramString)) {
+            return str;
+        }
+        int i = paramString.lastIndexOf('.');
+        if (i <= -1) {
+            return str;
+        }
+
+
+        str = paramString.substring(i + 1);
+        return str;
     }
 
     @Override
@@ -100,13 +249,16 @@ public class WebActivity extends BaseActivity {
                 view.loadUrl(url);
                 return false;
             }
+
         });
         //webview加载完成再显示评论
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-
+                if (newProgress == 100 && dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
         });
         webView.loadUrl(getIntent().getStringExtra(TITLEURL));
@@ -116,8 +268,26 @@ public class WebActivity extends BaseActivity {
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                 handler.proceed(); // 接受网站证书
             }
+
         });
 
+    }
 
+    @Override
+    public void onAllTaskEnd() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (userTask != null) {
+            userTask.remove();
+        }
+        if (okDownload!=null){
+
+            okDownload.removeOnAllTaskEndListener(this);
+        }
     }
 }

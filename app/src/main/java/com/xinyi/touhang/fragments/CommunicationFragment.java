@@ -67,7 +67,6 @@ import okhttp3.Response;
  */
 public class CommunicationFragment extends BaseFragment {
 
-
     @BindView(R.id.refresh_layout)
     PullRefreshLayout refresh_layout;
 
@@ -461,7 +460,7 @@ public class CommunicationFragment extends BaseFragment {
             RelativeLayout top_layout;
             ImageView icon_image;
             ImageView play_image;
-            EllipsizingTextView textview;
+            TextView textview;
             LinearLayout videoInfo_layout;
             TextView viewNums_tv;
             TextView rightTv;

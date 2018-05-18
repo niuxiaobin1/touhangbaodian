@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    tools:context="com.xinyi.touhang.activities.AboutUsActivity">
+
+    <include layout="@layout/back_title_bar"/>
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@mipmap/about_us_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textColor="@color/colorSubTitle"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/tv_10sp"
+            android:text="帮投行人一路领先"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/versionTv"
+        android:layout_marginBottom="5dp"
+        android:gravity="center_horizontal"
+        android:textColor="#BFBFBF"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/tv_10sp"
+        android:text="v 1.0.1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:textColor="#BFBFBF"
+        android:textSize="@dimen/tv_10sp"
+        android:text="深圳市新实信息科技有限公司"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

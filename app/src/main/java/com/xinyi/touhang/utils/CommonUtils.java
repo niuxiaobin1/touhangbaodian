@@ -13,6 +13,10 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -20,20 +24,26 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.adapter.ConsulationInnerAdapter;
 import com.xinyi.touhang.constants.Configer;
+import com.xinyi.touhang.third.CenterAlignImageSpan;
 
 import java.io.File;
 import java.security.MessageDigest;
@@ -436,6 +446,20 @@ public class CommonUtils {
     }
 
 
+    public static void setIcon(Context context, TextView tv, String text) {
+        //获取一张图片
+        Drawable drawable = ContextCompat.getDrawable(context, R.mipmap.top_icon);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        // 根据bitmap对象创建imagespan对象
+        CenterAlignImageSpan imagespan = new CenterAlignImageSpan(drawable);
+        // 创建一个spannablestring对象，以便插入用imagespan对象封装的图像
+        SpannableString spannablestring = new SpannableString(text);
+        spannablestring.setSpan(imagespan, 0, 1, ImageSpan.ALIGN_BASELINE);
+        tv.setText(spannablestring);
+
+    }
+
+
     public static void hideInputMethod(EditText editText, Context context, View view) {
         // 先隐藏键盘
         ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
@@ -539,10 +563,11 @@ public class CommonUtils {
 
     /**
      * 解决小米手机上获取图片路径为null的情况
+     *
      * @param intent
      * @return
      */
-    public static Uri geturi(Context context,android.content.Intent intent) {
+    public static Uri geturi(Context context, android.content.Intent intent) {
         Uri uri = intent.getData();
         String type = intent.getType();
         if (uri.getScheme().equals("file") && (type.contains("image/"))) {
@@ -554,7 +579,7 @@ public class CommonUtils {
                 buff.append("(").append(MediaStore.Images.ImageColumns.DATA).append("=")
                         .append("'" + path + "'").append(")");
                 Cursor cur = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        new String[] { MediaStore.Images.ImageColumns._ID },
+                        new String[]{MediaStore.Images.ImageColumns._ID},
                         buff.toString(), null, null);
                 int index = 0;
                 for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {

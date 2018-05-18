@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.xinyi.touhang">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
@@ -37,13 +39,7 @@
 
         <activity
             android:name=".activities.MainActivity"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:launchMode="singleTask" />
         <activity
             android:name=".base.BaseActivity"
             android:label="@string/title_activity_base"
@@ -74,22 +70,91 @@
         <activity
             android:name=".activities.ForumDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.ReleaseForumActivity" />
-        <activity android:name=".activities.MyFocusActivity" />
-        <activity android:name=".activities.HistoryActivity" />
-        <activity android:name=".activities.MyCommentActivity" />
-        <activity android:name=".activities.MyNotificationActivity" />
-        <activity android:name=".activities.MyOrderActivity" />
-        <activity android:name=".activities.MyForumActivity" />
-        <activity android:name=".activities.UserFeedBackActivity" />
-        <activity android:name=".activities.PersonalSettingsActivity" />
-        <activity android:name=".activities.VipActivity" />
-        <activity android:name=".activities.WebActivity" />
-        <activity android:name=".activities.RleaseBusinessActivity" />
-        <activity android:name=".activities.BusinessDetailActivity" />
-        <activity android:name=".activities.IpoListActivity" />
-        <activity android:name=".activities.RegroupListActivity" />
-        <activity android:name=".activities.SettingsActivity"></activity>
+        <activity
+            android:name=".activities.ReleaseForumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MyFocusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.HistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MyCommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MyNotificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MyOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MyForumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.UserFeedBackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.PersonalSettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.VipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.WebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RleaseBusinessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.BusinessDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.IpoListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RegroupListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.ReleaseNonStandActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.NonStandardDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.LauncherActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.WorkPlaceActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.WorkPlaceDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.ReleaseWorkPlaceActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.ReleaseBankActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.BankDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.AuthenticationActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.TopDetailActivity"
+            android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
     </application>
 
 </manifest>

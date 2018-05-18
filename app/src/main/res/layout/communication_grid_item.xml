@@ -54,7 +54,7 @@
                 android:layout_marginRight="5dp"
                 android:src="@mipmap/advise_icon" />
 
-            <com.xinyi.touhang.weight.EllipsizingTextView
+            <TextView
                 android:id="@+id/textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/viewer_num" />
+                android:src="@mipmap/buy_nums" />
 
             <TextView
                 android:id="@+id/viewNums_tv"

@@ -56,34 +56,29 @@
                 </RelativeLayout>
 
                 <net.lucode.hackware.magicindicator.MagicIndicator
-                    android:paddingLeft="@dimen/content_pading_7dp"
-                    android:paddingRight="@dimen/content_pading_7dp"
                     android:id="@+id/magic_indicator"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="@dimen/content_pading_7dp"
+                    android:paddingRight="@dimen/content_pading_7dp" />
 
                 <net.lucode.hackware.magicindicator.MagicIndicator
-                    android:paddingLeft="@dimen/content_pading_7dp"
-                    android:paddingRight="@dimen/content_pading_7dp"
                     android:id="@+id/sub_magic_indicator"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="5dp"
-                    android:visibility="gone" />
-
-                <RelativeLayout
                     android:paddingLeft="@dimen/content_pading_7dp"
                     android:paddingRight="@dimen/content_pading_7dp"
+                    android:visibility="gone" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/regroup_recylerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"></android.support.v7.widget.RecyclerView>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/regroup_recylerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
-
-                </RelativeLayout>
             </LinearLayout>
         </ScrollView>
     </com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout>

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
@@ -52,6 +53,16 @@ import okhttp3.Response;
  * create an instance of this fragment.
  */
 public class QueryFragment extends BaseFragment {
+
+    @BindView(R.id.select_layout1)
+    LinearLayout select_layout1;
+
+    @BindView(R.id.select_layout2)
+    LinearLayout select_layout2;
+
+    @BindView(R.id.select_layout3)
+    LinearLayout select_layout3;
+
     @BindView(R.id.search_et)
     EditText search_et;
 
@@ -67,10 +78,16 @@ public class QueryFragment extends BaseFragment {
     @BindView(R.id.query_recylerView)
     RecyclerView queryRecylerView;
 
+
+    private List<LinearLayout> linearLayouts;
+
     private QueryAdapter adapter;
 
     private List<Map<String, String>> tags = new ArrayList<>();
     private String name = "";//搜索的关键字
+
+
+    private String selectUrl = AppUrls.ForumIc_searchUrl;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -163,16 +180,59 @@ public class QueryFragment extends BaseFragment {
             public void onClick(View v) {
                 CommonUtils.hideInputMethod(search_et, getActivity());
                 name = search_et.getText().toString().trim();
-                goQuery();
+                goQuery(selectUrl);
             }
         });
+
+        linearLayouts = new ArrayList<>();
+        linearLayouts.add(select_layout1);
+        linearLayouts.add(select_layout2);
+        linearLayouts.add(select_layout3);
+
+        for (int i = 0; i < linearLayouts.size(); i++) {
+            final int current = i;
+            linearLayouts.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setSelect(current);
+                }
+            });
+        }
+
+
+        setSelect(0);
     }
 
 
-    private void goQuery() {
+    private void setSelect(int position) {
+        switch (position) {
+            case 0:
+                search_et.setHint("请输入企业名称");
+                selectUrl = AppUrls.ForumIc_searchUrl;
+                break;
+            case 1:
+                search_et.setHint("请输入企业全称");
+                selectUrl = AppUrls.ForumIcon_searchUrl;
+                break;
+            case 2:
+                search_et.setHint("请输入企业全称");
+                selectUrl = AppUrls.ForumPatent_searchUrl;
+                break;
+        }
+        for (int i = 0; i < linearLayouts.size(); i++) {
+            if (i == position) {
+                linearLayouts.get(i).getChildAt(1).setVisibility(View.VISIBLE);
+            } else {
+                linearLayouts.get(i).getChildAt(1).setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+
+    private void goQuery(String url) {
         Intent it = new Intent(getActivity(), WebActivity.class);
         it.putExtra(WebActivity.TITLESTRING, "工商查询");
-        it.putExtra(WebActivity.TITLEURL, AppUrls.ForumIc_searchUrl + "?key=" + name);
+        it.putExtra(WebActivity.TITLEURL, url + "?key=" + name);
         startActivity(it);
     }
 
@@ -236,8 +296,8 @@ public class QueryFragment extends BaseFragment {
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    name=tv.getText().toString().trim();
-                    goQuery();
+                    name = tv.getText().toString().trim();
+                    goQuery(AppUrls.ForumIc_searchUrl);
                 }
             });
             flowLayout.addView(tv);

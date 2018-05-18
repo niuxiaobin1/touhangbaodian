@@ -52,10 +52,10 @@ import okhttp3.Response;
 
 public class IpoListActivity extends BaseActivity {
 
-    public static final String TITLE="_title";
-    public static final String TYPE="_type";
+    public static final String TITLE = "_title";
+    public static final String TYPE = "_type";
 
-    private String type="";
+    private String type = "";
 
     @BindView(R.id.search_et)
     EditText search_et;
@@ -77,8 +77,8 @@ public class IpoListActivity extends BaseActivity {
 
     private String cid1;
     private String cid2;
-    private int page=1;
-    private String name="";//搜索的关键字
+    private int page = 1;
+    private String name = "";//搜索的关键字
 
 
     private List<Map<String, String>> mDataList = new ArrayList<>();
@@ -98,7 +98,7 @@ public class IpoListActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        type=getIntent().getStringExtra(TYPE);
+        type = getIntent().getStringExtra(TYPE);
         initTitle(getIntent().getStringExtra(TITLE));
 
         refresh_layout.setMode(PullRefreshLayout.PULL_FROM_END);
@@ -124,7 +124,7 @@ public class IpoListActivity extends BaseActivity {
         });
         ipoRecylerView.addItemDecoration(new DividerDecoration(this, R.color.colorItem,
                 DensityUtil.dip2px(this, 0.5f)));
-        adapter=new IpoListAdapter(this);
+        adapter = new IpoListAdapter(this);
         ipoRecylerView.setAdapter(adapter);
 
         search_et.setOnClickListener(new View.OnClickListener() {
@@ -137,9 +137,9 @@ public class IpoListActivity extends BaseActivity {
         search_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonUtils.hideInputMethod(search_et,IpoListActivity.this);
-                name=search_et.getText().toString().trim();
-                page=1;
+                CommonUtils.hideInputMethod(search_et, IpoListActivity.this);
+                name = search_et.getText().toString().trim();
+                page = 1;
                 try {
                     initMagicIndicator();
                 } catch (JSONException e) {
@@ -155,7 +155,7 @@ public class IpoListActivity extends BaseActivity {
     protected void initDatas() {
         super.initDatas();
         HttpParams params = new HttpParams();
-        params.put("type",type);
+        params.put("type", type);
         OkGo.<String>post(AppUrls.IpoGet_typeUrl)
                 .cacheMode(CacheMode.NO_CACHE)
                 .params(DoParams.encryptionparams(IpoListActivity.this, params, ""))
@@ -257,12 +257,20 @@ public class IpoListActivity extends BaseActivity {
     //二级分类
     private void initSubMagicIndicator(String data) throws JSONException {
         subList.clear();
-        subList = JsonUtils.ArrayToList(new JSONArray(data)
-                , new String[]{"id", "name"});
+        JSONArray array=new JSONArray(data);
+        if (array.length()!=0){
+            Map<String, String> fMap = new HashMap<>();
+            fMap.put("id", "");
+            fMap.put("name", "全部");
+            subList.add(fMap);
+            subList .addAll(JsonUtils.ArrayToList(array
+                    , new String[]{"id", "name"}));
+        }
+
         if (subList.size() == 0) {
             sub_magic_indicator.setVisibility(View.GONE);
             cid2 = "";
-            page=1;
+            page = 1;
             getData();
             return;
         } else {
@@ -290,7 +298,7 @@ public class IpoListActivity extends BaseActivity {
                         sub_magic_indicator.onPageSelected(index);
                         sub_magic_indicator.onPageScrolled(index, 0, 0);
                         cid2 = subList.get(index).get("id");
-                        page=1;
+                        page = 1;
                         getData();
                     }
                 });
@@ -306,19 +314,19 @@ public class IpoListActivity extends BaseActivity {
         });
         sub_magic_indicator.setNavigator(commonNavigator);
         cid2 = subList.get(0).get("id");
-        page=1;
+        page = 1;
         getData();
     }
 
 
     private void getData() {
         HttpParams params = new HttpParams();
-        params.put("page",String.valueOf(page));
-        params.put("name",name);
-        params.put("type1",cid1);
-        params.put("type2",cid2);
-        params.put("type",type);
-        if (page==1){
+        params.put("page", String.valueOf(page));
+        params.put("name", name);
+        params.put("type1", cid1);
+        params.put("type2", cid2);
+        params.put("type", type);
+        if (page == 1) {
             adapter.clearDatas();
         }
         OkGo.<String>post(AppUrls.IpoSearchUrl)
@@ -333,9 +341,9 @@ public class IpoListActivity extends BaseActivity {
                             JSONObject js = new JSONObject(response.body());
                             if (js.getBoolean("result")) {
                                 adapter.addDatas(JsonUtils.ArrayToList(
-                                        js.getJSONArray("data"),new String[]{
-                                                "id","name","type1","type2",
-                                                "type3","read_num","created","modified","date"
+                                        js.getJSONArray("data"), new String[]{
+                                                "id", "name", "type1", "type2",
+                                                "type3", "read_num", "created", "modified", "date"
                                         }
                                 ));
                             } else {

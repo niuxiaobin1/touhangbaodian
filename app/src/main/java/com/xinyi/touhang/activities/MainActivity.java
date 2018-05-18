@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity {
 
     private FragmentManager fragmentManager;
     //current show
-    private int currentIndex;
+    private int currentIndex = -1;
     private Fragment currentFragment;
 
 
@@ -123,10 +123,13 @@ public class MainActivity extends BaseActivity {
      * @param index
      */
     private void switchTab(int index) {
+        if (index == currentIndex) {
+            return;
+        }
 
-        if (index==footers.size()-1){
+        if (index == footers.size() - 1) {
             StatusBarUtil.StatusBarLightMode(MainActivity.this);
-        }else{
+        } else {
             StatusBarUtil.StatusBarDarkMode(MainActivity.this);
         }
 

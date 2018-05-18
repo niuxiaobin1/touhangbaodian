@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.BankDetailActivity;
 import com.xinyi.touhang.activities.BusinessDetailActivity;
 import com.xinyi.touhang.activities.ConsulationDetailActivity;
+import com.xinyi.touhang.activities.NonStandardDetailActivity;
 import com.xinyi.touhang.adapter.BaseAdapter;
 import com.xinyi.touhang.constants.AppUrls;
 import com.xinyi.touhang.utils.DensityUtil;
@@ -28,6 +30,9 @@ import butterknife.ButterKnife;
 public class BusinessAdapter extends BaseAdapter<BusinessAdapter.ViewHolder> {
 
     private Context context;
+    private String[] mDataList = new String[]{"全部", "公司债", "ABS",
+            "短期融资券", "专项收益计划", "PPN", "信托计划", "不动产", "证券类", "其他"};
+    private String[] mDataList1 = new String[]{"全部","短期拆借", "银行同存", "理财产品"};
 
     public BusinessAdapter(Context context) {
         super();
@@ -36,8 +41,8 @@ public class BusinessAdapter extends BaseAdapter<BusinessAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.focus_business_item,parent,false
+        View v = LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.focus_business_item, parent, false
         );
         return new ViewHolder(v);
     }
@@ -45,21 +50,47 @@ public class BusinessAdapter extends BaseAdapter<BusinessAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.textView.setText(datas.get(position).get("name"));
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it=new Intent(context, BusinessDetailActivity.class);
-                if (datas.get(position).get("type").equals("0") ) {
+                Intent it = null;
+                if (datas.get(position).get("type").equals("supply")) {
+                    it = new Intent(context, BusinessDetailActivity.class);
                     it.putExtra(BusinessDetailActivity.DATAURL, AppUrls.SupplyDetailUrl);
+                    it.putExtra(BusinessDetailActivity.BUSINESSTYPE,
+                            datas.get(position).get("sub_type_name").equals("投资方") ? "1" : "2");
+                    it.putExtra(BusinessDetailActivity.BUSINESSID, datas.get(position).get("id"));
+                } else if(datas.get(position).get("type").equals("non")){
+                    it = new Intent(context, NonStandardDetailActivity.class);
+                    it.putExtra(NonStandardDetailActivity.BUSINESSID, datas.get(position).get("id"));
+                    it.putExtra(NonStandardDetailActivity.BUSINESSTITLE, getNonId(datas.get(position).get("sub_type_name")));
                 }else{
-                    it.putExtra(BusinessDetailActivity.DATAURL, AppUrls.DemandDetailUrl);
+                    it = new Intent(context, BankDetailActivity.class);
+                    it.putExtra(BankDetailActivity.BUSINESSID, datas.get(position).get("id"));
+                    it.putExtra(BankDetailActivity.BUSINESSTITLE, getBankId(datas.get(position).get("sub_type_name")));
                 }
 
-                it.putExtra(BusinessDetailActivity.BUSINESSID,datas.get(position).get("id"));
                 context.startActivity(it);
             }
         });
+    }
+
+    private String getNonId(String nonString){
+        for (int i = 0; i <mDataList.length ; i++) {
+            if (mDataList[i].equals(nonString)){
+                return String.valueOf(i);
+            }
+        }
+        return "0";
+    }
+
+    private String getBankId(String bankString){
+        for (int i = 0; i <mDataList1.length ; i++) {
+            if (mDataList1[i].equals(bankString)){
+                return String.valueOf(i);
+            }
+        }
+        return "0";
     }
 
     @Override

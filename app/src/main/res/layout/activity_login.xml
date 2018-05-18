@@ -165,6 +165,7 @@
 
 
         <TextView
+            android:id="@+id/login_byQQ"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
@@ -175,6 +176,7 @@
             android:textSize="@dimen/tv_15sp" />
 
         <TextView
+            android:id="@+id/login_byWechat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"

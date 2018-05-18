@@ -21,6 +21,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.AuthenticationActivity;
 import com.xinyi.touhang.activities.HistoryActivity;
 import com.xinyi.touhang.activities.LoginActivity;
 import com.xinyi.touhang.activities.MainActivity;
@@ -33,6 +34,7 @@ import com.xinyi.touhang.activities.PersonalSettingsActivity;
 import com.xinyi.touhang.activities.SettingsActivity;
 import com.xinyi.touhang.activities.UserFeedBackActivity;
 import com.xinyi.touhang.activities.VipActivity;
+import com.xinyi.touhang.activities.WorkPlaceActivity;
 import com.xinyi.touhang.base.BaseFragment;
 import com.xinyi.touhang.callBack.DialogCallBack;
 import com.xinyi.touhang.callBack.HandleResponse;
@@ -63,6 +65,9 @@ public class MineFragment extends BaseFragment {
     //关注
     @BindView(R.id.focusLayout)
     RelativeLayout focusLayout;
+    //我的职场
+    @BindView(R.id.workPlaceLayout)
+    RelativeLayout workPlaceLayout;
     //历史
     @BindView(R.id.historyLayout)
     RelativeLayout historyLayout;
@@ -100,6 +105,8 @@ public class MineFragment extends BaseFragment {
     TextView userName;
     @BindView(R.id.vipFlag)
     TextView vipFlag;
+    @BindView(R.id.authenFlag)
+    TextView authenFlag;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -244,6 +251,29 @@ public class MineFragment extends BaseFragment {
                     Intent it = new Intent(getActivity(), VipActivity.class);
                     startActivity(it);
                 }
+            }
+        });
+        authenFlag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkLogin()) {
+                    String confirm = (String) SpUtils.get(getActivity(), SpUtils.USERCONFIRM, "");
+                    if (confirm.equals("0") || confirm.equals("3")) {
+                        Intent it = new Intent(getActivity(), AuthenticationActivity.class);
+                        startActivity(it);
+                    }
+                }
+            }
+        });
+
+        workPlaceLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkLogin()) {
+                    Intent it = new Intent(getActivity(), WorkPlaceActivity.class);
+                    startActivity(it);
+                }
+
             }
         });
 
@@ -421,6 +451,7 @@ public class MineFragment extends BaseFragment {
         SpUtils.put(getActivity(), SpUtils.USERMODIFIED, user.getString("modified"));
         SpUtils.put(getActivity(), SpUtils.USERIMAGE, user.getString("image"));
         SpUtils.put(getActivity(), SpUtils.USERVIP_LIMIT, user.getString("vip_limit"));
+        SpUtils.put(getActivity(), SpUtils.USERCONFIRM, user.getString("confirm"));
 
         userName.setText(user.getString("name"));
         Glide.with(getActivity()).load(user.getString("image")).transform(new GlideCircleTransform(getActivity()))
@@ -433,6 +464,24 @@ public class MineFragment extends BaseFragment {
             vipFlag.setTextColor(getResources().getColor(R.color.colorMain));
         }
 
+
+        if (user.getString("confirm").equals("0")) {
+            authenFlag.setBackgroundResource(R.drawable.vip_none_bg);
+            authenFlag.setTextColor(getResources().getColor(R.color.colorMain));
+            authenFlag.setText("实名认证");
+        } else if (user.getString("confirm").equals("1")) {
+            authenFlag.setBackgroundResource(R.drawable.authen_onway_bg);
+            authenFlag.setTextColor(getResources().getColor(R.color.colorWhite));
+            authenFlag.setText("正在认证");
+        } else if (user.getString("confirm").equals("2")) {
+            authenFlag.setBackgroundResource(R.drawable.vip_bg);
+            authenFlag.setTextColor(getResources().getColor(R.color.colorWhite));
+            authenFlag.setText("实名认证");
+        } else {
+            authenFlag.setBackgroundResource(R.drawable.authen_failed_bg);
+            authenFlag.setTextColor(getResources().getColor(R.color.colorWhite));
+            authenFlag.setText("认证失败");
+        }
     }
 
 
@@ -452,12 +501,31 @@ public class MineFragment extends BaseFragment {
         Glide.with(getActivity()).load((String) SpUtils.get(getActivity(), SpUtils.USERIMAGE, "")).transform(new GlideCircleTransform(getActivity()))
                 .into(userImage);
         String vip = (String) SpUtils.get(getActivity(), SpUtils.USERVIP, "");
+        String confirm = (String) SpUtils.get(getActivity(), SpUtils.USERCONFIRM, "");
         if (vip.equals("1")) {
             vipFlag.setBackgroundResource(R.drawable.vip_bg);
             vipFlag.setTextColor(getResources().getColor(R.color.colorWhite));
         } else {
             vipFlag.setBackgroundResource(R.drawable.vip_none_bg);
             vipFlag.setTextColor(getResources().getColor(R.color.colorMain));
+        }
+
+        if (confirm.equals("0")) {
+            authenFlag.setText("实名认证");
+            authenFlag.setBackgroundResource(R.drawable.vip_none_bg);
+            authenFlag.setTextColor(getResources().getColor(R.color.colorMain));
+        } else if (confirm.equals("1")) {
+            authenFlag.setBackgroundResource(R.drawable.authen_onway_bg);
+            authenFlag.setTextColor(getResources().getColor(R.color.colorWhite));
+            authenFlag.setText("正在认证");
+        } else if (confirm.equals("2")) {
+            authenFlag.setText("实名认证");
+            authenFlag.setBackgroundResource(R.drawable.vip_bg);
+            authenFlag.setTextColor(getResources().getColor(R.color.colorWhite));
+        } else {
+            authenFlag.setBackgroundResource(R.drawable.authen_failed_bg);
+            authenFlag.setTextColor(getResources().getColor(R.color.colorWhite));
+            authenFlag.setText("认证失败");
         }
     }
 

@@ -39,6 +39,7 @@
     <string name="guaranteeString">担保：</string>
     <string name="rateString">评级：</string>
     <string name="publishDateString">发布时间：</string>
+    <string name="updateDateString">更新时间：</string>
     <string name="search_hintString">请输入您要查询的公司名称</string>
     <string name="feedback_hintString">请输入你的意见</string>
     <string name="userTelString">手机号码</string>

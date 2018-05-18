@@ -1,32 +1,29 @@
 package com.xinyi.touhang.callBack;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.view.Window;
+import android.app.Dialog;
 
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.request.base.Request;
+import com.xinyi.touhang.weight.CustomProgressDialog;
 
 /**
  * Created by Niu on 2017/12/22.
  */
 
 public abstract class DialogCallBack extends StringCallback {
-    private ProgressDialog dialog;
+    private Dialog dialog;
 
     private void initDialog(Activity activity) {
-        dialog = new ProgressDialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCanceledOnTouchOutside(false);
+        dialog=CustomProgressDialog.createLoadingDialog(activity,"");
         dialog.setCancelable(false);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("");
+
     }
 
 
-    public DialogCallBack(Activity activity,boolean isShowDialog) {
+    public DialogCallBack(Activity activity, boolean isShowDialog) {
         super();
-        if (isShowDialog){
+        if (isShowDialog) {
             initDialog(activity);
         }
     }

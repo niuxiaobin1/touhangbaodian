@@ -26,6 +26,7 @@ import com.xinyi.touhang.fragments.searchInner.IpoFragment;
 import com.xinyi.touhang.fragments.searchInner.LawsFragment;
 import com.xinyi.touhang.fragments.searchInner.QueryFragment;
 import com.xinyi.touhang.fragments.searchInner.RegroupFragment;
+import com.xinyi.touhang.utils.CommonUtils;
 import com.xinyi.touhang.utils.StatusBarUtil;
 import com.xinyi.touhang.utils.TabLayoutUtils;
 
@@ -148,10 +149,20 @@ public class SearchFragment extends BaseFragment {
         mViewPager.setOffscreenPageLimit(5);
         mViewPager.setAdapter(adapter);
         ViewCompat.setElevation(tabLayout, 10);
+        tabLayout.setupWithViewPager(mViewPager);
+
+        tabLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                TabLayoutUtils.invalidateTablayout(getActivity(), tabLayout);
+            }
+        }, 100);
+        mViewPager.setOffscreenPageLimit(5);
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                CommonUtils.hideSoftInput(getActivity(),mViewPager);
             }
 
             @Override
@@ -164,15 +175,6 @@ public class SearchFragment extends BaseFragment {
 
             }
         });
-
-        tabLayout.setupWithViewPager(mViewPager);
-
-        tabLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                TabLayoutUtils.invalidateTablayout(getActivity(), tabLayout);
-            }
-        }, 100);
 
     }
 

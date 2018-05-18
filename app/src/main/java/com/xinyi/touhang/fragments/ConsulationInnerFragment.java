@@ -1,6 +1,7 @@
 package com.xinyi.touhang.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import com.lzy.okgo.model.HttpParams;
 import com.xinyi.touhang.PullRefreshLayout.OnRefreshListener;
 import com.xinyi.touhang.PullRefreshLayout.PullRefreshLayout;
 import com.xinyi.touhang.R;
+import com.xinyi.touhang.activities.TopDetailActivity;
 import com.xinyi.touhang.adapter.ConsulationInnerAdapter;
 import com.xinyi.touhang.base.BaseFragment;
 import com.xinyi.touhang.callBack.DialogCallBack;
@@ -181,8 +184,9 @@ public class ConsulationInnerFragment extends BaseFragment {
                             if (js.getBoolean("result")) {
                                 JSONObject data = js.getJSONObject("data");
                                 JSONArray top = data.getJSONArray("top");
-                                topList = JsonUtils.ArrayToList(top, new String[]{"id", "name", "author", "read_num",
-                                        "top", "news_type_id", "created", "modified", "author_img", "image", "passed"});
+                                topList = JsonUtils.ArrayToList(top, new String[]{"id", "name", "author",
+                                        "image", "url", "sort",
+                                        "created", "modified", "passed"});
                                 //top
                                 views.clear();
                                 for (int i = 0; i < topList.size(); i++) {
@@ -193,7 +197,7 @@ public class ConsulationInnerFragment extends BaseFragment {
                                 //news
                                 JSONArray news = data.getJSONArray("news");
                                 innerAdapter.addDatas(JsonUtils.ArrayToList(news, new String[]{"id", "name", "author", "read_num",
-                                       "top", "news_type_id", "created", "modified", "author_img", "image", "passed"}));
+                                        "top", "news_type_id", "created", "modified", "author_img", "image", "passed"}));
 
                             } else {
                                 UIHelper.toastMsg(js.getString("message"));
@@ -220,13 +224,13 @@ public class ConsulationInnerFragment extends BaseFragment {
     }
 
 
-    private View makeView(Map<String, String> map) {
+    private View makeView(final Map<String, String> map) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.page_item, null);
         //resize imageview
         int contentWidth = DensityUtil.getScreenWidth(getActivity())
                 - DensityUtil.dip2px(getActivity(), 7) * 4;
         ImageView imageView = view.findViewById(R.id.imageView);
-        EllipsizingTextView newsTitleTv = view.findViewById(R.id.newsTitleTv);
+        TextView newsTitleTv = view.findViewById(R.id.newsTitleTv);
         TextView newsEditorTv = view.findViewById(R.id.newsEditorTv);
         TextView newsTimeTv = view.findViewById(R.id.newsTimeTv);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
@@ -237,6 +241,23 @@ public class ConsulationInnerFragment extends BaseFragment {
         newsTitleTv.setText(map.get("name"));
         newsEditorTv.setText(map.get("author"));
         newsTimeTv.setText(map.get("passed"));
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String topUrl = map.get("url");
+                Intent it = new Intent(getActivity(), TopDetailActivity.class);
+                it.putExtra(TopDetailActivity.TITLESTRING, map.get("name"));
+                if (TextUtils.isEmpty(topUrl)) {
+                    it.putExtra(TopDetailActivity.CONTENTTYPE, true);
+                    it.putExtra(TopDetailActivity.TITLEURL, map.get("id"));
+                } else {
+                    it.putExtra(TopDetailActivity.CONTENTTYPE, false);
+                    it.putExtra(TopDetailActivity.TITLEURL, topUrl);
+                }
+                startActivity(it);
+            }
+        });
         return view;
     }
 

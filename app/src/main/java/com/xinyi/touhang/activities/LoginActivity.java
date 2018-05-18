@@ -16,6 +16,9 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.HttpParams;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.xinyi.touhang.R;
 import com.xinyi.touhang.base.BaseActivity;
 import com.xinyi.touhang.base.ThApplication;
@@ -23,12 +26,16 @@ import com.xinyi.touhang.callBack.DialogCallBack;
 import com.xinyi.touhang.callBack.HandleResponse;
 import com.xinyi.touhang.constants.AppUrls;
 import com.xinyi.touhang.constants.Configer;
+import com.xinyi.touhang.utils.CommonUtils;
 import com.xinyi.touhang.utils.DoParams;
 import com.xinyi.touhang.utils.SpUtils;
 import com.xinyi.touhang.utils.UIHelper;
+import com.xinyi.touhang.utils.UmengUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +43,12 @@ import okhttp3.Response;
 
 public class LoginActivity extends BaseActivity {
 
+
+    @BindView(R.id.login_byQQ)
+    TextView login_byQQ;
+
+    @BindView(R.id.login_byWechat)
+    TextView login_byWechat;
 
     //获取验证码
     @BindView(R.id.getCodeTv)
@@ -94,6 +107,69 @@ public class LoginActivity extends BaseActivity {
                 login();
             }
         });
+
+        login_byQQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UmengUtils.UmengLogin(LoginActivity.this, SHARE_MEDIA.QQ, new UMAuthListener() {
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+                        Log.e("nxb","onStart");
+                    }
+
+                    @Override
+                    public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                        Log.e("nxb","onComplete");
+                    }
+
+                    @Override
+                    public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                        Log.e("nxb","onError");
+                    }
+
+                    @Override
+                    public void onCancel(SHARE_MEDIA share_media, int i) {
+                        Log.e("nxb","onCancel");
+                    }
+                });
+            }
+        });
+
+
+        login_byWechat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UmengUtils.UmengLogin(LoginActivity.this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+                        Log.e("nxb","onStart");
+                    }
+
+                    @Override
+                    public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                        Log.e("nxb","onComplete");
+                    }
+
+                    @Override
+                    public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                        Log.e("nxb","onError");
+                    }
+
+                    @Override
+                    public void onCancel(SHARE_MEDIA share_media, int i) {
+                        Log.e("nxb","onCancel");
+                    }
+                });
+            }
+        });
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -279,7 +355,7 @@ public class LoginActivity extends BaseActivity {
         SpUtils.put(this, SpUtils.USERCREATED, user.getString("created"));
         SpUtils.put(this, SpUtils.USERMODIFIED, user.getString("modified"));
         SpUtils.put(this, SpUtils.USERIMAGE, user.getString("image"));
-
+        SpUtils.put(this, SpUtils.USERCONFIRM, user.getString("confirm"));
     }
 
 

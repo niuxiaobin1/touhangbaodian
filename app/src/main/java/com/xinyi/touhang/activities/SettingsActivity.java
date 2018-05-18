@@ -22,6 +22,10 @@ public class SettingsActivity extends BaseActivity {
     @BindView(R.id.feedbackLayout)
     RelativeLayout feedbackLayout;
 
+    //关于我们
+    @BindView(R.id.aboutUsLayout)
+    RelativeLayout aboutUsLayout;
+
     @BindView(R.id.logout_btn)
     Button logout_btn;
 
@@ -52,6 +56,13 @@ public class SettingsActivity extends BaseActivity {
                     Intent it = new Intent(SettingsActivity.this, UserFeedBackActivity.class);
                     startActivity(it);
                 }
+            }
+        });
+        aboutUsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(SettingsActivity.this, AboutUsActivity.class);
+                startActivity(it);
             }
         });
 

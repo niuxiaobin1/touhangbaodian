@@ -18,6 +18,9 @@ import com.lzy.okgo.cookie.store.MemoryCookieStore;
 import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.tencent.smtt.sdk.QbSdk;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareConfig;
 import com.xinyi.touhang.constants.Configer;
 import com.xinyi.touhang.third.TLSSocketFactory;
 import com.xinyi.touhang.third.WeakHandler;
@@ -94,6 +97,10 @@ public class ThApplication extends Application {
         });
         QbSdk.setDownloadWithoutWifi(true);
 
+        UMConfigure.init(this,"5af3d772f29d9872ef00009e"
+                ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");//58edcfeb310c93091c000be2 5965ee00734be40b580001a0
+        PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
+        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
     }
 
 

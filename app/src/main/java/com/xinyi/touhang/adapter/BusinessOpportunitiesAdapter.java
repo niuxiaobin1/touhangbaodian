@@ -2,7 +2,9 @@ package com.xinyi.touhang.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,16 +28,14 @@ import butterknife.ButterKnife;
 public class BusinessOpportunitiesAdapter extends BaseAdapter<BusinessOpportunitiesAdapter.ViewHolder> {
 
     private Context context;
-    private int type = 0;
+
 
     public BusinessOpportunitiesAdapter(Context context) {
         super();
         this.context = context;
     }
 
-    public void setType(int type) {
-        this.type = type;
-    }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,7 +47,7 @@ public class BusinessOpportunitiesAdapter extends BaseAdapter<BusinessOpportunit
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Map<String, String> map = datas.get(position);
-        if (type == 0) {
+        if (map.get("type1").equals("1")) {
             holder.supply_layout.setVisibility(View.VISIBLE);
             holder.demand_layout.setVisibility(View.GONE);
             holder.sTv1.setText(map.get("address"));
@@ -57,7 +57,7 @@ public class BusinessOpportunitiesAdapter extends BaseAdapter<BusinessOpportunit
             holder.sTv5.setText(map.get("price"));
             holder.sTv6.setText(map.get("points"));
 
-        } else {
+        } else if(map.get("type1").equals("2")) {
             holder.supply_layout.setVisibility(View.GONE);
             holder.demand_layout.setVisibility(View.VISIBLE);
             holder.dTv1.setText(map.get("address"));
@@ -73,17 +73,18 @@ public class BusinessOpportunitiesAdapter extends BaseAdapter<BusinessOpportunit
             holder.isTop_image.setVisibility(View.GONE);
         }
 
+        if (map.get("yellow").equals("1")){
+            holder.titleTv.setTextColor(ContextCompat.getColor(context,R.color.colorTabSelectedIndicator));
+        }else{
+            holder.titleTv.setTextColor(ContextCompat.getColor(context,R.color.colorMain));
+        }
         holder.titleTv.setText(map.get("name"));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it=new Intent(context, BusinessDetailActivity.class);
-                if (type == 0) {
-                    it.putExtra(BusinessDetailActivity.DATAURL, AppUrls.SupplyDetailUrl);
-                }else{
-                    it.putExtra(BusinessDetailActivity.DATAURL, AppUrls.DemandDetailUrl);
-                }
-
+                it.putExtra(BusinessDetailActivity.DATAURL, AppUrls.SupplyDetailUrl);
+                it.putExtra(BusinessDetailActivity.BUSINESSTYPE, map.get("type1"));
                 it.putExtra(BusinessDetailActivity.BUSINESSID,map.get("id"));
                 context.startActivity(it);
             }
